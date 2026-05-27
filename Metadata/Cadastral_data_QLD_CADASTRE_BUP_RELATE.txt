@@ -1,0 +1,3 @@
+RelationshipClass: Cadastral_data_QLD_CADASTRE_BUP_RELATE
+From: Cadastral_data_QLD_CADASTRE_DCDB (LOTPLAN)
+To: Cadastral_data_QLD_CADASTRE_BUP_LOT (LOTPLAN)

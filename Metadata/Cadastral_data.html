@@ -1,0 +1,387 @@
+
+
+
+
+  
+
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+	
+	
+	<html lang="en">
+<head>
+</head>
+<body>
+	<div id="gptMainWrap">
+		<div id="gptBody">
+			
+			<table id="cmPlPgdPageBody" class="pageBody" cellpadding="0" cellspacing="0" summary="This table is for design purposes only.">
+<tbody>
+<tr>
+<td><span id="cmPlPgpPageBody">
+					
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  var gptMapConfig = new GptMapConfig();
+  gptMapConfig.mapServiceURL = "https://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
+  gptMapConfig.mapServiceType = "dynamic";
+  gptMapConfig.geometryServiceURL = "https://gisservices.information.qld.gov.au/arcgis/rest/services/Geometry/GeometryServer";
+  gptMapConfig.locatorURL = "https://gisservices.information.qld.gov.au/arcgis/rest/services/Location/QldAddressComposite/GeocodeServer";
+  gptMapConfig.locatorSingleFieldParameter = "SingleLine";
+  gptMapConfig.locatorGraphicURL = "/catalogue/catalog/images/pushpin_red.gif";
+  gptMapConfig.mapVisibleLayers = "[]";
+</script>
+
+
+<form id="mdDetails" name="mdDetails" method="post" action="/catalogue/custom/viewMetadataDetails.page;jsessionid=F0A0E73A1B916AC7F494B12FED035DE9" class="mdDetails" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="mdDetails" value="mdDetails" />
+
+
+<script type="text/javascript">
+
+function MddMap() {
+  var _gptMap = null;
+  var _gptInpEnv = null;
+  
+  this.initialize = function initialize() {
+    var config = gptMapConfig;
+    config.mapElementId = "interactiveMap";
+    config.mapToolbarId = "mdDetails:mapToolbar";
+        
+    var elForm = mddFindForm();
+    if ((elForm != null) && (typeof(mdeEnvelopeIds) != 'undefined') && (mdeEnvelopeIds != null)) {
+      var sPfx = elForm.id+":";
+      config.inputEnvelopeXMinId = sPfx+mdeEnvelopeIds[0];
+      config.inputEnvelopeYMinId = sPfx+mdeEnvelopeIds[1];
+      config.inputEnvelopeXMaxId = sPfx+mdeEnvelopeIds[2];
+      config.inputEnvelopeYMaxId = sPfx+mdeEnvelopeIds[3];
+      var el = document.getElementById(config.inputEnvelopeXMinId);
+      if (el != null) el.value = el.innerHTML;
+      el = document.getElementById(config.inputEnvelopeYMinId);
+      if (el != null) el.value = el.innerHTML;
+      el = document.getElementById(config.inputEnvelopeXMaxId);
+      if (el != null) el.value = el.innerHTML;
+      el = document.getElementById(config.inputEnvelopeYMaxId);
+      if (el != null) el.value = el.innerHTML;
+    }
+      
+    _gptMap = new GptMap();
+    dojo.connect(_gptMap,"onMapLoaded",this,"onMapLoaded");
+
+    _gptInpEnv = new GptInputEnvelope();
+    _gptInpEnv.initialize(config,_gptMap);
+
+    _gptMap.initialize(config);
+  }
+
+  this.onMapLoaded = function() {
+      if (_gptInpEnv != null) {
+        _gptInpEnv.highlightInputEnvelope();
+        setTimeout(dojo.hitch(_gptInpEnv,"zoomToInputEnvelope"),1000);
+        _gptMap.getAgsMap().disableMapNavigation();
+        _gptMap.getAgsMap().disablePan();
+        _gptMap.getAgsMap().disableClickRecenter();
+        _gptMap.getAgsMap().disableDoubleClickZoom();
+        _gptMap.getAgsMap().disableRubberBandZoom();
+        _gptMap.getAgsMap().disableScrollWheelZoom();
+        _gptMap.getAgsMap().disableShiftDoubleClickZoom();
+        _gptMap.getAgsMap().hidePanArrows();
+        _gptMap.getAgsMap().hideZoomSlider();
+      }
+  }
+  
+  this.reposition = function reposition() {
+    if (_gptMap != null) _gptMap.reposition();
+  }
+};
+
+
+function mddFindForm(sBaseName) {
+  var elForm = null;
+  var aForms = document.getElementsByTagName("form");
+  if (aForms != null) {
+    if (sBaseName == null) sBaseName = "mdDetails";
+    for (var i=0;i<aForms.length;i++) {
+      var el = aForms[i];
+      if (el && el.id && (el.id.indexOf(sBaseName) != -1)) {
+        elForm = el;
+        break;
+      }
+    }
+  }
+  return elForm;
+};
+
+
+var mddMap = new MddMap();;
+if (typeof(dojo) != 'undefined') {
+  dojo.addOnLoad(mddMapInit);
+}
+
+function mddMapInit() {
+  var toolbar = dojo.byId("mdDetails:mapToolbar");
+  if (toolbar!=null) toolbar.style.display="none";
+  var elMap = document.getElementById("interactiveMap");
+  if (elMap != null) mddMap.initialize();
+  dojo.connect(window,"onresize",mddMap,"reposition");
+};
+
+
+function mddOnSectionClicked(sSectionId) {
+  var elForm = mddFindForm();
+  if (elForm != null) {
+    var bDisplay = true;
+    var sFolder = "/catalogue/catalog/images/";
+    var sSrc = sFolder+"section_open.gif";
+    var elImg = document.getElementById(elForm.id+":"+sSectionId+"-img");
+    if (elImg != null) {
+      if (elImg.src.indexOf("section_open.gif") != -1) {
+        sSrc = sFolder+"section_closed.gif";
+        bDisplay = false;
+      }
+      elImg.src = sSrc;
+      var elChk = document.getElementById(elForm.id+":"+sSectionId+"-chk");
+      if (elChk != null) elChk.checked = bDisplay;
+    }
+    var el = document.getElementById(elForm.id+":"+sSectionId+"-body");
+
+	if (el != null) {
+	  if (bDisplay) el.style.display = "block"; else el.style.display = "none";
+	  mddMap.reposition();
+	}      
+  }
+}
+
+</script>
+
+
+<span id="mdDetails:xsltBasedDetails"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>Cadastral data - Queensland - by area of interest</title><meta content="text/html; charset=UTF-8" http-equiv="Content-type"/><style type="text/css">
+                            h1{
+                                font-family:Arial, Verdana, Helvetica, sans-serif;
+                                font-weight:bold;
+                                color:#333333;
+                                font-size:140%;
+                                border-bottom:2px solid #CCCCCC;
+                            }
+                            h2{
+                                font-family:Arial, Verdana, Helvetica, sans-serif;
+                                font-weight:bold;
+                                color:#333333;
+                                font-size:120%;
+                            }
+                            h3{
+                                font-family:Arial, Verdana, Helvetica, sans-serif;
+                                font-weight:bold;
+                                color:#333333;
+                                font-size:110%;
+                            }
+                            
+                            body{
+                                font-family:Verdana, Arial, Helvetica, sans-serif;
+                                font-size:10pt;
+                                line-height:16pt;
+                                color:#333333;
+                                padding-right:10%;
+                            }
+                            
+                            em{
+                                font-family:Arial;
+                                font-style:normal;
+                                font-weight:bold;
+                            }
+                            em.rawContent{
+                                font-style:normal;
+                                font-weight:bold;
+                                font-style:italic;
+                            }
+                            
+                            div{
+                                padding-left:40px;
+                                margin-top:0;
+                                margin-bottom:0;
+                            }</style></head><body><h1>Cadastral data - Queensland - by area of interest</h1><h2 class="headTitle">Identification</h2><div>
+                <em>Title: </em>Cadastral data - Queensland - by area of interest<br/><em>Alternative title: </em>Cadastral data<br/><em>Date: </em>
+                                2022-08-29
+                             (publication) <br/>
+                        <em>Presentation form code: </em>mapDigital<br/>
+                    
+            <em>Related resource:</em><div><em>Identifier: </em>PROP.QLD_DCDB\PROP.QLD_CADASTRE_DCDB<br/><em>Relationship to related resource: </em>source<br/></div></div><h2 class="headTitle">Description</h2><div><em>Abstract / Description: </em><div>This dataset allows you to extract your area of interest using the 'clip, zip and ship' functionality. You can select areas by local government area, city or suburb (locality) or freehand over small areas. The data is updated nightly and can be downloaded by searching the Q Spatial web site for "Cadastral Data Queensland".<br/>You cannot download the entire State in one single order. The dataset, "Cadastral data weekly - whole of State Queensland" provides the whole of State in one order but in file geodatabase format only.</div><em>Additional Information: </em><div>A structure change in data has occurred due to an underlying vendor bug fix and software upgrade.  This has resulted in the QAMF data being moved from inside the feature dataset, to outside.  This will be the ongoing data format from 9/08/2020.<br/>The Digital Cadastral Database is the spatial representation of every current parcel of land in Queensland, and its legal Lot on Plan description and relevant attributes. It provides the map base for systems dealing with land related information. The DCDB is considered to be the point of truth for the graphical representation of property boundaries. It is not the point of truth for the legal property boundary or related attribute information, this will always be the plan of survey or the related titling information and administrative data sets.<br/><br/>The data layers in the extracted file are:- <br/>QLD_CADASTRE_DCDB - This layer represents the complete DCDB. <br/>QLD_CADASTRE_NATBDY - This layer is a subset of the complete DCDB representing only those natural features which form part of a property boundary contained in the dataset. <br/>QLD_CADASTRE_ROAD - This layer is a subset of the complete DCDB representing the road boundaries contained in the dataset. <br/>QLD_CADASTRE_BUP_LOT - This layer is a subset of the complete DCDB, representing all multi-level Building Unit lots contained in the dataset<br/><br/>From the 30 November 2015, there will no longer be reference to Parishes and Counties in the Departments land information systems, including the Digital Cadastral Database (DCDB) – a computerised map of property boundaries and related description of all land parcels in Queensland. <br/><br/>The Department of Resources will retain a record of parishes and counties for historical purposes. The Museum of Lands, Mapping and Surveying provides historical information about parishes and counties and the historical parish directory is available online.<br/>If you obtain information or products from QSpatial, either the information will no longer contain parish and county details, or the parish and county fields will contain the words ‘no longer used’.<br/><br/>Further details about accuracies and other attributes can be found in the Queensland Interchange Format document available on the internet – type in ‘DCDB QIF Specifications’ in an internet search tool to locate.</div><em>Language: </em>eng<br/><em>Character set: </em>unknown<br/></div><h2 class="headTitle">Topic</h2><div><em>ISO topic category codes: </em>boundaries, planningCadastre<br/></div><h2 class="headTitle">Spatial Data Information</h2><div>
+                <em>Spatial representation type: </em>vector<br/>
+            
+            <em>Coordinate Reference System EPSG code: </em>EPSG:4283<br/><div><em>Title: </em>EPSG Geodetic Parameter<br/>                                Dataset<br/><em>Date: </em>
+                                        2007-07-16
+                                     (revision) <br/><em>Edition: </em>Version 6.13<br/></div>
+        </div><h2 class="headTitle">Contacts</h2><div><em>Point of contact: </em><br/><div><em>Organisation: </em>Department of Resources<br/>
+                        <em>Address:</em><br/><div>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    <em>Email: </em> <a href="mailto:support@spatial-qld-support.atlassian.net">support@spatial-qld-support.atlassian.net</a> 
+                                </div>
+                    </div><em>Owner: </em><br/><div><em>Organisation: </em>Department of Resources<br/></div></div><h2 class="headTitle">Status</h2><div>
+                <em>Progress status: </em>onGoing<br/>
+            
+                        <em>Maintenance and update frequency: </em>daily<br/>
+                    </div><h2 class="headTitle">Data / Resource Constraints</h2><div><em>Resource Access Level:</em>
+                         --&gt;
+                        
+                    <div>
+                        <em>Security classification (ISO 19115): </em>unclassified<br/>
+                    <em>Use limitation: </em>Users of the information recorded in this document (the Information) accept all responsibility and risk associated with the use of the Information and should seek independent professional advice in relation to dealings with property. Despite the department's best efforts, it makes no representations or warranties in relation to the Information, and, to the extent permitted by law, exclude or limit all warranties relating to correctness, accuracy, reliability, completeness or currency and all liability for any direct, indirect and consequential costs, losses, damages and expenses incurred in any way (including but not limited to that arising from negligence) in connection with any use of or reliance on the Information.<br/></div><em>Copyright: </em> (as use constraint)<br/><div>&copy State of Queensland (Department of Resources) 2021</div><em>Licence: </em> (as use constraint)<br/><div>This material is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons - Attribution 4.0 International</a> licence.<br /> <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" title="Creative Commons - Attribution 4.0 International License" style="border: 0;" src="https://licensebuttons.net/l/by/4.0/88x31.png" /></a><br /> The Department of Resources requests attribution in the following manner:<br />&copy; State of Queensland (Department of Resources) 2021.</div></div><h2 class="headTitle">Temporal and Spatial extents:</h2><div>
+                
+                    
+                        <em>Bounding box: </em><div><em>West bounding longitude: </em>138<br/><em>East bounding longitude: </em>155<br/><em>South bounding latitude: </em>-29.5<br/><em>North bounding latitude: </em>-9<br/></div>
+                    
+                    
+                    
+                    <em>Temporal extent: </em><div>
+                            <em> Start: </em> 1983-06-01<em> End: </em>now 2021<br/>
+                        </div>
+                
+            </div><h2 class="headTitle">Data Quality</h2><div>
+            
+                <em>Data quality scope:</em><div>
+                    
+                        <em>Level: </em>dataset<br/>
+                    
+                    
+                </div>
+            
+            
+                <em>Completeness (omission):</em><div>
+                    
+                        <br/>                                New data entered into the Digital Cadastral Database (DCDB) is validated as part of the update process. New plan details are recorded in the database to a client service standard which states that 90% of all new registered plans be entered into the DCDB within 7 working days of the plan being registered in the titling system. The database is also updated for administrative advices and government gazettal actions.<br/><br/>The easement layer in the digital cadastre does not represent the full set of current easements. When the digital cadastre was created, easements that were shown on current survey plans were included. As new plans are registered, easements that are shown on those plans are included when they appear on the title. However, other easements that have not been surveyed do not appear. Furthermore, the department does not have a process by which the issue, surrenders or partial surrenders of easements are notified to administrators of the digital cadastre.<br/><br/>A similar situation exits with covenants, profit a prendres and carbon abatement interest in that the DCDB may not represent a complete dataset due to processes in the titling system and the complexities in the way the interests are recorded.   <br/><br/>Information about missing easements, encumbrances and interests can be sent to support@spatial-qld-support.atlassian.net<br/>The land title is the point of truth for easements and other restrictions.<br/>                            
+                    
+                </div>
+            
+            
+                <em>Consistency (conceptual):</em><div>
+                    
+                        <br/>                                This version of the DCDB can be considered as a seamless map of the State and consists of base cadastral parcels. The base parcels are contiguous with surrounding base parcels. The graphic package and the routines that extract and reload update data to the database has a tolerance of 2mm on the ground. This tolerance may become significant in some proprietary systems and therefore an allowance will be necessary.<br/>                            
+                    
+                </div>
+            
+            
+                <em>Positional accuracy (external, absolute):</em><div>
+                    
+                        <br/>                                Positional accuracy values have been allocated to all parcels in the DCDB. This value reflects 'maximum error' status of the polygons and has been derived from the capture process or assigned as the DCDB data has been upgraded. For this extraction, the 'maximum error' of parcels, expressed as a value, ranges from and a data sourced statement. It has been established that the positional accuracy of the DCDB should include a finite value representing the 'maximum error' based on the source map type, the scale and a digitising value component. Positional accuracy values are expressed in metres at a 95% confidence level.<br/>                            
+                    
+                </div>
+            
+            
+                <em>Attribute accuracy (non quantitative):</em><div>
+                    
+                        <br/>                                The attributes in the DCDB are acquired from a number of sources within the Department. Each polygon in the DCDB has a unique identifier called a segment-parcel number. The following attributes are attached to each polygon in the DCDB based on the polygon centroid which is the segment-parcel number:<br/><br/>Accuracy value,			County name,			Coverage type,<br/>Feature name,			Feature name alias,		Local Government code,<br/>Local Government code,		Locality code,		 	Locality name,<br/>Lot area value,			Lot area excluded value,		Lot area calculated value,<br/>Lot area volume,			Lot number,			Lot/Plan number,<br/>Parcel indicator code,		Parcel number,			Parcel type,<br/>Parish code,			Parish name,			Plan number,<br/>Segment number,			Segment/parcel number,		Survey indicator,<br/>Tenure code					<br/><br/>The lot on plan attribute can have a one to many relationship with the polygons. There are also system generated values for object id code is a unique number for each polygon which is created on each download extraction and length/area values are calculated from the geometry of the polygon based on the coordinate reference of the data being downloaded.<br/><br/>The original validation process consisted of the visual inspection and or comparison of hard copy output compared to the departmental cadastral working maps and update plans. New update plans are committed to the database through a supervisor signoff process. There are several system validation procedures in the maintenance process and these are run at a required frequency. The estimated accuracy of the attribute information is 98%.<br/>                            
+                    
+                </div>
+            
+            
+            
+            
+            
+            
+                <h2 class="headTitle">History:</h2><div>
+                    <em>Lineage statement:</em><div>The DCDB was created by digitising existing cadastral maps at a variety of scales and accuracies. These mapping scales ranged from Standard 1:2500 to 1:250000, Provisional 1:2500 to 1:253400 and mapping such as Parish and Town maps. At the initial capture, existing control identified from the Survey Control Database, topographic maps, photogrammetric and orthophoto compilations were used as part of the digitising process. A positional accuracy value has been allocated to all parcels in the DCDB. The value reflects the maximum error status of the parcel and has been derived from the capture process or assigned as the DCDB has been upgraded. The maximum error at the time of capture ranged from +/- 1.5m to +/- 637m. The maximum error status is based on an assumed plotting accuracy for the source mapping. Positional errors can exceed this value, due to a range of factors including the accuracy of the information that was used to prepare the source mapping.<br/>At the time of the graphical capture, a segment/parcel number was allocated to uniquely describe each parcel of land. Attribute information collected from plans and maps was then linked to the segment/parcel number to form the relationship between the graphics and the attributes. A double entry process of keying in the attributes was done to eliminate any keying in errors. <br/>The DCDB is continuously updated by inputting boundary measurements from registered plans and from attribute updates from government gazettes and other administrative notifications. The department has a client service standard that 90% of all new registered plans be entered into the DCDB within 7 working days of the plan being registered in the titling system.</div>
+                    
+                        <em>Process step:</em><div>The DCDB data is extracted from ESRI SDE Geodatabase and exported to ESRI File Geodatabase.</div>
+                    
+                    
+                </div>
+            
+        </div><h2 class="headTitle">Distribution</h2><div>
+        
+            
+                <em>Format(s):</em><div>
+                    <em>Name/identifier: </em>Queensland Spatial Catalogue<br/>
+                    
+                    <em>Specification: </em>Download Service<br/>
+                    
+                        
+                                
+                            
+                                
+                                    
+                                        <em>Online resource:</em><div><em>Website: </em><a href="http://qldspatial.information.qld.gov.au/catalogue"><small>http://qldspatial.information.qld.gov.au/catalogue</small></a><br/></div>
+                                    
+                                
+                            
+                                <em>Ordering information:</em><div><em>Fees: </em>Nil<br/><em>Instructions: </em>Open the Queensland Spatial Catalogue (QSpatial). Select the large SEARCH button and all available records are displayed. Select one of the four filter options provided and then the further options within the filter. The resultant search is then displayed. Select your record and complete the order.<br/></div>
+                            
+                    
+                </div><br/>
+            
+            
+            
+            
+                <em>Format(s):</em><div>
+                    <em>Name/identifier: </em>downloadableData<br/>
+                    <em>Version: </em>10.0<br/>
+                    <em>Specification: </em>ESRI ArcGIS Server Geoportal Extension Content Type<br/>
+                </div><br/>
+            
+            
+                <em>Distributor:</em><div>
+                        
+                    
+                        <em>Format(s):</em><div>
+                            <em>Name/identifier: </em>From the Queensland Spatial Catalogue available as ESRI Shape file SHP, MapInfo Tab file TAB, ESRI file geodatabase FGDB, Google file KMZ, and Geopackage version 1.0, 1.1, or 1.2 file GPKG<br/>
+                            
+                        </div><br/>
+                    
+                        
+                            <em>Transfer size (megabytes): </em>345<br/>
+                            
+                                <em>Online resource:</em><div><em>Website: </em><a href="http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=%22Cadastral data - Queensland - by area of interest%22"><small>http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=%22Cadastral data - Queensland - by area of interest%22</small></a><br/></div>
+                            
+                            
+                        
+                    </div>
+            
+            <em>Transfer options:</em><div>
+                
+                    
+                        <em>Online resource:</em><div><em>Website: </em>
+                                <em>Function: </em>download<br/>
+                            </div>
+                    
+                
+            </div>
+        
+    <br><em>Web Service Finder:</em></br><div><em>Website: </em><a href="http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=keywords:&quot;Cadastral data - Queensland - by area of interest&quot;&amp;contentTypes=liveData">QSpatial Web Service</a></div><div><em>Instructions: </em>Use the URL to search QSpatial for web services displaying or using this dataset.
+                </div></div><h2 class="headTitle">Metadata Reference Information</h2><div>
+        <em>Hierarchy level (scope of the metadata): </em>dataset<br/>
+    <em>Identifier: </em>{2CED9850-1B25-4438-BEAE-B13CE8CA59E0}<br/><em>Parent identifier: </em>{B7BCD0C6-56A9-42FE-A35D-36FB775A819A}<br/><em>Metadata date stamp: </em>
+        2022-09-05
+    <br/><em>Language: </em>eng<br/>
+        <em>Character set: </em>utf8<br/>
+    <em>Metadata standard name: </em>ISO 19115:2005, ANZLIC ISO 1.1<br/><em>Metadata version name: </em>QGIS<br/></div></body></html></span><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="-7868440043151773090:-1374524302169168713" autocomplete="off" />
+</form>
+  <!--iframe class="section" src="/catalogue/rest/document?f=html&id=%7B2CED9850-1B25-4438-BEAE-B13CE8CA59E0%7D" width="100%" scrolling="no" frameborder="0"></iframe-->
+  <!--span class="note">/catalogue/rest/document?f=html&id=%7B2CED9850-1B25-4438-BEAE-B13CE8CA59E0%7D</span-->
+</span></td>
+</tr>
+</tbody>
+</table>
+
+		</div>
+	</div>
+</body>
+	</html>
+
+
+

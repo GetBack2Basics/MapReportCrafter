@@ -1,0 +1,381 @@
+
+
+
+
+  
+
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+	
+	
+	<html lang="en">
+<head>
+</head>
+<body>
+	<div id="gptMainWrap">
+		<div id="gptBody">
+			
+			<table id="cmPlPgdPageBody" class="pageBody" cellpadding="0" cellspacing="0" summary="This table is for design purposes only.">
+<tbody>
+<tr>
+<td><span id="cmPlPgpPageBody">
+					
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  var gptMapConfig = new GptMapConfig();
+  gptMapConfig.mapServiceURL = "https://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
+  gptMapConfig.mapServiceType = "dynamic";
+  gptMapConfig.geometryServiceURL = "https://gisservices.information.qld.gov.au/arcgis/rest/services/Geometry/GeometryServer";
+  gptMapConfig.locatorURL = "https://gisservices.information.qld.gov.au/arcgis/rest/services/Location/QldAddressComposite/GeocodeServer";
+  gptMapConfig.locatorSingleFieldParameter = "SingleLine";
+  gptMapConfig.locatorGraphicURL = "/catalogue/catalog/images/pushpin_red.gif";
+  gptMapConfig.mapVisibleLayers = "[]";
+</script>
+
+
+<form id="mdDetails" name="mdDetails" method="post" action="/catalogue/custom/viewMetadataDetails.page;jsessionid=73FFA3205E1300EFD2B39F248E620ADD" class="mdDetails" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="mdDetails" value="mdDetails" />
+
+
+<script type="text/javascript">
+
+function MddMap() {
+  var _gptMap = null;
+  var _gptInpEnv = null;
+  
+  this.initialize = function initialize() {
+    var config = gptMapConfig;
+    config.mapElementId = "interactiveMap";
+    config.mapToolbarId = "mdDetails:mapToolbar";
+        
+    var elForm = mddFindForm();
+    if ((elForm != null) && (typeof(mdeEnvelopeIds) != 'undefined') && (mdeEnvelopeIds != null)) {
+      var sPfx = elForm.id+":";
+      config.inputEnvelopeXMinId = sPfx+mdeEnvelopeIds[0];
+      config.inputEnvelopeYMinId = sPfx+mdeEnvelopeIds[1];
+      config.inputEnvelopeXMaxId = sPfx+mdeEnvelopeIds[2];
+      config.inputEnvelopeYMaxId = sPfx+mdeEnvelopeIds[3];
+      var el = document.getElementById(config.inputEnvelopeXMinId);
+      if (el != null) el.value = el.innerHTML;
+      el = document.getElementById(config.inputEnvelopeYMinId);
+      if (el != null) el.value = el.innerHTML;
+      el = document.getElementById(config.inputEnvelopeXMaxId);
+      if (el != null) el.value = el.innerHTML;
+      el = document.getElementById(config.inputEnvelopeYMaxId);
+      if (el != null) el.value = el.innerHTML;
+    }
+      
+    _gptMap = new GptMap();
+    dojo.connect(_gptMap,"onMapLoaded",this,"onMapLoaded");
+
+    _gptInpEnv = new GptInputEnvelope();
+    _gptInpEnv.initialize(config,_gptMap);
+
+    _gptMap.initialize(config);
+  }
+
+  this.onMapLoaded = function() {
+      if (_gptInpEnv != null) {
+        _gptInpEnv.highlightInputEnvelope();
+        setTimeout(dojo.hitch(_gptInpEnv,"zoomToInputEnvelope"),1000);
+        _gptMap.getAgsMap().disableMapNavigation();
+        _gptMap.getAgsMap().disablePan();
+        _gptMap.getAgsMap().disableClickRecenter();
+        _gptMap.getAgsMap().disableDoubleClickZoom();
+        _gptMap.getAgsMap().disableRubberBandZoom();
+        _gptMap.getAgsMap().disableScrollWheelZoom();
+        _gptMap.getAgsMap().disableShiftDoubleClickZoom();
+        _gptMap.getAgsMap().hidePanArrows();
+        _gptMap.getAgsMap().hideZoomSlider();
+      }
+  }
+  
+  this.reposition = function reposition() {
+    if (_gptMap != null) _gptMap.reposition();
+  }
+};
+
+
+function mddFindForm(sBaseName) {
+  var elForm = null;
+  var aForms = document.getElementsByTagName("form");
+  if (aForms != null) {
+    if (sBaseName == null) sBaseName = "mdDetails";
+    for (var i=0;i<aForms.length;i++) {
+      var el = aForms[i];
+      if (el && el.id && (el.id.indexOf(sBaseName) != -1)) {
+        elForm = el;
+        break;
+      }
+    }
+  }
+  return elForm;
+};
+
+
+var mddMap = new MddMap();;
+if (typeof(dojo) != 'undefined') {
+  dojo.addOnLoad(mddMapInit);
+}
+
+function mddMapInit() {
+  var toolbar = dojo.byId("mdDetails:mapToolbar");
+  if (toolbar!=null) toolbar.style.display="none";
+  var elMap = document.getElementById("interactiveMap");
+  if (elMap != null) mddMap.initialize();
+  dojo.connect(window,"onresize",mddMap,"reposition");
+};
+
+
+function mddOnSectionClicked(sSectionId) {
+  var elForm = mddFindForm();
+  if (elForm != null) {
+    var bDisplay = true;
+    var sFolder = "/catalogue/catalog/images/";
+    var sSrc = sFolder+"section_open.gif";
+    var elImg = document.getElementById(elForm.id+":"+sSectionId+"-img");
+    if (elImg != null) {
+      if (elImg.src.indexOf("section_open.gif") != -1) {
+        sSrc = sFolder+"section_closed.gif";
+        bDisplay = false;
+      }
+      elImg.src = sSrc;
+      var elChk = document.getElementById(elForm.id+":"+sSectionId+"-chk");
+      if (elChk != null) elChk.checked = bDisplay;
+    }
+    var el = document.getElementById(elForm.id+":"+sSectionId+"-body");
+
+	if (el != null) {
+	  if (bDisplay) el.style.display = "block"; else el.style.display = "none";
+	  mddMap.reposition();
+	}      
+  }
+}
+
+</script>
+
+
+<span id="mdDetails:xsltBasedDetails"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>Queensland Parks and Wildlife Service access</title><meta content="text/html; charset=UTF-8" http-equiv="Content-type"/><style type="text/css">
+                            h1{
+                                font-family:Arial, Verdana, Helvetica, sans-serif;
+                                font-weight:bold;
+                                color:#333333;
+                                font-size:140%;
+                                border-bottom:2px solid #CCCCCC;
+                            }
+                            h2{
+                                font-family:Arial, Verdana, Helvetica, sans-serif;
+                                font-weight:bold;
+                                color:#333333;
+                                font-size:120%;
+                            }
+                            h3{
+                                font-family:Arial, Verdana, Helvetica, sans-serif;
+                                font-weight:bold;
+                                color:#333333;
+                                font-size:110%;
+                            }
+                            
+                            body{
+                                font-family:Verdana, Arial, Helvetica, sans-serif;
+                                font-size:10pt;
+                                line-height:16pt;
+                                color:#333333;
+                                padding-right:10%;
+                            }
+                            
+                            em{
+                                font-family:Arial;
+                                font-style:normal;
+                                font-weight:bold;
+                            }
+                            em.rawContent{
+                                font-style:normal;
+                                font-weight:bold;
+                                font-style:italic;
+                            }
+                            
+                            div{
+                                padding-left:40px;
+                                margin-top:0;
+                                margin-bottom:0;
+                            }</style></head><body><h1>Queensland Parks and Wildlife Service access</h1><h2 class="headTitle">Identification</h2><div>
+                <em>Title: </em>Queensland Parks and Wildlife Service access<br/><em>Alternative title: </em>QPWS access<br/><em>Date: </em>
+                                2019-06-06
+                             (publication) <br/>
+            <em>Related resource:</em><div><em>Identifier: </em>QPWS_SIS.QLD_QPWS_TRANSPORT\QPWS_SIS.QLD_QPWS_ACCESS<br/><em>Relationship to related resource: </em>source<br/></div></div><h2 class="headTitle">Description</h2><div><em>Abstract / Description: </em><div>Queensland Parks and Wildlife Service (QPWS) Estate access data including roads, tracks and trails, and associated data. Primary data source is road locations as determined by GPS (Global Positioning System), DGPS (Differential Global Positioning System) traverse. Other data sources include roads identified from air photos or satellite imagery, other government departments, and roads from existing topographic mapping.</div><em>Purpose: </em><div>This data is intended to display access to, and around QPWS estate.</div><em>Additional Information: </em><div>QPWS Access subtypes<br/>Subtypes are records in a table or feature class that have been grouped based on an attribute field. In QPWS Access this field is the 'subcategory' field, which is the primary classification field based on QPWS Strategic Asset Management System (SAMS), listed below<br/>Code Description<br/>18 Access Structures for Roads such as vehicle barriers<br/>19 Drainage and Water Control infrastructure<br/>21 Roads<br/>22 Roadway Additional Assets including causeways or floodway<br/>24 Track Structures including boardwalks, pedestrian bridges etc<br/>25 Tracks and Trails including walking tracks, horse trails and mountain bike<br/><br/>Fields specific to subtypes<br/>Asset Type (assettype) - contains road classification listed in "Queensland Parks and Wildlife Service Road Classification System", itself derived in part from the Austroads classification system (1989). Other classifications in this field define the primary purpose and maintenance characteristics for that type of asset.<br/>Asset Group (assetgroup) - contains heights for vehicle bridges, formation for roads, and classification for walking tracks.<br/>Material/Surface (material) - contains a description of the surface type particularly for roads, but also for walking tracks.<br/>Fireline Classification (fireline) -  contains fields defined in the QPWS Procedural Guide for Fireline Classification, Marking and Identification. In the geodatabase version of QPWS Access, only fireline class 4 and fireline class 4 Unconstructed are available when used on conjunction with tracks as these are the only appropriate options.<br/>The following subheadings describe the QPWS Access subtypes and appropriate related records in subsequent fields. This is followed in the next section by a description of fields which are common to all subtypes.<br/><br/>Access Structures Subtype <br/>Subcategory (subcat) <br/>Code Description<br/>18 Access Structures for Roads such as vehicle barriers<br/><br/>Asset Type (assettype)<br/>Code Description<br/>209 Vehicle Barriers, Bollards<br/>NULL NULL values are tracks or roads that are not managed by QPWS and do not appear in SAMS.<br/> <br/>Asset Group (assetgroup) <br/>Code Description<br/>20901 Bollards<br/>20902 Vehicle Barrier<br/>20903 Wheelstop<br/><br/>Material/Surface (material) <br/>Code Description<br/>7 logs<br/>17 stone<br/>20 wood<br/><br/>Fireline Classification (fireline) <br/>Code Description<br/>1 Fireline Class 1<br/>2 Fireline Class 2<br/>3 Fireline Class 3<br/>4 Fireline Class 4<br/>5 Fireline Class 3 Unconstructed<br/>6 Fireline Class 4 Unconstructed<br/>7 Not used for fire<br/><br/><br/>Drainage and Water Control infrastructure Subtype<br/>Subcategory (subcat)  <br/>Code Description<br/>19 Drainage and Water Control infrastructure<br/><br/>Asset Type (assettype)<br/>Code Description<br/>169 Drainage & Water control infrastructure<br/>NULL  NULL values are tracks or roads that are not managed by QPWS and do not appear in SAMS.<br/><br/>Material/Surface (material) <br/>Code Description<br/>1 sealed<br/>2 unsealed<br/>3 natural<br/><br/>Fireline Classification (fireline) <br/>Code Description<br/>1 Fireline Class 1<br/>2 Fireline Class 2<br/>3 Fireline Class 3<br/>4 Fireline Class 4<br/>5 Fireline Class 3 Unconstructed<br/>6 Fireline Class 4 Unconstructed<br/>7 Not used for fire<br/><br/><br/>Roads Subtype<br/>Subcategory (subcat)  <br/>Code Description<br/>21 Roads<br/><br/>Asset Type (assettype) <br/>Code Description<br/>50 4C Local access roads for neighbouring landholders.<br/>56 5C Minor level of access, formed or unformed, unsealed or natural surface.<br/>60 5A Primary access to QPWS Estate, generally formed, sealed or unsealed.<br/>65 3A Rural Arterial roads with high transport use, which would normally be classified as 5A.<br/>69 5B Secondary Access to QPWS estate, moderate traffic, formed or unformed, unsealed.<br/>NULL  NULL values are tracks or roads that are not managed by QPWS and do not appear in SAMS.<br/><br/>Asset Group (assetgroup) <br/>Code Description<br/>1 formed roads or tracks<br/>2 unformed roads or tracks<br/><br/>Material/Surface (material) <br/>Code Description<br/>1 sealed<br/>2 unsealed<br/>3 natural<br/><br/>Fireline Classification (fireline) <br/>Code Description<br/>1 Fireline Class 1<br/>2 Fireline Class 2<br/>3 Fireline Class 3<br/>4 Fireline Class 4<br/>5 Fireline Class 3 Unconstructed<br/>6 Fireline Class 4 Unconstructed<br/>7 Not used for fire<br/><br/>Roadway Additional Assets Subtype<br/>Subcategory (subcat) <br/>Code Description<br/>22 Roadway Additional Assets including causeways or floodway<br/><br/>Asset Type (assettype) <br/>Code Description<br/>179 Vehicle Bridge<br/>180 Causeway/Floodway<br/>NULL  NULL values are tracks or roads that are not managed by QPWS and do not appear in SAMS.<br/><br/>Asset Group (assetgroup) <br/>Code Description<br/>17901 vehicle bridges above 6m<br/>17902 vehicle bridges below 6m<br/><br/>Material/Surface (material) <br/>Code Description<br/>1 sealed<br/>2 unsealed<br/>3 natural<br/><br/>Fireline Classification (fireline) <br/>Code Description<br/>1 Fireline Class 1<br/>2 Fireline Class 2<br/>3 Fireline Class 3<br/>4 Fireline Class 4<br/>5 Fireline Class 3 Unconstructed<br/>6 Fireline Class 4 Unconstructed<br/>7 Not used for fire<br/><br/>Track Structures Subtype<br/>Subcategory (subcat) <br/>Code Description<br/>24 Track Structures including boardwalks, pedestrian bridges etc<br/><br/>Asset Type (assettype) <br/>Code Description<br/>81 Pedestrian Bridges<br/>89 Stairs/ Steps / Ladders - including hand rails/balustrade<br/>NULL  NULL values are tracks or roads that are not managed by QPWS and do not appear in SAMS.<br/><br/>Asset Group (assetgroup) <br/>Code Description<br/>29 Track Class 1 to AS 2156.1. No bushwalking experience required, flat even surface, no longer than 5km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>30 Track Class 2 to AS 2156.1. No bushwalking experience required, hardened surface, may have gentle hill section/s,no longer than 10km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>31 Track Class 3 to AS 2156.1. Some bushwalking experience recommended, may have hill sections, rough surface and many steps. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>32 Track Class 4 to AS 2156.1. Bushwalking experience recommended, tracks may be long, rough and very steep. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>33 Track Class 5 to AS 2156.1. Very experienced bushwalkers, tracks likely to be very rough, very steep and unmarked, and longer than 20km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>999 unclassified (not known what Asset Group the line feature falls under - interim classification)<br/><br/>Material/Surface (material) <br/>Code Description<br/>1 sealed<br/>2 unsealed<br/>3 natural<br/><br/>Fireline Classification (fireline) <br/>Code Description<br/>4 Fireline Class 4<br/>6 Fireline Class 4 Unconstructed<br/>7 Not used for fire<br/><br/><br/>Tracks and Trails Subtype<br/>Subcategory (subcat) <br/>Code Description<br/>25 Tracks and Trails including walking tracks, horse trails and mountain bike<br/><br/>Asset Type (assettype) <br/>Code Description<br/>79 Boardwalks<br/>83 Walking Track<br/>210 Mountain Bike Tracks. Primary purpose and maintenance is for mountain bike trail (more detailed classification available in 'mtb' field).<br/>211 Horse Trails. Primary purpose and maintenance is for horse trail (more detailed classification available in 'horse' field).<br/>NULL  NULL values are tracks or roads that are not managed by QPWS and do not appear in SAMS.<br/><br/>Asset Group (assetgroup) <br/>Code Description<br/>29 Track Class 1 to AS 2156.1. No bushwalking experience required, flat even surface, no longer than 5km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>30 Track Class 2 to AS 2156.1. No bushwalking experience required, hardened surface, may have gentle hill section/s,no longer than 10km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>31 Track Class 3 to AS 2156.1. Some bushwalking experience recommended, may have hill sections, rough surface and many steps. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>32 Track Class 4 to AS 2156.1. Bushwalking experience recommended, tracks may be long, rough and very steep. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>33 Track Class 5 to AS 2156.1. Very experienced bushwalkers, tracks likely to be very rough, very steep and unmarked, and longer than 20km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>999 unclassified (not known what Asset Group the line feature falls under - interim classification)<br/><br/>Material/Surface (material) <br/>Code Description<br/>1 sealed<br/>2 unsealed<br/>3 natural<br/><br/>Fireline Classification (fireline) <br/>Code Description<br/>4 Fireline Class 4<br/>6 Fireline Class 4 Unconstructed<br/>7 Not used for fire<br/><br/>Fields common to all Subtypes<br/><br/>Name (name)<br/>Primary name used for the access type<br/><br/>Maintained by QPWS? (maintain)<br/>This field details whether QPWS maintains the asset.<br/>Code Description<br/>1 yes<br/>2 no<br/>999 unclassified<br/><br/>Owner<br/>The owner of the asset<br/>Code Description<br/>1 Authority - Lease Holder<br/>2 Commonwealth Government<br/>3 Local Government Authority<br/>4 Other Non-Government<br/>5 Other Qld Government<br/>6 Queensland Parks and Wildlife Service<br/>7 NPRSR other (non QPWS)<br/><br/>Status <br/>details whether the road is classed as open or closed<br/>Code Description<br/>1 Open<br/>2 Closed<br/><br/>Warning<br/>contains warnings about the access data<br/>Code Description<br/>1 steep<br/>2 no through road<br/>3 one way (east to west)<br/>4 one way (west to east)<br/>5 one way (north to south)<br/>6 one way (south to north)<br/>7 one way clockwise<br/>8 one way anti-clockwise<br/>9 one way<br/>10 seasonal road closure<br/>11 tracked vehicle only<br/>  <br/>gisid <br/>Geographic Information System identification code used for integration with SAMS. <br/><br/>Source <br/>This field contains data source information used to derive the accuracy field <br/>Code Description<br/>0 Indicative Only<br/>1 Total Station Survey<br/>2 Differential GPS<br/>3 Handheld GPS or Mobile device<br/>4 10-15cm Aerial Imagery<br/>5 20-50cm or unclassified Aerial Imagery<br/>6 Quickbird Imagery<br/>7 Quickbird (multi-spec) or 2.5m SPOT Satellite Imagery<br/>8 5m SPOT Satellite Imagery<br/>9 10m SPOT Satellite Imagery<br/>10 Web Map Services (WMS) such as Google Globe/Bing<br/>11 Unclassified satellite imagery<br/>12 DCDB<br/>13 1:10000 Forestry Map<br/>14 1:25000 Topographic or Forestry Map<br/>15 1:50000 Topographic or Forestry Map<br/>16 1:100000 topographic map<br/>17 1:250000 topographic map<br/>18 Cadastral Map (note in comments)<br/>19 Other data layers or source (note in comments)<br/><br/>Src_comment (Source Comment)<br/> Comment related to the accuracy of the source data, especially with regard to source types which have varying accuracy, such as Total Station, (D)GPS, Web Map Services, DCDB, Cadastral maps, and other unspecified data layers.<br/>Vetting Status (vetting) <br/>contains information about what stage of checking the data has undergone while being entered or edited. <br/>Code Description<br/>1 field checked<br/>2 staff knowledge<br/>3 not verified<br/><br/>Retain in QPWS data? (retain)<br/>This field contains yes/no field about whether this data should be retained in QPWS Access for distribution, and is deleted before release of the production version.<br/>Code Description<br/>1 yes<br/>2 no<br/>999 unclassified<br/><br/>comments <br/>supplementary information field. <br/><br/>Wheelchair Accessible? (wheelchair)<br/>Is the asset accessible by wheelchair?<br/>Code Description<br/>1 yes<br/>2 no<br/>999 unclassified<br/><br/>Access Restriction (access)<br/>This field contains access restrictions for roads on and surrounding QPWS estate.<br/>1 management only<br/>2 permit<br/>3 private<br/>4 public<br/>999 unknown (not known what vehicle access the line feature falls under - interim classification)<br/>  <br/>Used for Great!Walk? (gw)<br/>This field contains names of all the Queensland Great!Walks, as a secondary field to the maintenance fields such as Asset Type. This allows Great!Walk data to be easily retrieved. <br/>Code Description<br/>1 Carnarvon<br/>2 Conondale Range<br/>3 Cooloola<br/>4 Fraser Island<br/>5 Gold Coast Hinterland<br/>6 Mackay Highlands<br/>7 Sunshine Coast Hinterland<br/>8 Wet Tropics<br/>9 Whitsunday<br/>10 Whitsunday Ngaro Sea Trail<br/>999 unclassified (not known what Great!Walk classification the line feature falls under - interim classification)<br/>  <br/>Used for Walking Track? (ped)<br/>This field contains walking track classification, as a secondary field to the maintenance fields such as Asset Type based on the QPWS Sign Manual Appendix 4.7 (October 2012). This allows walking track data to be easily retrieved, regardless of whether the primary classification is, for instance, as a vehicular road. <br/>Code Description<br/>29 Track Class 1 to AS 2156.1. No bushwalking experience required, flat even surface, no longer than 5km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>30 Track Class 2 to AS 2156.1. No bushwalking experience required, hardened surface, may have gentle hill section/s,no longer than 10km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>31 Track Class 3 to AS 2156.1. Some bushwalking experience recommended, may have hill sections, rough surface and many steps. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>32 Track Class 4 to AS 2156.1. Bushwalking experience recommended, tracks may be long, rough and very steep. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>33 Track Class 5 to AS 2156.1. Very experienced bushwalkers, tracks likely to be very rough, very steep and unmarked, and longer than 20km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).<br/>999 unclassified (not known what pedestrian access type the line feature falls under - interim classification)<br/><br/>Used for Horse Trail? (horse)<br/>This field contains horse trail classification based on the QPWS Sign Manual Appendix 4.7 (October 2012), as a secondary field to the maintenance fields such as Asset Type. This allows horse trails to be easily retrieved, regardless of whether the primary classification is, for instance, as a vehicular road.<br/>Code Description<br/>1 Horse Trail Class 1 (easy)<br/>2 Horse Trail Class 2 (intermediate)<br/>3 Horse Trail Class 3 (advanced)<br/>999 unclassified<br/>  <br/>Used for Trail Bikes? (tb)<br/>This field contains trail bike information, as a secondary field to the maintenance fields such as Asset Type. This allows trail bike trails to be easily retrieved, regardless of whether the primary classification is, for instance, as a vehicular road.<br/>Code Description<br/>1 yes<br/>2 no<br/>999 unclassified<br/><br/>Used for Mountain Bikes? (mtb)<br/>This field contains mountain bike trail information based on the QPWS Sign Manual Appendix 4.7 (October 2012), as a secondary field to the maintenance fields such as Asset Type. This allows mountain bike trails to be easily retrieved, regardless of whether the primary classification is, for instance, as a vehicular road. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).' <br/>Code Description<br/>1 Very Easy. Wide trail, gentle gradient, no obstacles. For beginner cyclists with basic bike skills.<br/>2 Easy. Wide trail, gentle gradient, some obstacles. For beginner mountain bikers with basic mountain-bike skills.<br/>3 Intermediate. Moderate gradient, obstacles and some steep sections. For skilled mountain bikers.<br/>4 Difficult. For experience mountain bikers. Challenging trail. Large unavoidable obstacles and features. Long steep climbs or descents and loose surfaces.<br/>5 Extreme. Highly experienced mountain bikers. All sections extremely challenging. Large unavoidable obstacles and severe features.<br/>999 unclassified (not known what mountain bike classification the line feature falls under - interim classification)<br/><br/>Traffic<br/>This field is only available in the production version of the geodatabase, and is derived from a combination of Asset Type, Asset Group, and surface fields to create a road 'trafficability' field used for symbolising data on maps. This field is indicative only and care and judgment should be exercised when using this data for navigation purposes. <br/>2wd all weather - roads comprising <br/>3A Rural Arterial formed sealed roads <br/>3A Rural Arterial formed unsealed roads <br/>4C Local access formed sealed roads <br/>5A Primary access formed sealed roads <br/>5B Secondary Access formed sealed roads <br/>Null Asset Type formed sealed roads <br/>  <br/>2wd dry weather - roads comprising <br/>4C Local access formed unsealed roads <br/>4C Local access formed natural roads <br/>5A Primary access formed unsealed roads <br/>5B Secondary Access formed unsealed roads <br/>  <br/>4wd all weather - roads comprising <br/>4C Local access unformed unsealed roads <br/>5A Primary access formed natural roads <br/>5A Primary access unformed unsealed roads <br/>5A Primary access unformed natural roads <br/>5B Secondary Access formed natural roads <br/>5B Secondary Access unformed unsealed roads <br/>5C Minor access formed unsealed roads <br/>Null Asset Type formed unsealed roads <br/>  <br/>4wd dry weather - roads comprising <br/>4C Local access unformed natural roads <br/>5B Secondary Access unformed natural roads <br/>5C Minor access formed natural roads <br/>5C Minor access unformed unsealed roads <br/>5C Minor access unformed natural roads <br/>Null Asset Type formed natural roads <br/>Null Asset Type unformed unsealed roads <br/>Null Asset Type unformed natural roads <br/>  <br/>Vehicle Bridge <br/>Causeway/Floodway <br/>Pedestrian Bridges <br/>Stairs/ Steps / Ladders - including hand rails/balustrade <br/>Boardwalks <br/>Walking Track <br/>Mountain Bike Tracks <br/>Horse Trails <br/>Closed road <br/>Closed track <br/>Road not assessed <br/>Track not assessed <br/>Vehicle Barriers/Bollards <br/> <br/>Class<br/>This field is only available in the production version of the geodatabase, and is derived from a combination of Asset Type, Asset Group, and surface fields to create a road class field used for symbolising data on maps.<br/>Code Description<br/>  formed, sealed - formed sealed roads with material such as bitumen, concrete etc<br/>  formed unsealed - formed roads, some surface hardening with material such as gravel<br/>  formed natural - formed roads, natural surface in-situ<br/>  unformed unsealed - unformed roads, some surface hardening with material such as gravel<br/>  unformed natural - unformed roads, natural surface in-situ<br/>  Vehicle Bridge<br/>  Causeway/Floodway<br/>  Pedestrian Bridges<br/>  Stairs/ Steps / Ladders - including hand rails/balustrade<br/>  Boardwalks<br/>  Walking Track<br/>  Mountain Bike Tracks<br/>  Horse Trails<br/>  Closed road<br/>  Closed track<br/>  Road not assessed<br/>  Track not assessed<br/>  Vehicle Barriers/Bollards<br/>  <br/>Positional accuracy (pos_acc)<br/>Accuracy field derived from the data source information as well as verification by data entry person, as detailed in the QPWS Standard Accuracy Framework Document. Units are in metres.<br/>Code Description positional accuracy<br/>0 Indicative only Nil; Unattainable<br/>1 Total Station Survey Sub 1m; stated with survey data.<br/>2 Differential GPS (real time correction) Up to ± 3m; dependant on number of available satellites, canopy cover and terrain.<br/>3 Handheld GPS or Mobile device Up ± 50m; dependant on number of available satellites, canopy cover and terrain.<br/>4 10-15cm Aerial Imagery ± 15cm<br/>5 20-50cm or unclassified Aerial Imagery ± 50cm<br/>6 Quickbird Imagery ± 60cm<br/>7 Quickbird (multi-spec) or 2.5m SPOT Satellite Imagery ± 2.5m<br/>8 5m SPOT Satellite Imagery ± 5m<br/>9 10m SPOT Satellite Imagery ± 10m<br/>10 WMS (Google Globe/Bing) Location and scale dependant; verifier action required - manually determine image resolution.<br/>11 Unclassified satellite imagery ± 30m<br/>12 DCDB Location dependant; verifier action required - refer to the DCDB positional accuracy values.<br/>13 1:10000 Forestry Map ± 8.5m<br/>14 1:25000 Topographic or Forestry Map ± 12.5m<br/>15 1:50000 Topographic or Forestry Map ± 25m<br/>16 1:100000 topographic map ± 50m<br/>17 1:250000 topographic map ± 127m<br/>18 Cadastral Map (note in comments Scale dependant; verifier action required - converter tool available to calculate based on scale.<br/>19 Other data layers or source (note in comments) Data dependant; verifier action required.</div><em>Language: </em>eng<br/><em>Character set: </em>unknown<br/></div><h2 class="headTitle">Topic</h2><div><em>ISO topic category codes: </em>transportation<br/></div><h2 class="headTitle">Spatial Data Information</h2><div>
+                <em>Spatial representation type: </em>vector<br/>
+            
+            <em>Coordinate Reference System EPSG code: </em>EPSG:4938<br/><div><em>Title: </em>EPSG Geodetic Parameter<br/>                                Dataset<br/><em>Date: </em>
+                                        2007-07-16
+                                     (revision) <br/><em>Edition: </em>Version 6.13<br/></div>
+        </div><h2 class="headTitle">Contacts</h2><div><em>Point of contact: </em><br/><div><em>Organisation: </em>Department of Environment and Science<br/>
+                        <em>Address:</em><br/><div>
+                                    <em>Delivery point: </em>PO Box 1442<br/>
+                                    <em>City: </em>Toowoomba<br/>
+                                    <em>State: </em>Queensland<br/>
+                                    <em>Postcode: </em>4350<br/>
+                                    <em>Country: </em>Australia<br/>
+                                    <em>Email: </em> <a href="mailto:Spatial.Services@des.qld.gov.au">Spatial.Services@des.qld.gov.au</a> 
+                                </div>
+                    </div><em>Owner: </em><br/><div><em>Organisation: </em>Department of Environment and Science<br/></div></div><h2 class="headTitle">Status</h2><div>
+                        <em>Maintenance and update frequency: </em>asNeeded<br/>
+                    </div><h2 class="headTitle">Data / Resource Constraints</h2><div><em>Resource Access Level:</em>
+                         --&gt;
+                        
+                    <div>
+                        <em>Security classification (ISO 19115): </em>unclassified<br/>
+                    </div><em>Copyright: </em> (as use constraint)<br/><div>&copy State of Queensland (Department of Environment and Science) 2020</div><em>Licence: </em> (as use constraint)<br/><div>This material is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/au/">Creative Commons - Attribution 3.0 Australia</a> licence.<br /> <a rel="license" href="http://creativecommons.org/licenses/by/3.0/au/"><img alt="Creative Commons License" title="Creative Commons - Attribution 3.0 Australia License" style="border: 0;" src="http://i.creativecommons.org/l/by/3.0/au/88x31.png" /></a><br /> The Department of Environment and Science requests attribution in the following manner: <br/> &copy State of Queensland (Department of Environment and Science) 2020. Updated data available at http://qldspatial.information.qld.gov.au/catalogue//.</div></div><h2 class="headTitle">Temporal and Spatial extents:</h2><div>
+                
+                    
+                        <em>Bounding box: </em><div><em>West bounding longitude: </em>138<br/><em>East bounding longitude: </em>155<br/><em>South bounding latitude: </em>-29.5<br/><em>North bounding latitude: </em>-9<br/></div>
+                    
+                    
+                    
+                    <em>Temporal extent: </em><div>
+                            <em> Start: </em> 2015-06-19<em> End: </em> 2019-06-06<br/>
+                        </div>
+                
+            </div><h2 class="headTitle">Data Quality</h2><div>
+            
+                <em>Data quality scope:</em><div>
+                    
+                        <em>Level: </em>dataset<br/>
+                    
+                    
+                </div>
+            
+            
+                <em>Completeness (omission):</em><div>
+                    
+                        <br/>                                Data is subject to continual and irregular update. While this data is designed to provide road information on QPWS Estate, currency and completeness can not be guaranteed.<br/>                            
+                    
+                </div>
+            
+            
+                <em>Consistency (conceptual):</em><div>
+                    
+                        <br/>                                Attribute information is consistant with information either provided by data collector (GPS), or as described in data included from sources.<br/>                            
+                    
+                </div>
+            
+            
+                <em>Positional accuracy (external, absolute):</em><div>
+                    
+                        <br/>                                Accuracy depends on "source" of individual features. Data collected by Differential GPS (DGPS) has nominal accuracy +/- 5m. Refer to primary data source for indication of feature accuracy fix (original).<br/>                            
+                    
+                </div>
+            
+            
+                <em>Attribute accuracy (non quantitative):</em><div>
+                    
+                        <br/>                                Attributing of GPS sources data is based on the Queensland Parks and Wildlife Service data dictionary, and is current at the time of capture.<br/>                            
+                    
+                </div>
+            
+            
+            
+            
+            
+            
+                <h2 class="headTitle">History:</h2><div>
+                    <em>Lineage statement:</em><div>Data originally included in Department of Resourcesforestry roads, which became QPWS Roads. After a major review, the dataset became QPWS Access in July 2013.</div>
+                    
+                    
+                </div>
+            
+        </div><h2 class="headTitle">Distribution</h2><div>
+        
+            
+                <em>Format(s):</em><div>
+                    <em>Name/identifier: </em>Queensland Spatial Catalogue<br/>
+                    
+                    <em>Specification: </em>Download Service<br/>
+                    
+                        
+                                
+                            
+                                
+                                    
+                                        <em>Online resource:</em><div><em>Website: </em><a href="http://qldspatial.information.qld.gov.au/catalogue/"><small>http://qldspatial.information.qld.gov.au/catalogue/</small></a><br/></div>
+                                    
+                                
+                            
+                                <em>Ordering information:</em><div><em>Instructions: </em>Open the Queensland Spatial Catalogue (QSpatial). Select the large SEARCH button and all available records are displayed. Select one of the four filter options provided and then the further options within the filter. The resultant search is then displayed. Select your record and complete the order.<br/></div>
+                            
+                    
+                </div><br/>
+            
+            
+            
+            
+                <em>Format(s):</em><div>
+                    <em>Name/identifier: </em>downloadableData<br/>
+                    <em>Version: </em>10.0<br/>
+                    <em>Specification: </em>ESRI ArcGIS Server Geoportal Extension Content Type<br/>
+                </div><br/>
+            
+            
+                <em>Distributor:</em><div>
+                        
+                    
+                        <em>Format(s):</em><div>
+                            <em>Name/identifier: </em>From the Queensland Spatial Catalogue available as ESRI Shape file SHP, MapInfo Tab file TAB, ESRI file geodatabase FGDB, Google file KMZ, and Geopackage version 1.0, 1.1, or 1.2 file GPKG<br/>
+                            
+                        </div><br/>
+                    
+                        
+                            <em>Transfer size (megabytes): </em>53<br/>
+                            
+                                <em>Online resource:</em><div><em>Website: </em><a href="http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=%22Queensland Parks and Wildlife Service Access%22"><small>http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=%22Queensland Parks and Wildlife Service Access%22</small></a><br/></div>
+                            
+                            
+                        
+                    </div>
+            
+            <em>Transfer options:</em><div>
+                
+                    
+                        <em>Online resource:</em><div><em>Website: </em>
+                                <em>Function: </em>download<br/>
+                            </div>
+                    
+                
+            </div>
+        
+    <br><em>Web Service Finder:</em></br><div><em>Website: </em><a href="http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=keywords:&quot;Queensland Parks and Wildlife Service access&quot;&amp;contentTypes=liveData">QSpatial Web Service</a></div><div><em>Instructions: </em>Use the URL to search QSpatial for web services displaying or using this dataset.
+                </div></div><h2 class="headTitle">Metadata Reference Information</h2><div>
+        <em>Hierarchy level (scope of the metadata): </em>dataset<br/>
+    <em>Identifier: </em>{A9A1700B-5C6C-4DFC-A013-FD4FB615D189}<br/><em>Parent identifier: </em>x<br/><em>Metadata date stamp: </em>
+        2013-08-01
+    <br/><em>Language: </em>eng<br/>
+        <em>Character set: </em>utf8<br/>
+    <em>Metadata standard name: </em>ISO 19115:2005, ANZLIC ISO 1.1<br/><em>Metadata version name: </em>QGIS<br/></div></body></html></span><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="6363132358674135774:2840479402988138281" autocomplete="off" />
+</form>
+  <!--iframe class="section" src="/catalogue/rest/document?f=html&id=%7BA9A1700B-5C6C-4DFC-A013-FD4FB615D189%7D" width="100%" scrolling="no" frameborder="0"></iframe-->
+  <!--span class="note">/catalogue/rest/document?f=html&id=%7BA9A1700B-5C6C-4DFC-A013-FD4FB615D189%7D</span-->
+</span></td>
+</tr>
+</tbody>
+</table>
+
+		</div>
+	</div>
+</body>
+	</html>
+
+
+

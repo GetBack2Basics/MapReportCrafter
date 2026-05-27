@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pg-tileserv
+  namespace: default
+  labels:
+    app: pg-tileserv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pg-tileserv
+  template:
+    metadata:
+      labels:
+        app: pg-tileserv
+    spec:
+      containers:
+      - name: pg-tileserv
+        image: pramsey/pg_tileserv:latest
+        env:
+        - name: DATABASE_URL
+          value: postgresql://docker:docker@postgis-service:5432/gis
+        ports:
+        - containerPort: 7800
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pg-tileserv-service
+  namespace: default
+spec:
+  type: ClusterIP
+  ports:
+  - port: 7800
+    targetPort: 7800
+  selector:
+    app: pg-tileserv

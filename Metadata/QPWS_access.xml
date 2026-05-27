@@ -1,0 +1,1106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<MD_Metadata xmlns="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd      http://www.opengis.net/gml http://www.isotc211.org/2005/gml/gml.xsd      http://www.w3.org/1999/xlink http://www.isotc211.org/2005/xlink/xlinks.xsd">
+    <fileIdentifier>
+        <gco:CharacterString>{A9A1700B-5C6C-4DFC-A013-FD4FB615D189}</gco:CharacterString>
+    </fileIdentifier>
+    <language>
+        <gco:CharacterString>eng</gco:CharacterString>
+    </language>
+    <characterSet>
+        <MD_CharacterSetCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8"/>
+    </characterSet>
+    <parentIdentifier>
+        <gco:CharacterString>x</gco:CharacterString>
+    </parentIdentifier>
+    <hierarchyLevel>
+        <MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset">dataset</MD_ScopeCode>
+    </hierarchyLevel>
+    
+    <contact>
+        <CI_ResponsibleParty id="metadataContact">
+            <organisationName>
+                <gco:CharacterString>Department of Environment and Science</gco:CharacterString>
+            </organisationName>
+            <positionName>
+                <gco:CharacterString>Senior Conservation Officer</gco:CharacterString>
+            </positionName>
+            <contactInfo>
+                <CI_Contact>
+                    <phone>
+                        <CI_Telephone>
+                            <voice>
+                                <gco:CharacterString>(07) 4699 4337</gco:CharacterString>
+                            </voice>
+                        </CI_Telephone>
+                    </phone>
+                    <address>
+                        <CI_Address>
+                            <deliveryPoint>
+                                <gco:CharacterString>PO Box 1442</gco:CharacterString>
+                            </deliveryPoint>
+                            <city>
+                                <gco:CharacterString>Toowoomba</gco:CharacterString>
+                            </city>
+                            <administrativeArea>
+                                <gco:CharacterString>Queensland</gco:CharacterString>
+                            </administrativeArea>
+                            <postalCode>
+                                <gco:CharacterString>4350</gco:CharacterString>
+                            </postalCode>
+                            <country>
+                                <gco:CharacterString>Australia</gco:CharacterString>
+                            </country>
+                            <electronicMailAddress>
+                                <gco:CharacterString>Spatial.Services@des.qld.gov.au</gco:CharacterString>
+                            </electronicMailAddress>
+                        </CI_Address>
+                    </address>
+                    
+                </CI_Contact>
+            </contactInfo>
+            <role>
+                <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</CI_RoleCode>
+            </role>
+        </CI_ResponsibleParty>
+    </contact>
+    <dateStamp>
+        <gco:Date>2013-08-01</gco:Date>
+    </dateStamp>
+    <metadataStandardName>
+        <gco:CharacterString>ISO 19115:2005, ANZLIC ISO 1.1</gco:CharacterString>
+    </metadataStandardName>
+    <metadataStandardVersion>
+        <gco:CharacterString>QGIS</gco:CharacterString>
+    </metadataStandardVersion>
+    <referenceSystemInfo>
+        <MD_ReferenceSystem id="coordRefSystem">
+            <referenceSystemIdentifier>
+                <RS_Identifier>
+                    <authority>
+                        <CI_Citation>
+                            <title>
+                                <gco:CharacterString>EPSG Geodetic Parameter
+                                Dataset</gco:CharacterString>
+                            </title>
+                            <date>
+                                <CI_Date>
+                                    <date>
+                                        <gco:Date>2007-07-16</gco:Date>
+                                    </date>
+                                    <dateType>
+                                        <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision </CI_DateTypeCode>
+                                    </dateType>
+                                </CI_Date>
+                            </date>
+                            <edition>
+                                <gco:CharacterString>Version 6.13</gco:CharacterString>
+                            </edition>
+                        </CI_Citation>
+                    </authority>
+                    <code>
+                        <gco:CharacterString>EPSG:4938</gco:CharacterString>
+                    </code>
+                </RS_Identifier>
+            </referenceSystemIdentifier>
+        </MD_ReferenceSystem>
+    </referenceSystemInfo>
+    
+    
+    
+    <identificationInfo>
+        <MD_DataIdentification>
+            <citation>
+                <CI_Citation>
+                    <title>
+                        <gco:CharacterString>Queensland Parks and Wildlife Service access</gco:CharacterString>
+                    </title>
+                    <alternateTitle>
+                        <gco:CharacterString>QPWS access</gco:CharacterString>
+                    </alternateTitle>
+                    <date>
+                        <CI_Date>
+                            <date>
+                                <gco:Date>2019-06-06</gco:Date>
+                            </date>
+                            <dateType>
+                                <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+                            </dateType>
+                        </CI_Date>
+                    </date>
+                    
+                    
+                    
+                    <citedResponsibleParty>
+                        <CI_ResponsibleParty id="resourceCustodian">
+                            <organisationName>
+                                <gco:CharacterString>Department of Environment and Science</gco:CharacterString>
+                            </organisationName>
+                            <positionName>
+                                <gco:CharacterString>Deputy Director-General, Queensland Parks and Wildlife Service and Partnerships</gco:CharacterString>
+                            </positionName>
+                            <contactInfo>
+                                <CI_Contact>
+                                                                
+                                </CI_Contact>
+                            </contactInfo>
+                            <role>
+                                <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="custodian">custodian</CI_RoleCode>
+                            </role>
+                        </CI_ResponsibleParty>
+                    </citedResponsibleParty>
+                    <citedResponsibleParty>
+                        <CI_ResponsibleParty id="resourceOwner">
+                            <organisationName>
+                                <gco:CharacterString>Department of Environment and Science</gco:CharacterString>
+                            </organisationName>
+                            <positionName>
+                                <gco:CharacterString>Deputy Director-General, Queensland Parks and Wildlife Service and Partnerships</gco:CharacterString>
+                            </positionName>
+                            <role>
+                                <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="owner">owner</CI_RoleCode>
+                            </role>
+                        </CI_ResponsibleParty>
+                    </citedResponsibleParty>
+                    
+                    
+                    
+                    
+                    
+                </CI_Citation>
+            </citation>
+
+
+            <abstract>
+                <gco:CharacterString>Queensland Parks and Wildlife Service (QPWS) Estate access data including roads, tracks and trails, and associated data. Primary data source is road locations as determined by GPS (Global Positioning System), DGPS (Differential Global Positioning System) traverse. Other data sources include roads identified from air photos or satellite imagery, other government departments, and roads from existing topographic mapping.</gco:CharacterString>
+            </abstract>
+            <purpose>
+                <gco:CharacterString>This data is intended to display access to, and around QPWS estate.</gco:CharacterString>
+            </purpose>
+            
+            <pointOfContact>
+                <CI_ResponsibleParty>
+                    <organisationName>
+                        <gco:CharacterString>Department of Environment and Science</gco:CharacterString>
+                    </organisationName>
+                    <positionName>
+                        <gco:CharacterString>Senior Conservation Officer</gco:CharacterString>
+                    </positionName>
+                    <contactInfo>
+                        <CI_Contact>
+                            <phone>
+                                <CI_Telephone>
+                                    <voice>
+                                        <gco:CharacterString>(07) 4699 4337</gco:CharacterString>
+                                    </voice>
+                                </CI_Telephone>
+                            </phone>
+                            <address>
+                                <CI_Address>
+                                    <deliveryPoint>
+                                        <gco:CharacterString>PO Box 1442</gco:CharacterString>
+                                    </deliveryPoint>
+                                    <city>
+                                        <gco:CharacterString>Toowoomba</gco:CharacterString>
+                                    </city>
+                                    <administrativeArea>
+                                        <gco:CharacterString>Queensland</gco:CharacterString>
+                                    </administrativeArea>
+                                    <postalCode>
+                                        <gco:CharacterString>4350</gco:CharacterString>
+                                    </postalCode>
+                                    <country>
+                                        <gco:CharacterString>Australia</gco:CharacterString>
+                                    </country>
+                                    <electronicMailAddress>
+                                        <gco:CharacterString>Spatial.Services@des.qld.gov.au</gco:CharacterString>
+                                    </electronicMailAddress>
+                                </CI_Address>
+                            </address>
+                                                        
+                        </CI_Contact>
+                    </contactInfo>
+                    <role>
+                        <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
+                    </role>
+                </CI_ResponsibleParty>
+            </pointOfContact>
+            <resourceMaintenance>
+                <MD_MaintenanceInformation>
+                    <maintenanceAndUpdateFrequency>
+                        <MD_MaintenanceFrequencyCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_MaintenanceFrequencyCode" codeListValue="asNeeded"/>
+                    </maintenanceAndUpdateFrequency>
+                    
+                </MD_MaintenanceInformation>
+            </resourceMaintenance>
+            
+            <resourceFormat>
+                <MD_Format>
+                    <name>
+                        <gco:CharacterString>SHP, TAB, FGDB, KMZ, GPKG</gco:CharacterString>
+                    </name>
+                    <version>
+                        <gco:CharacterString>1</gco:CharacterString>
+                    </version>
+                </MD_Format>
+            </resourceFormat>
+            <descriptiveKeywords>
+                <MD_Keywords id="ThemeAnzlicThesaurus">
+                    <keyword>
+                        <gco:CharacterString>TRANSPORTATION</gco:CharacterString>
+                    </keyword>
+                    <type>
+                        <MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</MD_KeywordTypeCode>
+                    </type>
+                    <thesaurusName>
+                        <CI_Citation>
+                            <title>
+                                <gco:CharacterString>ANZLIC Search Words</gco:CharacterString>
+                            </title>
+                            <date>
+                                <CI_Date>
+                                    <date gco:nilReason="unknown"/>
+                                    <dateType>
+                                        <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+                                    </dateType>
+                                </CI_Date>
+                            </date>
+                        </CI_Citation>
+                    </thesaurusName>
+                </MD_Keywords>
+            </descriptiveKeywords>
+            <descriptiveKeywords>
+                <MD_Keywords id="ThemeOpenDataThesaurus">
+                    <keyword>
+                        <gco:CharacterString>Environment</gco:CharacterString>
+                    </keyword>
+                    <type>
+                        <MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</MD_KeywordTypeCode>
+                    </type>
+                    <thesaurusName>
+                        <CI_Citation>
+                            <title>
+                                <gco:CharacterString>Queensland Open Data Categories</gco:CharacterString>
+                            </title>
+                            <date>
+                                <CI_Date>
+                                    <date gco:nilReason="unknown"/>
+                                    <dateType>
+                                        <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+                                    </dateType>
+                                </CI_Date>
+                            </date>
+                        </CI_Citation>
+                    </thesaurusName>
+                </MD_Keywords>
+            </descriptiveKeywords>
+            <descriptiveKeywords>
+                <MD_Keywords id="ThemeOtherThesaurus">
+                    <keyword>
+                        <gco:CharacterString>QPWS Access</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>Road</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>Track</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>Trail</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>Walking Track</gco:CharacterString>
+                    </keyword>
+                    <type>
+                        <MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</MD_KeywordTypeCode>
+                    </type>
+                    <thesaurusName>
+                        <CI_Citation>
+                            <title>
+                                <gco:CharacterString>Common Name</gco:CharacterString>
+                            </title>
+                            <date>
+                                <CI_Date>
+                                    <date gco:nilReason="unknown"/>
+                                    <dateType>
+                                        <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+                                    </dateType>
+                                </CI_Date>
+                            </date>
+                            <otherCitationDetails>
+                                <gco:CharacterString>Theme keywords input by metadata
+                                publisher</gco:CharacterString>
+                            </otherCitationDetails>
+                        </CI_Citation>
+                    </thesaurusName>
+                </MD_Keywords>
+            </descriptiveKeywords>
+            
+            <resourceConstraints>
+                <MD_SecurityConstraints>
+                    
+                    <classification>
+                        <MD_ClassificationCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ClassificationCode" codeListValue="unclassified">unclassified</MD_ClassificationCode>
+                    </classification>
+                    <classificationSystem>
+                        <gco:CharacterString>Resource Access Level</gco:CharacterString>
+                    </classificationSystem>
+                </MD_SecurityConstraints>
+            </resourceConstraints>
+            <resourceConstraints>
+                <MD_LegalConstraints>
+                    <useLimitation>
+                        <gco:CharacterString>&amp;copy State of Queensland (Department of Environment and Science) 2020</gco:CharacterString>
+                    </useLimitation>
+                    <useConstraints>
+                        <MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="copyright">copyright</MD_RestrictionCode>
+                    </useConstraints>
+                </MD_LegalConstraints>
+            </resourceConstraints>
+            <resourceConstraints>
+                <MD_LegalConstraints>
+                    <useLimitation>
+                        <gco:CharacterString>This material is licensed under a &lt;a rel="license" href="http://creativecommons.org/licenses/by/3.0/au/"&gt;Creative Commons - Attribution 3.0 Australia&lt;/a&gt; licence.&lt;br /&gt; &lt;a rel="license" href="http://creativecommons.org/licenses/by/3.0/au/"&gt;&lt;img alt="Creative Commons License" title="Creative Commons - Attribution 3.0 Australia License" style="border: 0;" src="http://i.creativecommons.org/l/by/3.0/au/88x31.png" /&gt;&lt;/a&gt;&lt;br /&gt; The Department of Environment and Science requests attribution in the following manner: &lt;br/&gt; &amp;copy State of Queensland (Department of Environment and Science) 2020. Updated data available at http://qldspatial.information.qld.gov.au/catalogue//.</gco:CharacterString>
+                    </useLimitation>
+                    <useConstraints>
+                        <MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="license">license</MD_RestrictionCode>
+                    </useConstraints>
+                </MD_LegalConstraints>
+            </resourceConstraints>
+            
+            
+            
+            
+            <aggregationInfo>
+                <MD_AggregateInformation>
+                    <aggregateDataSetIdentifier>
+                        <MD_Identifier>
+                            <code>
+                                <gco:CharacterString>QPWS_SIS.QLD_QPWS_TRANSPORT\QPWS_SIS.QLD_QPWS_ACCESS</gco:CharacterString>
+                            </code>
+                        </MD_Identifier>
+                    </aggregateDataSetIdentifier>
+                    <associationType>
+                        <DS_AssociationTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#DS_AssociationTypeCode" codeListValue="source">source</DS_AssociationTypeCode>
+                    </associationType>
+                </MD_AggregateInformation>
+            </aggregationInfo>
+            <spatialRepresentationType>
+                <MD_SpatialRepresentationTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="vector">vector</MD_SpatialRepresentationTypeCode>
+            </spatialRepresentationType>
+            
+            <language>
+                <gco:CharacterString>eng</gco:CharacterString>
+            </language>
+            <characterSet gco:nilReason="unknown"/>
+            <topicCategory>
+                <MD_TopicCategoryCode>transportation</MD_TopicCategoryCode>
+            </topicCategory>
+            <environmentDescription>
+                <gco:CharacterString>Spatial Information Resource</gco:CharacterString>
+            </environmentDescription>
+            <extent>
+                <EX_Extent>
+                    <geographicElement>
+                        <EX_GeographicBoundingBox>
+                            <westBoundLongitude>
+                                <gco:Decimal>138</gco:Decimal>
+                            </westBoundLongitude>
+                            <eastBoundLongitude>
+                                <gco:Decimal>155</gco:Decimal>
+                            </eastBoundLongitude>
+                            <southBoundLatitude>
+                                <gco:Decimal>-29.5</gco:Decimal>
+                            </southBoundLatitude>
+                            <northBoundLatitude>
+                                <gco:Decimal>-9</gco:Decimal>
+                            </northBoundLatitude>
+                        </EX_GeographicBoundingBox>
+                    </geographicElement>
+                    
+                    
+                    <temporalElement>
+                        <EX_TemporalExtent>
+                            <extent>
+                                <gml:TimePeriod frame="#ISO-8601" gml:id="timePeriod1">
+                                    <gml:beginPosition>2015-06-19</gml:beginPosition>
+                                    <gml:endPosition>2019-06-06</gml:endPosition>
+                                </gml:TimePeriod>
+                            </extent>
+                        </EX_TemporalExtent>
+                    </temporalElement>
+                </EX_Extent>
+            </extent>
+            <supplementalInformation>
+                <gco:CharacterString>QPWS Access subtypes&#13;
+Subtypes are records in a table or feature class that have been grouped based on an attribute field. In QPWS Access this field is the 'subcategory' field, which is the primary classification field based on QPWS Strategic Asset Management System (SAMS), listed below&#13;
+Code Description&#13;
+18 Access Structures for Roads such as vehicle barriers&#13;
+19 Drainage and Water Control infrastructure&#13;
+21 Roads&#13;
+22 Roadway Additional Assets including causeways or floodway&#13;
+24 Track Structures including boardwalks, pedestrian bridges etc&#13;
+25 Tracks and Trails including walking tracks, horse trails and mountain bike&#13;
+&#13;
+Fields specific to subtypes&#13;
+Asset Type (assettype) - contains road classification listed in "Queensland Parks and Wildlife Service Road Classification System", itself derived in part from the Austroads classification system (1989). Other classifications in this field define the primary purpose and maintenance characteristics for that type of asset.&#13;
+Asset Group (assetgroup) - contains heights for vehicle bridges, formation for roads, and classification for walking tracks.&#13;
+Material/Surface (material) - contains a description of the surface type particularly for roads, but also for walking tracks.&#13;
+Fireline Classification (fireline) -  contains fields defined in the QPWS Procedural Guide for Fireline Classification, Marking and Identification. In the geodatabase version of QPWS Access, only fireline class 4 and fireline class 4 Unconstructed are available when used on conjunction with tracks as these are the only appropriate options.&#13;
+The following subheadings describe the QPWS Access subtypes and appropriate related records in subsequent fields. This is followed in the next section by a description of fields which are common to all subtypes.&#13;
+&#13;
+Access Structures Subtype &#13;
+Subcategory (subcat) &#13;
+Code Description&#13;
+18 Access Structures for Roads such as vehicle barriers&#13;
+&#13;
+Asset Type (assettype)&#13;
+Code Description&#13;
+209 Vehicle Barriers, Bollards&#13;
+NULL NULL values are tracks or roads that are not managed by QPWS and do not appear in SAMS.&#13;
+ &#13;
+Asset Group (assetgroup) &#13;
+Code Description&#13;
+20901 Bollards&#13;
+20902 Vehicle Barrier&#13;
+20903 Wheelstop&#13;
+&#13;
+Material/Surface (material) &#13;
+Code Description&#13;
+7 logs&#13;
+17 stone&#13;
+20 wood&#13;
+&#13;
+Fireline Classification (fireline) &#13;
+Code Description&#13;
+1 Fireline Class 1&#13;
+2 Fireline Class 2&#13;
+3 Fireline Class 3&#13;
+4 Fireline Class 4&#13;
+5 Fireline Class 3 Unconstructed&#13;
+6 Fireline Class 4 Unconstructed&#13;
+7 Not used for fire&#13;
+&#13;
+&#13;
+Drainage and Water Control infrastructure Subtype&#13;
+Subcategory (subcat)  &#13;
+Code Description&#13;
+19 Drainage and Water Control infrastructure&#13;
+&#13;
+Asset Type (assettype)&#13;
+Code Description&#13;
+169 Drainage &amp; Water control infrastructure&#13;
+NULL  NULL values are tracks or roads that are not managed by QPWS and do not appear in SAMS.&#13;
+&#13;
+Material/Surface (material) &#13;
+Code Description&#13;
+1 sealed&#13;
+2 unsealed&#13;
+3 natural&#13;
+&#13;
+Fireline Classification (fireline) &#13;
+Code Description&#13;
+1 Fireline Class 1&#13;
+2 Fireline Class 2&#13;
+3 Fireline Class 3&#13;
+4 Fireline Class 4&#13;
+5 Fireline Class 3 Unconstructed&#13;
+6 Fireline Class 4 Unconstructed&#13;
+7 Not used for fire&#13;
+&#13;
+&#13;
+Roads Subtype&#13;
+Subcategory (subcat)  &#13;
+Code Description&#13;
+21 Roads&#13;
+&#13;
+Asset Type (assettype) &#13;
+Code Description&#13;
+50 4C Local access roads for neighbouring landholders.&#13;
+56 5C Minor level of access, formed or unformed, unsealed or natural surface.&#13;
+60 5A Primary access to QPWS Estate, generally formed, sealed or unsealed.&#13;
+65 3A Rural Arterial roads with high transport use, which would normally be classified as 5A.&#13;
+69 5B Secondary Access to QPWS estate, moderate traffic, formed or unformed, unsealed.&#13;
+NULL  NULL values are tracks or roads that are not managed by QPWS and do not appear in SAMS.&#13;
+&#13;
+Asset Group (assetgroup) &#13;
+Code Description&#13;
+1 formed roads or tracks&#13;
+2 unformed roads or tracks&#13;
+&#13;
+Material/Surface (material) &#13;
+Code Description&#13;
+1 sealed&#13;
+2 unsealed&#13;
+3 natural&#13;
+&#13;
+Fireline Classification (fireline) &#13;
+Code Description&#13;
+1 Fireline Class 1&#13;
+2 Fireline Class 2&#13;
+3 Fireline Class 3&#13;
+4 Fireline Class 4&#13;
+5 Fireline Class 3 Unconstructed&#13;
+6 Fireline Class 4 Unconstructed&#13;
+7 Not used for fire&#13;
+&#13;
+Roadway Additional Assets Subtype&#13;
+Subcategory (subcat) &#13;
+Code Description&#13;
+22 Roadway Additional Assets including causeways or floodway&#13;
+&#13;
+Asset Type (assettype) &#13;
+Code Description&#13;
+179 Vehicle Bridge&#13;
+180 Causeway/Floodway&#13;
+NULL  NULL values are tracks or roads that are not managed by QPWS and do not appear in SAMS.&#13;
+&#13;
+Asset Group (assetgroup) &#13;
+Code Description&#13;
+17901 vehicle bridges above 6m&#13;
+17902 vehicle bridges below 6m&#13;
+&#13;
+Material/Surface (material) &#13;
+Code Description&#13;
+1 sealed&#13;
+2 unsealed&#13;
+3 natural&#13;
+&#13;
+Fireline Classification (fireline) &#13;
+Code Description&#13;
+1 Fireline Class 1&#13;
+2 Fireline Class 2&#13;
+3 Fireline Class 3&#13;
+4 Fireline Class 4&#13;
+5 Fireline Class 3 Unconstructed&#13;
+6 Fireline Class 4 Unconstructed&#13;
+7 Not used for fire&#13;
+&#13;
+Track Structures Subtype&#13;
+Subcategory (subcat) &#13;
+Code Description&#13;
+24 Track Structures including boardwalks, pedestrian bridges etc&#13;
+&#13;
+Asset Type (assettype) &#13;
+Code Description&#13;
+81 Pedestrian Bridges&#13;
+89 Stairs/ Steps / Ladders - including hand rails/balustrade&#13;
+NULL  NULL values are tracks or roads that are not managed by QPWS and do not appear in SAMS.&#13;
+&#13;
+Asset Group (assetgroup) &#13;
+Code Description&#13;
+29 Track Class 1 to AS 2156.1. No bushwalking experience required, flat even surface, no longer than 5km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+30 Track Class 2 to AS 2156.1. No bushwalking experience required, hardened surface, may have gentle hill section/s,no longer than 10km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+31 Track Class 3 to AS 2156.1. Some bushwalking experience recommended, may have hill sections, rough surface and many steps. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+32 Track Class 4 to AS 2156.1. Bushwalking experience recommended, tracks may be long, rough and very steep. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+33 Track Class 5 to AS 2156.1. Very experienced bushwalkers, tracks likely to be very rough, very steep and unmarked, and longer than 20km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+999 unclassified (not known what Asset Group the line feature falls under - interim classification)&#13;
+&#13;
+Material/Surface (material) &#13;
+Code Description&#13;
+1 sealed&#13;
+2 unsealed&#13;
+3 natural&#13;
+&#13;
+Fireline Classification (fireline) &#13;
+Code Description&#13;
+4 Fireline Class 4&#13;
+6 Fireline Class 4 Unconstructed&#13;
+7 Not used for fire&#13;
+&#13;
+&#13;
+Tracks and Trails Subtype&#13;
+Subcategory (subcat) &#13;
+Code Description&#13;
+25 Tracks and Trails including walking tracks, horse trails and mountain bike&#13;
+&#13;
+Asset Type (assettype) &#13;
+Code Description&#13;
+79 Boardwalks&#13;
+83 Walking Track&#13;
+210 Mountain Bike Tracks. Primary purpose and maintenance is for mountain bike trail (more detailed classification available in 'mtb' field).&#13;
+211 Horse Trails. Primary purpose and maintenance is for horse trail (more detailed classification available in 'horse' field).&#13;
+NULL  NULL values are tracks or roads that are not managed by QPWS and do not appear in SAMS.&#13;
+&#13;
+Asset Group (assetgroup) &#13;
+Code Description&#13;
+29 Track Class 1 to AS 2156.1. No bushwalking experience required, flat even surface, no longer than 5km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+30 Track Class 2 to AS 2156.1. No bushwalking experience required, hardened surface, may have gentle hill section/s,no longer than 10km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+31 Track Class 3 to AS 2156.1. Some bushwalking experience recommended, may have hill sections, rough surface and many steps. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+32 Track Class 4 to AS 2156.1. Bushwalking experience recommended, tracks may be long, rough and very steep. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+33 Track Class 5 to AS 2156.1. Very experienced bushwalkers, tracks likely to be very rough, very steep and unmarked, and longer than 20km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+999 unclassified (not known what Asset Group the line feature falls under - interim classification)&#13;
+&#13;
+Material/Surface (material) &#13;
+Code Description&#13;
+1 sealed&#13;
+2 unsealed&#13;
+3 natural&#13;
+&#13;
+Fireline Classification (fireline) &#13;
+Code Description&#13;
+4 Fireline Class 4&#13;
+6 Fireline Class 4 Unconstructed&#13;
+7 Not used for fire&#13;
+&#13;
+Fields common to all Subtypes&#13;
+&#13;
+Name (name)&#13;
+Primary name used for the access type&#13;
+&#13;
+Maintained by QPWS? (maintain)&#13;
+This field details whether QPWS maintains the asset.&#13;
+Code Description&#13;
+1 yes&#13;
+2 no&#13;
+999 unclassified&#13;
+&#13;
+Owner&#13;
+The owner of the asset&#13;
+Code Description&#13;
+1 Authority - Lease Holder&#13;
+2 Commonwealth Government&#13;
+3 Local Government Authority&#13;
+4 Other Non-Government&#13;
+5 Other Qld Government&#13;
+6 Queensland Parks and Wildlife Service&#13;
+7 NPRSR other (non QPWS)&#13;
+&#13;
+Status &#13;
+details whether the road is classed as open or closed&#13;
+Code Description&#13;
+1 Open&#13;
+2 Closed&#13;
+&#13;
+Warning&#13;
+contains warnings about the access data&#13;
+Code Description&#13;
+1 steep&#13;
+2 no through road&#13;
+3 one way (east to west)&#13;
+4 one way (west to east)&#13;
+5 one way (north to south)&#13;
+6 one way (south to north)&#13;
+7 one way clockwise&#13;
+8 one way anti-clockwise&#13;
+9 one way&#13;
+10 seasonal road closure&#13;
+11 tracked vehicle only&#13;
+  &#13;
+gisid &#13;
+Geographic Information System identification code used for integration with SAMS. &#13;
+&#13;
+Source &#13;
+This field contains data source information used to derive the accuracy field &#13;
+Code Description&#13;
+0 Indicative Only&#13;
+1 Total Station Survey&#13;
+2 Differential GPS&#13;
+3 Handheld GPS or Mobile device&#13;
+4 10-15cm Aerial Imagery&#13;
+5 20-50cm or unclassified Aerial Imagery&#13;
+6 Quickbird Imagery&#13;
+7 Quickbird (multi-spec) or 2.5m SPOT Satellite Imagery&#13;
+8 5m SPOT Satellite Imagery&#13;
+9 10m SPOT Satellite Imagery&#13;
+10 Web Map Services (WMS) such as Google Globe/Bing&#13;
+11 Unclassified satellite imagery&#13;
+12 DCDB&#13;
+13 1:10000 Forestry Map&#13;
+14 1:25000 Topographic or Forestry Map&#13;
+15 1:50000 Topographic or Forestry Map&#13;
+16 1:100000 topographic map&#13;
+17 1:250000 topographic map&#13;
+18 Cadastral Map (note in comments)&#13;
+19 Other data layers or source (note in comments)&#13;
+&#13;
+Src_comment (Source Comment)&#13;
+ Comment related to the accuracy of the source data, especially with regard to source types which have varying accuracy, such as Total Station, (D)GPS, Web Map Services, DCDB, Cadastral maps, and other unspecified data layers.&#13;
+Vetting Status (vetting) &#13;
+contains information about what stage of checking the data has undergone while being entered or edited. &#13;
+Code Description&#13;
+1 field checked&#13;
+2 staff knowledge&#13;
+3 not verified&#13;
+&#13;
+Retain in QPWS data? (retain)&#13;
+This field contains yes/no field about whether this data should be retained in QPWS Access for distribution, and is deleted before release of the production version.&#13;
+Code Description&#13;
+1 yes&#13;
+2 no&#13;
+999 unclassified&#13;
+&#13;
+comments &#13;
+supplementary information field. &#13;
+&#13;
+Wheelchair Accessible? (wheelchair)&#13;
+Is the asset accessible by wheelchair?&#13;
+Code Description&#13;
+1 yes&#13;
+2 no&#13;
+999 unclassified&#13;
+&#13;
+Access Restriction (access)&#13;
+This field contains access restrictions for roads on and surrounding QPWS estate.&#13;
+1 management only&#13;
+2 permit&#13;
+3 private&#13;
+4 public&#13;
+999 unknown (not known what vehicle access the line feature falls under - interim classification)&#13;
+  &#13;
+Used for Great!Walk? (gw)&#13;
+This field contains names of all the Queensland Great!Walks, as a secondary field to the maintenance fields such as Asset Type. This allows Great!Walk data to be easily retrieved. &#13;
+Code Description&#13;
+1 Carnarvon&#13;
+2 Conondale Range&#13;
+3 Cooloola&#13;
+4 Fraser Island&#13;
+5 Gold Coast Hinterland&#13;
+6 Mackay Highlands&#13;
+7 Sunshine Coast Hinterland&#13;
+8 Wet Tropics&#13;
+9 Whitsunday&#13;
+10 Whitsunday Ngaro Sea Trail&#13;
+999 unclassified (not known what Great!Walk classification the line feature falls under - interim classification)&#13;
+  &#13;
+Used for Walking Track? (ped)&#13;
+This field contains walking track classification, as a secondary field to the maintenance fields such as Asset Type based on the QPWS Sign Manual Appendix 4.7 (October 2012). This allows walking track data to be easily retrieved, regardless of whether the primary classification is, for instance, as a vehicular road. &#13;
+Code Description&#13;
+29 Track Class 1 to AS 2156.1. No bushwalking experience required, flat even surface, no longer than 5km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+30 Track Class 2 to AS 2156.1. No bushwalking experience required, hardened surface, may have gentle hill section/s,no longer than 10km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+31 Track Class 3 to AS 2156.1. Some bushwalking experience recommended, may have hill sections, rough surface and many steps. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+32 Track Class 4 to AS 2156.1. Bushwalking experience recommended, tracks may be long, rough and very steep. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+33 Track Class 5 to AS 2156.1. Very experienced bushwalkers, tracks likely to be very rough, very steep and unmarked, and longer than 20km. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).&#13;
+999 unclassified (not known what pedestrian access type the line feature falls under - interim classification)&#13;
+&#13;
+Used for Horse Trail? (horse)&#13;
+This field contains horse trail classification based on the QPWS Sign Manual Appendix 4.7 (October 2012), as a secondary field to the maintenance fields such as Asset Type. This allows horse trails to be easily retrieved, regardless of whether the primary classification is, for instance, as a vehicular road.&#13;
+Code Description&#13;
+1 Horse Trail Class 1 (easy)&#13;
+2 Horse Trail Class 2 (intermediate)&#13;
+3 Horse Trail Class 3 (advanced)&#13;
+999 unclassified&#13;
+  &#13;
+Used for Trail Bikes? (tb)&#13;
+This field contains trail bike information, as a secondary field to the maintenance fields such as Asset Type. This allows trail bike trails to be easily retrieved, regardless of whether the primary classification is, for instance, as a vehicular road.&#13;
+Code Description&#13;
+1 yes&#13;
+2 no&#13;
+999 unclassified&#13;
+&#13;
+Used for Mountain Bikes? (mtb)&#13;
+This field contains mountain bike trail information based on the QPWS Sign Manual Appendix 4.7 (October 2012), as a secondary field to the maintenance fields such as Asset Type. This allows mountain bike trails to be easily retrieved, regardless of whether the primary classification is, for instance, as a vehicular road. For further information see QPWS Sign Manual Appendix 4.7 (October 2012).' &#13;
+Code Description&#13;
+1 Very Easy. Wide trail, gentle gradient, no obstacles. For beginner cyclists with basic bike skills.&#13;
+2 Easy. Wide trail, gentle gradient, some obstacles. For beginner mountain bikers with basic mountain-bike skills.&#13;
+3 Intermediate. Moderate gradient, obstacles and some steep sections. For skilled mountain bikers.&#13;
+4 Difficult. For experience mountain bikers. Challenging trail. Large unavoidable obstacles and features. Long steep climbs or descents and loose surfaces.&#13;
+5 Extreme. Highly experienced mountain bikers. All sections extremely challenging. Large unavoidable obstacles and severe features.&#13;
+999 unclassified (not known what mountain bike classification the line feature falls under - interim classification)&#13;
+&#13;
+Traffic&#13;
+This field is only available in the production version of the geodatabase, and is derived from a combination of Asset Type, Asset Group, and surface fields to create a road 'trafficability' field used for symbolising data on maps. This field is indicative only and care and judgment should be exercised when using this data for navigation purposes. &#13;
+2wd all weather - roads comprising &#13;
+3A Rural Arterial formed sealed roads &#13;
+3A Rural Arterial formed unsealed roads &#13;
+4C Local access formed sealed roads &#13;
+5A Primary access formed sealed roads &#13;
+5B Secondary Access formed sealed roads &#13;
+Null Asset Type formed sealed roads &#13;
+  &#13;
+2wd dry weather - roads comprising &#13;
+4C Local access formed unsealed roads &#13;
+4C Local access formed natural roads &#13;
+5A Primary access formed unsealed roads &#13;
+5B Secondary Access formed unsealed roads &#13;
+  &#13;
+4wd all weather - roads comprising &#13;
+4C Local access unformed unsealed roads &#13;
+5A Primary access formed natural roads &#13;
+5A Primary access unformed unsealed roads &#13;
+5A Primary access unformed natural roads &#13;
+5B Secondary Access formed natural roads &#13;
+5B Secondary Access unformed unsealed roads &#13;
+5C Minor access formed unsealed roads &#13;
+Null Asset Type formed unsealed roads &#13;
+  &#13;
+4wd dry weather - roads comprising &#13;
+4C Local access unformed natural roads &#13;
+5B Secondary Access unformed natural roads &#13;
+5C Minor access formed natural roads &#13;
+5C Minor access unformed unsealed roads &#13;
+5C Minor access unformed natural roads &#13;
+Null Asset Type formed natural roads &#13;
+Null Asset Type unformed unsealed roads &#13;
+Null Asset Type unformed natural roads &#13;
+  &#13;
+Vehicle Bridge &#13;
+Causeway/Floodway &#13;
+Pedestrian Bridges &#13;
+Stairs/ Steps / Ladders - including hand rails/balustrade &#13;
+Boardwalks &#13;
+Walking Track &#13;
+Mountain Bike Tracks &#13;
+Horse Trails &#13;
+Closed road &#13;
+Closed track &#13;
+Road not assessed &#13;
+Track not assessed &#13;
+Vehicle Barriers/Bollards &#13;
+ &#13;
+Class&#13;
+This field is only available in the production version of the geodatabase, and is derived from a combination of Asset Type, Asset Group, and surface fields to create a road class field used for symbolising data on maps.&#13;
+Code Description&#13;
+  formed, sealed - formed sealed roads with material such as bitumen, concrete etc&#13;
+  formed unsealed - formed roads, some surface hardening with material such as gravel&#13;
+  formed natural - formed roads, natural surface in-situ&#13;
+  unformed unsealed - unformed roads, some surface hardening with material such as gravel&#13;
+  unformed natural - unformed roads, natural surface in-situ&#13;
+  Vehicle Bridge&#13;
+  Causeway/Floodway&#13;
+  Pedestrian Bridges&#13;
+  Stairs/ Steps / Ladders - including hand rails/balustrade&#13;
+  Boardwalks&#13;
+  Walking Track&#13;
+  Mountain Bike Tracks&#13;
+  Horse Trails&#13;
+  Closed road&#13;
+  Closed track&#13;
+  Road not assessed&#13;
+  Track not assessed&#13;
+  Vehicle Barriers/Bollards&#13;
+  &#13;
+Positional accuracy (pos_acc)&#13;
+Accuracy field derived from the data source information as well as verification by data entry person, as detailed in the QPWS Standard Accuracy Framework Document. Units are in metres.&#13;
+Code Description positional accuracy&#13;
+0 Indicative only Nil; Unattainable&#13;
+1 Total Station Survey Sub 1m; stated with survey data.&#13;
+2 Differential GPS (real time correction) Up to ± 3m; dependant on number of available satellites, canopy cover and terrain.&#13;
+3 Handheld GPS or Mobile device Up ± 50m; dependant on number of available satellites, canopy cover and terrain.&#13;
+4 10-15cm Aerial Imagery ± 15cm&#13;
+5 20-50cm or unclassified Aerial Imagery ± 50cm&#13;
+6 Quickbird Imagery ± 60cm&#13;
+7 Quickbird (multi-spec) or 2.5m SPOT Satellite Imagery ± 2.5m&#13;
+8 5m SPOT Satellite Imagery ± 5m&#13;
+9 10m SPOT Satellite Imagery ± 10m&#13;
+10 WMS (Google Globe/Bing) Location and scale dependant; verifier action required - manually determine image resolution.&#13;
+11 Unclassified satellite imagery ± 30m&#13;
+12 DCDB Location dependant; verifier action required - refer to the DCDB positional accuracy values.&#13;
+13 1:10000 Forestry Map ± 8.5m&#13;
+14 1:25000 Topographic or Forestry Map ± 12.5m&#13;
+15 1:50000 Topographic or Forestry Map ± 25m&#13;
+16 1:100000 topographic map ± 50m&#13;
+17 1:250000 topographic map ± 127m&#13;
+18 Cadastral Map (note in comments Scale dependant; verifier action required - converter tool available to calculate based on scale.&#13;
+19 Other data layers or source (note in comments) Data dependant; verifier action required.</gco:CharacterString>
+            </supplementalInformation>
+        </MD_DataIdentification>
+    </identificationInfo>
+    <distributionInfo>
+        <MD_Distribution>
+            <distributionFormat>
+                <MD_Format id="DownloadService">
+                    <name>
+                        <gco:CharacterString>Queensland Spatial Catalogue</gco:CharacterString>
+                    </name>
+                    <version gco:nilReason="inapplicable"/>
+                    <specification>
+                        <gco:CharacterString>Download Service</gco:CharacterString>
+                    </specification>
+                    <formatDistributor>
+                        <MD_Distributor>
+                            <distributorContact>
+                                <CI_ResponsibleParty>
+                                    <organisationName>
+                                        <gco:CharacterString>Department of Environment and Science</gco:CharacterString>
+                                    </organisationName>
+                                    <role>
+                                        <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="resourceProvider">resourceProvider</CI_RoleCode>
+                                    </role>
+                                </CI_ResponsibleParty>
+                            </distributorContact>
+                            <distributionOrderProcess>
+                                <MD_StandardOrderProcess>
+                                    
+                                    <orderingInstructions>
+                                        <gco:CharacterString>Open the Queensland Spatial Catalogue (QSpatial). Select the large SEARCH button and all available records are displayed. Select one of the four filter options provided and then the further options within the filter. The resultant search is then displayed. Select your record and complete the order.</gco:CharacterString>
+                                    </orderingInstructions>
+                                </MD_StandardOrderProcess>
+                            </distributionOrderProcess>
+                            <distributorTransferOptions>
+                                <MD_DigitalTransferOptions>
+                                    <onLine>
+                                        <CI_OnlineResource id="dns1">
+                                            <linkage>
+                                                <URL>http://qldspatial.information.qld.gov.au/catalogue/</URL>
+                                            </linkage>
+                                        </CI_OnlineResource>
+                                    </onLine>
+                                </MD_DigitalTransferOptions>
+                            </distributorTransferOptions>
+                        </MD_Distributor>
+                    </formatDistributor>
+                </MD_Format>
+            </distributionFormat>
+            
+            
+            <distributionFormat>
+                <MD_Format id="GptBehaviour">
+                    <name>
+                        <gco:CharacterString>downloadableData</gco:CharacterString>
+                    </name>
+                    <version>
+                        <gco:CharacterString>10.0</gco:CharacterString>
+                    </version>
+                    <specification>
+                        <gco:CharacterString>ESRI ArcGIS Server Geoportal Extension Content Type</gco:CharacterString>
+                    </specification>
+                </MD_Format>
+            </distributionFormat>
+            <distributor>
+                <MD_Distributor id="distributorContact1">
+                    <distributorContact>
+                        <CI_ResponsibleParty>
+                            <organisationName>
+                                <gco:CharacterString>Department of Environment and Science</gco:CharacterString>
+                            </organisationName>
+                            <positionName>
+                                <gco:CharacterString>opendata@des.qld.gov.au</gco:CharacterString>
+                            </positionName>
+                            <role>
+                                <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="distributor">distributor</CI_RoleCode>
+                            </role>
+                        </CI_ResponsibleParty>
+                    </distributorContact>
+                    
+                    <distributorFormat>
+                        <MD_Format>
+                            <name>
+                                <gco:CharacterString>From the Queensland Spatial Catalogue available as ESRI Shape file SHP, MapInfo Tab file TAB, ESRI file geodatabase FGDB, Google file KMZ, and Geopackage version 1.0, 1.1, or 1.2 file GPKG</gco:CharacterString>
+                            </name>
+                            <version gco:nilReason="inapplicable"/>
+                        </MD_Format>
+                    </distributorFormat>
+                    <distributorTransferOptions>
+                        <MD_DigitalTransferOptions>
+                            <transferSize>
+                                <gco:Real>53</gco:Real>
+                            </transferSize>
+                            <onLine>
+                                <CI_OnlineResource>
+                                    <linkage>
+                                        <URL>http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=%22Queensland Parks and Wildlife Service Access%22</URL>
+                                    </linkage>
+                                </CI_OnlineResource>
+                            </onLine>
+                            
+                        </MD_DigitalTransferOptions>
+                    </distributorTransferOptions>
+                </MD_Distributor>
+            </distributor>
+            <transferOptions>
+                <MD_DigitalTransferOptions id="download">
+                    <onLine>
+                        <CI_OnlineResource>
+                            <linkage>
+                                <URL/>
+                            </linkage>
+                            <function>
+                                <CI_OnLineFunctionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download">download</CI_OnLineFunctionCode>
+                            </function>
+                        </CI_OnlineResource>
+                    </onLine>
+                </MD_DigitalTransferOptions>
+            </transferOptions>
+        </MD_Distribution>
+    </distributionInfo>
+    <dataQualityInfo>
+        <DQ_DataQuality>
+            <scope>
+                <DQ_Scope>
+                    <level>
+                        <MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset">dataset</MD_ScopeCode>
+                    </level>
+                    
+                </DQ_Scope>
+            </scope>
+            <report>
+                <DQ_CompletenessOmission>
+                    <result>
+                        <DQ_ConformanceResult>
+                            <specification gco:nilReason="missing"/>
+                            <explanation>
+                                <gco:CharacterString>Data is subject to continual and irregular update. While this data is designed to provide road information on QPWS Estate, currency and completeness can not be guaranteed.</gco:CharacterString>
+                            </explanation>
+                            <pass gco:nilReason="inapplicable"/>
+                        </DQ_ConformanceResult>
+                    </result>
+                </DQ_CompletenessOmission>
+            </report>
+            <report>
+                <DQ_ConceptualConsistency>
+                    <result>
+                        <DQ_ConformanceResult>
+                            <specification gco:nilReason="missing"/>
+                            <explanation>
+                                <gco:CharacterString>Attribute information is consistant with information either provided by data collector (GPS), or as described in data included from sources.</gco:CharacterString>
+                            </explanation>
+                            <pass gco:nilReason="inapplicable"/>
+                        </DQ_ConformanceResult>
+                    </result>
+                </DQ_ConceptualConsistency>
+            </report>
+            <report>
+                <DQ_AbsoluteExternalPositionalAccuracy>
+                    <result>
+                        <DQ_ConformanceResult>
+                            <specification gco:nilReason="missing"/>
+                            <explanation>
+                                <gco:CharacterString>Accuracy depends on "source" of individual features. Data collected by Differential GPS (DGPS) has nominal accuracy +/- 5m. Refer to primary data source for indication of feature accuracy fix (original).</gco:CharacterString>
+                            </explanation>
+                            <pass gco:nilReason="inapplicable"/>
+                        </DQ_ConformanceResult>
+                    </result>
+                </DQ_AbsoluteExternalPositionalAccuracy>
+            </report>
+            <report>
+                <DQ_NonQuantitativeAttributeAccuracy>
+                    <result>
+                        <DQ_ConformanceResult>
+                            <specification gco:nilReason="missing"/>
+                            <explanation>
+                                <gco:CharacterString>Attributing of GPS sources data is based on the Queensland Parks and Wildlife Service data dictionary, and is current at the time of capture.</gco:CharacterString>
+                            </explanation>
+                            <pass gco:nilReason="inapplicable"/>
+                        </DQ_ConformanceResult>
+                    </result>
+                </DQ_NonQuantitativeAttributeAccuracy>
+            </report>
+            
+            
+            
+            
+            <lineage>
+                <LI_Lineage>
+                    <statement>
+                        <gco:CharacterString>Data originally included in Department of Resourcesforestry roads, which became QPWS Roads. After a major review, the dataset became QPWS Access in July 2013.</gco:CharacterString>
+                    </statement>
+                    
+                    
+                </LI_Lineage>
+            </lineage>
+        </DQ_DataQuality>
+    </dataQualityInfo>
+    <metadataConstraints>
+        <MD_SecurityConstraints>
+            <useLimitation>
+                <gco:CharacterString>Public</gco:CharacterString>
+            </useLimitation>
+            <classification>
+                <MD_ClassificationCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ClassificationCode" codeListValue="unclassified"/>
+            </classification>
+            <classificationSystem>
+                <gco:CharacterString>Metadata Access Level</gco:CharacterString>
+            </classificationSystem>
+        </MD_SecurityConstraints>
+    </metadataConstraints>
+</MD_Metadata>

@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<MD_Metadata xmlns="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd      http://www.opengis.net/gml http://www.isotc211.org/2005/gml/gml.xsd      http://www.w3.org/1999/xlink http://www.isotc211.org/2005/xlink/xlinks.xsd">
+    <fileIdentifier>
+        <gco:CharacterString>{2CED9850-1B25-4438-BEAE-B13CE8CA59E0}</gco:CharacterString>
+    </fileIdentifier>
+    <language>
+        <gco:CharacterString>eng</gco:CharacterString>
+    </language>
+    <characterSet>
+        <MD_CharacterSetCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8"/>
+    </characterSet>
+    <parentIdentifier>
+        <gco:CharacterString>{B7BCD0C6-56A9-42FE-A35D-36FB775A819A}</gco:CharacterString>
+    </parentIdentifier>
+    <hierarchyLevel>
+        <MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset">dataset</MD_ScopeCode>
+    </hierarchyLevel>
+    
+    <contact>
+        <CI_ResponsibleParty id="metadataContact">
+            <organisationName>
+                <gco:CharacterString>Department of Resources</gco:CharacterString>
+            </organisationName>
+            <positionName>
+                <gco:CharacterString>Senior Spatial Information Officer</gco:CharacterString>
+            </positionName>
+            <contactInfo>
+                <CI_Contact>
+                    <phone>
+                        <CI_Telephone>
+                            <voice>
+                                <gco:CharacterString>(07) 3330 4786</gco:CharacterString>
+                            </voice>
+                        </CI_Telephone>
+                    </phone>
+                    <address>
+                        <CI_Address>
+                            
+                            <city>
+                                <gco:CharacterString>Brisbane</gco:CharacterString>
+                            </city>
+                            <administrativeArea>
+                                <gco:CharacterString>QLD</gco:CharacterString>
+                            </administrativeArea>
+                            <postalCode>
+                                <gco:CharacterString>4000</gco:CharacterString>
+                            </postalCode>
+                            <country>
+                                <gco:CharacterString>Australia</gco:CharacterString>
+                            </country>
+                            <electronicMailAddress>
+                                <gco:CharacterString>opendata@resources.qld.gov.au</gco:CharacterString>
+                            </electronicMailAddress>
+                        </CI_Address>
+                    </address>
+                    
+                </CI_Contact>
+            </contactInfo>
+            <role>
+                <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</CI_RoleCode>
+            </role>
+        </CI_ResponsibleParty>
+    </contact>
+    <dateStamp>
+        <gco:Date>2021-07-11</gco:Date>
+    </dateStamp>
+    <metadataStandardName>
+        <gco:CharacterString>ISO 19115:2005, ANZLIC ISO 1.1</gco:CharacterString>
+    </metadataStandardName>
+    <metadataStandardVersion>
+        <gco:CharacterString>QGIS</gco:CharacterString>
+    </metadataStandardVersion>
+    <referenceSystemInfo>
+        <MD_ReferenceSystem id="coordRefSystem">
+            <referenceSystemIdentifier>
+                <RS_Identifier>
+                    <authority>
+                        <CI_Citation>
+                            <title>
+                                <gco:CharacterString>EPSG Geodetic Parameter
+                                Dataset</gco:CharacterString>
+                            </title>
+                            <date>
+                                <CI_Date>
+                                    <date>
+                                        <gco:Date>2007-07-16</gco:Date>
+                                    </date>
+                                    <dateType>
+                                        <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision </CI_DateTypeCode>
+                                    </dateType>
+                                </CI_Date>
+                            </date>
+                            <edition>
+                                <gco:CharacterString>Version 6.13</gco:CharacterString>
+                            </edition>
+                        </CI_Citation>
+                    </authority>
+                    <code>
+                        <gco:CharacterString>EPSG:4283</gco:CharacterString>
+                    </code>
+                </RS_Identifier>
+            </referenceSystemIdentifier>
+        </MD_ReferenceSystem>
+    </referenceSystemInfo>
+    
+    
+    
+    <identificationInfo>
+        <MD_DataIdentification>
+            <citation>
+                <CI_Citation>
+                    <title>
+                        <gco:CharacterString>Cadastral data - Queensland - by area of interest</gco:CharacterString>
+                    </title>
+                    <alternateTitle>
+                        <gco:CharacterString>Cadastral data</gco:CharacterString>
+                    </alternateTitle>
+                    <date>
+                        <CI_Date>
+                            <date>
+                                <gco:Date>2021-07-11</gco:Date>
+                            </date>
+                            <dateType>
+                                <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+                            </dateType>
+                        </CI_Date>
+                    </date>
+                    
+                    
+                    
+                    <citedResponsibleParty>
+                        <CI_ResponsibleParty id="resourceCustodian">
+                            <organisationName>
+                                <gco:CharacterString>Department of Resources</gco:CharacterString>
+                            </organisationName>
+                            <positionName>
+                                <gco:CharacterString>Executive Director, Land and Spatial Information</gco:CharacterString>
+                            </positionName>
+                            <contactInfo>
+                                <CI_Contact>
+                                                                
+                                </CI_Contact>
+                            </contactInfo>
+                            <role>
+                                <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="custodian">custodian</CI_RoleCode>
+                            </role>
+                        </CI_ResponsibleParty>
+                    </citedResponsibleParty>
+                    <citedResponsibleParty>
+                        <CI_ResponsibleParty id="resourceOwner">
+                            <organisationName>
+                                <gco:CharacterString>Department of Resources</gco:CharacterString>
+                            </organisationName>
+                            <positionName>
+                                <gco:CharacterString>Manager, Cadastral and Geodetic Services</gco:CharacterString>
+                            </positionName>
+                            <role>
+                                <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="owner">owner</CI_RoleCode>
+                            </role>
+                        </CI_ResponsibleParty>
+                    </citedResponsibleParty>
+                    
+                    
+                    
+                    <presentationForm>
+                        <CI_PresentationFormCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_PresentationFormCode" codeListValue="mapDigital">mapDigital</CI_PresentationFormCode>
+                    </presentationForm>
+                    
+                </CI_Citation>
+            </citation>
+
+
+            <abstract>
+                <gco:CharacterString>This dataset allows you to extract your area of interest using the 'clip, zip and ship' functionality. You can select areas by local government area, city or suburb (locality) or freehand over small areas. The data is updated nightly and can be downloaded by searching the Q Spatial web site for "Cadastral Data Queensland".&#13;
+You cannot download the entire State in one single order. The dataset, "Cadastral data weekly - whole of State Queensland" provides the whole of State in one order but in file geodatabase format only.</gco:CharacterString>
+            </abstract>
+            
+            <status>
+                <MD_ProgressCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ProgressCode" codeListValue="onGoing">onGoing</MD_ProgressCode>
+            </status>
+            <pointOfContact>
+                <CI_ResponsibleParty>
+                    <organisationName>
+                        <gco:CharacterString>Department of Resources</gco:CharacterString>
+                    </organisationName>
+                    <positionName>
+                        <gco:CharacterString>Senior Spatial Information Officer</gco:CharacterString>
+                    </positionName>
+                    <contactInfo>
+                        <CI_Contact>
+                            <phone>
+                                <CI_Telephone>
+                                    <voice>
+                                        <gco:CharacterString>(07) 3330 4786</gco:CharacterString>
+                                    </voice>
+                                </CI_Telephone>
+                            </phone>
+                            <address>
+                                <CI_Address>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    <electronicMailAddress>
+                                        <gco:CharacterString>opendata@resources.qld.gov.au</gco:CharacterString>
+                                    </electronicMailAddress>
+                                </CI_Address>
+                            </address>
+                                                        
+                        </CI_Contact>
+                    </contactInfo>
+                    <role>
+                        <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
+                    </role>
+                </CI_ResponsibleParty>
+            </pointOfContact>
+            <resourceMaintenance>
+                <MD_MaintenanceInformation>
+                    <maintenanceAndUpdateFrequency>
+                        <MD_MaintenanceFrequencyCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_MaintenanceFrequencyCode" codeListValue="daily"/>
+                    </maintenanceAndUpdateFrequency>
+                    
+                </MD_MaintenanceInformation>
+            </resourceMaintenance>
+            
+            <resourceFormat>
+                <MD_Format>
+                    <name>
+                        <gco:CharacterString>SHP, TAB, FGDB, KMZ, GPKG</gco:CharacterString>
+                    </name>
+                    <version>
+                        <gco:CharacterString>1</gco:CharacterString>
+                    </version>
+                </MD_Format>
+            </resourceFormat>
+            <descriptiveKeywords>
+                <MD_Keywords id="ThemeAnzlicThesaurus">
+                    <keyword>
+                        <gco:CharacterString>LAND</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>LAND-Cadastre</gco:CharacterString>
+                    </keyword>
+                    <type>
+                        <MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</MD_KeywordTypeCode>
+                    </type>
+                    <thesaurusName>
+                        <CI_Citation>
+                            <title>
+                                <gco:CharacterString>ANZLIC Search Words</gco:CharacterString>
+                            </title>
+                            <date>
+                                <CI_Date>
+                                    <date gco:nilReason="unknown"/>
+                                    <dateType>
+                                        <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+                                    </dateType>
+                                </CI_Date>
+                            </date>
+                        </CI_Citation>
+                    </thesaurusName>
+                </MD_Keywords>
+            </descriptiveKeywords>
+            
+            <descriptiveKeywords>
+                <MD_Keywords id="ThemeOtherThesaurus">
+                    <keyword>
+                        <gco:CharacterString>cadastre</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>land parcels</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>cadastral</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>digital cadastre database</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>DCDB</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>property boundaries</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>land-cadastre</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>cadastral boundaries</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>cadastral data</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>Cadastral data</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>land cadastre</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>DCDB</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>DCDB</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>DCDB</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>DCDB</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>Easement</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>easements</gco:CharacterString>
+                    </keyword>
+                    <type>
+                        <MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</MD_KeywordTypeCode>
+                    </type>
+                    <thesaurusName>
+                        <CI_Citation>
+                            <title>
+                                <gco:CharacterString>Common policy</gco:CharacterString>
+                            </title>
+                            <date>
+                                <CI_Date>
+                                    <date gco:nilReason="unknown"/>
+                                    <dateType>
+                                        <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+                                    </dateType>
+                                </CI_Date>
+                            </date>
+                            <otherCitationDetails>
+                                <gco:CharacterString>Theme keywords input by metadata
+                                publisher</gco:CharacterString>
+                            </otherCitationDetails>
+                        </CI_Citation>
+                    </thesaurusName>
+                </MD_Keywords>
+            </descriptiveKeywords>
+            
+            <resourceConstraints>
+                <MD_SecurityConstraints>
+                    <useLimitation>
+                        <gco:CharacterString>Users of the information recorded in this document (the Information) accept all responsibility and risk associated with the use of the Information and should seek independent professional advice in relation to dealings with property. Despite the department's best efforts, it makes no representations or warranties in relation to the Information, and, to the extent permitted by law, exclude or limit all warranties relating to correctness, accuracy, reliability, completeness or currency and all liability for any direct, indirect and consequential costs, losses, damages and expenses incurred in any way (including but not limited to that arising from negligence) in connection with any use of or reliance on the Information.</gco:CharacterString>
+                    </useLimitation>
+                    <classification>
+                        <MD_ClassificationCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ClassificationCode" codeListValue="unclassified">unclassified</MD_ClassificationCode>
+                    </classification>
+                    <classificationSystem>
+                        <gco:CharacterString>Resource Access Level</gco:CharacterString>
+                    </classificationSystem>
+                </MD_SecurityConstraints>
+            </resourceConstraints>
+            <resourceConstraints>
+                <MD_LegalConstraints>
+                    <useLimitation>
+                        <gco:CharacterString>&amp;copy State of Queensland (Department of Resources) 2021</gco:CharacterString>
+                    </useLimitation>
+                    <useConstraints>
+                        <MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="copyright">copyright</MD_RestrictionCode>
+                    </useConstraints>
+                </MD_LegalConstraints>
+            </resourceConstraints>
+            <resourceConstraints>
+                <MD_LegalConstraints>
+                    <useLimitation>
+                        <gco:CharacterString>This material is licensed under a &lt;a rel="license" href="http://creativecommons.org/licenses/by/4.0/"&gt;Creative Commons - Attribution 4.0 International&lt;/a&gt; licence.&lt;br /&gt; &lt;a rel="license" href="http://creativecommons.org/licenses/by/4.0/"&gt;&lt;img alt="Creative Commons License" title="Creative Commons - Attribution 4.0 International License" style="border: 0;" src="https://licensebuttons.net/l/by/4.0/88x31.png" /&gt;&lt;/a&gt;&lt;br /&gt; The Department of Resources requests attribution in the following manner:&lt;br /&gt;&amp;copy; State of Queensland (Department of Resources) 2021.</gco:CharacterString>
+                    </useLimitation>
+                    <useConstraints>
+                        <MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="license">license</MD_RestrictionCode>
+                    </useConstraints>
+                </MD_LegalConstraints>
+            </resourceConstraints>
+            
+            
+            
+            
+            <aggregationInfo>
+                <MD_AggregateInformation>
+                    <aggregateDataSetIdentifier>
+                        <MD_Identifier>
+                            <code>
+                                <gco:CharacterString>PROP.QLD_DCDB\PROP.QLD_CADASTRE_DCDB</gco:CharacterString>
+                            </code>
+                        </MD_Identifier>
+                    </aggregateDataSetIdentifier>
+                    <associationType>
+                        <DS_AssociationTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#DS_AssociationTypeCode" codeListValue="source">source</DS_AssociationTypeCode>
+                    </associationType>
+                </MD_AggregateInformation>
+            </aggregationInfo>
+            <spatialRepresentationType>
+                <MD_SpatialRepresentationTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="vector">vector</MD_SpatialRepresentationTypeCode>
+            </spatialRepresentationType>
+            
+            <language>
+                <gco:CharacterString>eng</gco:CharacterString>
+            </language>
+            <characterSet gco:nilReason="unknown"/>
+            <topicCategory>
+                <MD_TopicCategoryCode>boundaries</MD_TopicCategoryCode>
+            </topicCategory>
+<topicCategory>
+                <MD_TopicCategoryCode>planningCadastre</MD_TopicCategoryCode>
+            </topicCategory>
+            <environmentDescription>
+                <gco:CharacterString>Spatial Information Resource</gco:CharacterString>
+            </environmentDescription>
+            <extent>
+                <EX_Extent>
+                    <geographicElement>
+                        <EX_GeographicBoundingBox>
+                            <westBoundLongitude>
+                                <gco:Decimal>138</gco:Decimal>
+                            </westBoundLongitude>
+                            <eastBoundLongitude>
+                                <gco:Decimal>155</gco:Decimal>
+                            </eastBoundLongitude>
+                            <southBoundLatitude>
+                                <gco:Decimal>-29.5</gco:Decimal>
+                            </southBoundLatitude>
+                            <northBoundLatitude>
+                                <gco:Decimal>-9</gco:Decimal>
+                            </northBoundLatitude>
+                        </EX_GeographicBoundingBox>
+                    </geographicElement>
+                    
+                    
+                    <temporalElement>
+                        <EX_TemporalExtent>
+                            <extent>
+                                <gml:TimePeriod frame="#ISO-8601" gml:id="timePeriod1">
+                                    <gml:beginPosition>1983-06-01</gml:beginPosition>
+                                    <gml:endPosition indeterminatePosition="now">2021</gml:endPosition>
+                                </gml:TimePeriod>
+                            </extent>
+                        </EX_TemporalExtent>
+                    </temporalElement>
+                </EX_Extent>
+            </extent>
+            <supplementalInformation>
+                <gco:CharacterString>A structure change in data has occurred due to an underlying vendor bug fix and software upgrade.  This has resulted in the QAMF data being moved from inside the feature dataset, to outside.  This will be the ongoing data format from 9/08/2020.&#13;
+The Digital Cadastral Database is the spatial representation of every current parcel of land in Queensland, and its legal Lot on Plan description and relevant attributes. It provides the map base for systems dealing with land related information. The DCDB is considered to be the point of truth for the graphical representation of property boundaries. It is not the point of truth for the legal property boundary or related attribute information, this will always be the plan of survey or the related titling information and administrative data sets.&#13;
+&#13;
+The data layers in the extracted file are:- &#13;
+QLD_CADASTRE_DCDB - This layer represents the complete DCDB. &#13;
+QLD_CADASTRE_NATBDY - This layer is a subset of the complete DCDB representing only those natural features which form part of a property boundary contained in the dataset. &#13;
+QLD_CADASTRE_ROAD - This layer is a subset of the complete DCDB representing the road boundaries contained in the dataset. &#13;
+QLD_CADASTRE_BUP_LOT - This layer is a subset of the complete DCDB, representing all multi-level Building Unit lots contained in the dataset&#13;
+&#13;
+From the 30 November 2015, there will no longer be reference to Parishes and Counties in the Departments land information systems, including the Digital Cadastral Database (DCDB) – a computerised map of property boundaries and related description of all land parcels in Queensland. &#13;
+&#13;
+The Department of Resources will retain a record of parishes and counties for historical purposes. The Museum of Lands, Mapping and Surveying provides historical information about parishes and counties and the historical parish directory is available online.&#13;
+If you obtain information or products from QSpatial, either the information will no longer contain parish and county details, or the parish and county fields will contain the words ‘no longer used’.&#13;
+&#13;
+Further details about accuracies and other attributes can be found in the Queensland Interchange Format document available on the internet – type in ‘DCDB QIF Specifications’ in an internet search tool to locate.</gco:CharacterString>
+            </supplementalInformation>
+        </MD_DataIdentification>
+    </identificationInfo>
+    <distributionInfo>
+        <MD_Distribution>
+            <distributionFormat>
+                <MD_Format id="DownloadService">
+                    <name>
+                        <gco:CharacterString>Queensland Spatial Catalogue</gco:CharacterString>
+                    </name>
+                    <version gco:nilReason="inapplicable"/>
+                    <specification>
+                        <gco:CharacterString>Download Service</gco:CharacterString>
+                    </specification>
+                    <formatDistributor>
+                        <MD_Distributor>
+                            <distributorContact>
+                                <CI_ResponsibleParty>
+                                    <organisationName>
+                                        <gco:CharacterString>Department of Resources</gco:CharacterString>
+                                    </organisationName>
+                                    <role>
+                                        <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="resourceProvider">resourceProvider</CI_RoleCode>
+                                    </role>
+                                </CI_ResponsibleParty>
+                            </distributorContact>
+                            <distributionOrderProcess>
+                                <MD_StandardOrderProcess>
+                                    <fees>
+                                        <gco:CharacterString>Nil</gco:CharacterString>
+                                    </fees>
+                                    <orderingInstructions>
+                                        <gco:CharacterString>Open the Queensland Spatial Catalogue (QSpatial). Select the large SEARCH button and all available records are displayed. Select one of the four filter options provided and then the further options within the filter. The resultant search is then displayed. Select your record and complete the order.</gco:CharacterString>
+                                    </orderingInstructions>
+                                </MD_StandardOrderProcess>
+                            </distributionOrderProcess>
+                            <distributorTransferOptions>
+                                <MD_DigitalTransferOptions>
+                                    <onLine>
+                                        <CI_OnlineResource id="dns1">
+                                            <linkage>
+                                                <URL>http://qldspatial.information.qld.gov.au/catalogue</URL>
+                                            </linkage>
+                                        </CI_OnlineResource>
+                                    </onLine>
+                                </MD_DigitalTransferOptions>
+                            </distributorTransferOptions>
+                        </MD_Distributor>
+                    </formatDistributor>
+                </MD_Format>
+            </distributionFormat>
+            
+            
+            <distributionFormat>
+                <MD_Format id="GptBehaviour">
+                    <name>
+                        <gco:CharacterString>downloadableData</gco:CharacterString>
+                    </name>
+                    <version>
+                        <gco:CharacterString>10.0</gco:CharacterString>
+                    </version>
+                    <specification>
+                        <gco:CharacterString>ESRI ArcGIS Server Geoportal Extension Content Type</gco:CharacterString>
+                    </specification>
+                </MD_Format>
+            </distributionFormat>
+            <distributor>
+                <MD_Distributor id="distributorContact1">
+                    <distributorContact>
+                        <CI_ResponsibleParty>
+                            <organisationName>
+                                <gco:CharacterString>Department of Resources</gco:CharacterString>
+                            </organisationName>
+                            <positionName>
+                                <gco:CharacterString>opendata@dnrme.qld.gov.au</gco:CharacterString>
+                            </positionName>
+                            <role>
+                                <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="distributor">distributor</CI_RoleCode>
+                            </role>
+                        </CI_ResponsibleParty>
+                    </distributorContact>
+                    
+                    <distributorFormat>
+                        <MD_Format>
+                            <name>
+                                <gco:CharacterString>From the Queensland Spatial Catalogue available as ESRI Shape file SHP, MapInfo Tab file TAB, ESRI file geodatabase FGDB, Google file KMZ, and Geopackage version 1.0, 1.1, or 1.2 file GPKG</gco:CharacterString>
+                            </name>
+                            <version gco:nilReason="inapplicable"/>
+                        </MD_Format>
+                    </distributorFormat>
+                    <distributorTransferOptions>
+                        <MD_DigitalTransferOptions>
+                            <transferSize>
+                                <gco:Real>345</gco:Real>
+                            </transferSize>
+                            <onLine>
+                                <CI_OnlineResource>
+                                    <linkage>
+                                        <URL>http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=%22Cadastral data - Queensland - by area of interest%22</URL>
+                                    </linkage>
+                                </CI_OnlineResource>
+                            </onLine>
+                            
+                        </MD_DigitalTransferOptions>
+                    </distributorTransferOptions>
+                </MD_Distributor>
+            </distributor>
+            <transferOptions>
+                <MD_DigitalTransferOptions id="download">
+                    <onLine>
+                        <CI_OnlineResource>
+                            <linkage>
+                                <URL/>
+                            </linkage>
+                            <function>
+                                <CI_OnLineFunctionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download">download</CI_OnLineFunctionCode>
+                            </function>
+                        </CI_OnlineResource>
+                    </onLine>
+                </MD_DigitalTransferOptions>
+            </transferOptions>
+        </MD_Distribution>
+    </distributionInfo>
+    <dataQualityInfo>
+        <DQ_DataQuality>
+            <scope>
+                <DQ_Scope>
+                    <level>
+                        <MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset">dataset</MD_ScopeCode>
+                    </level>
+                    
+                </DQ_Scope>
+            </scope>
+            <report>
+                <DQ_CompletenessOmission>
+                    <result>
+                        <DQ_ConformanceResult>
+                            <specification gco:nilReason="missing"/>
+                            <explanation>
+                                <gco:CharacterString>New data entered into the Digital Cadastral Database (DCDB) is validated as part of the update process. New plan details are recorded in the database to a client service standard which states that 90% of all new registered plans be entered into the DCDB within 7 working days of the plan being registered in the titling system. The database is also updated for administrative advices and government gazettal actions.&#13;
+&#13;
+The easement layer in the digital cadastre does not represent the full set of current easements. When the digital cadastre was created, easements that were shown on current survey plans were included. As new plans are registered, easements that are shown on those plans are included when they appear on the title. However, other easements that have not been surveyed do not appear. Furthermore, the department does not have a process by which the issue, surrenders or partial surrenders of easements are notified to administrators of the digital cadastre.&#13;
+&#13;
+A similar situation exits with covenants, profit a prendres and carbon abatement interest in that the DCDB may not represent a complete dataset due to processes in the titling system and the complexities in the way the interests are recorded.   &#13;
+&#13;
+Information about missing easements, encumbrances and interests can be sent to opendata@resources.qld.gov.au&#13;
+The land title is the point of truth for easements and other restrictions.</gco:CharacterString>
+                            </explanation>
+                            <pass gco:nilReason="inapplicable"/>
+                        </DQ_ConformanceResult>
+                    </result>
+                </DQ_CompletenessOmission>
+            </report>
+            <report>
+                <DQ_ConceptualConsistency>
+                    <result>
+                        <DQ_ConformanceResult>
+                            <specification gco:nilReason="missing"/>
+                            <explanation>
+                                <gco:CharacterString>This version of the DCDB can be considered as a seamless map of the State and consists of base cadastral parcels. The base parcels are contiguous with surrounding base parcels. The graphic package and the routines that extract and reload update data to the database has a tolerance of 2mm on the ground. This tolerance may become significant in some proprietary systems and therefore an allowance will be necessary.</gco:CharacterString>
+                            </explanation>
+                            <pass gco:nilReason="inapplicable"/>
+                        </DQ_ConformanceResult>
+                    </result>
+                </DQ_ConceptualConsistency>
+            </report>
+            <report>
+                <DQ_AbsoluteExternalPositionalAccuracy>
+                    <result>
+                        <DQ_ConformanceResult>
+                            <specification gco:nilReason="missing"/>
+                            <explanation>
+                                <gco:CharacterString>Positional accuracy values have been allocated to all parcels in the DCDB. This value reflects 'maximum error' status of the polygons and has been derived from the capture process or assigned as the DCDB data has been upgraded. For this extraction, the 'maximum error' of parcels, expressed as a value, ranges from and a data sourced statement. It has been established that the positional accuracy of the DCDB should include a finite value representing the 'maximum error' based on the source map type, the scale and a digitising value component. Positional accuracy values are expressed in metres at a 95% confidence level.</gco:CharacterString>
+                            </explanation>
+                            <pass gco:nilReason="inapplicable"/>
+                        </DQ_ConformanceResult>
+                    </result>
+                </DQ_AbsoluteExternalPositionalAccuracy>
+            </report>
+            <report>
+                <DQ_NonQuantitativeAttributeAccuracy>
+                    <result>
+                        <DQ_ConformanceResult>
+                            <specification gco:nilReason="missing"/>
+                            <explanation>
+                                <gco:CharacterString>The attributes in the DCDB are acquired from a number of sources within the Department. Each polygon in the DCDB has a unique identifier called a segment-parcel number. The following attributes are attached to each polygon in the DCDB based on the polygon centroid which is the segment-parcel number:&#13;
+&#13;
+Accuracy value,			County name,			Coverage type,&#13;
+Feature name,			Feature name alias,		Local Government code,&#13;
+Local Government code,		Locality code,		 	Locality name,&#13;
+Lot area value,			Lot area excluded value,		Lot area calculated value,&#13;
+Lot area volume,			Lot number,			Lot/Plan number,&#13;
+Parcel indicator code,		Parcel number,			Parcel type,&#13;
+Parish code,			Parish name,			Plan number,&#13;
+Segment number,			Segment/parcel number,		Survey indicator,&#13;
+Tenure code					&#13;
+&#13;
+The lot on plan attribute can have a one to many relationship with the polygons. There are also system generated values for object id code is a unique number for each polygon which is created on each download extraction and length/area values are calculated from the geometry of the polygon based on the coordinate reference of the data being downloaded.&#13;
+&#13;
+The original validation process consisted of the visual inspection and or comparison of hard copy output compared to the departmental cadastral working maps and update plans. New update plans are committed to the database through a supervisor signoff process. There are several system validation procedures in the maintenance process and these are run at a required frequency. The estimated accuracy of the attribute information is 98%.</gco:CharacterString>
+                            </explanation>
+                            <pass gco:nilReason="inapplicable"/>
+                        </DQ_ConformanceResult>
+                    </result>
+                </DQ_NonQuantitativeAttributeAccuracy>
+            </report>
+            
+            
+            
+            
+            <lineage>
+                <LI_Lineage>
+                    <statement>
+                        <gco:CharacterString>The DCDB was created by digitising existing cadastral maps at a variety of scales and accuracies. These mapping scales ranged from Standard 1:2500 to 1:250000, Provisional 1:2500 to 1:253400 and mapping such as Parish and Town maps. At the initial capture, existing control identified from the Survey Control Database, topographic maps, photogrammetric and orthophoto compilations were used as part of the digitising process. A positional accuracy value has been allocated to all parcels in the DCDB. The value reflects the maximum error status of the parcel and has been derived from the capture process or assigned as the DCDB has been upgraded. The maximum error at the time of capture ranged from +/- 1.5m to +/- 637m. The maximum error status is based on an assumed plotting accuracy for the source mapping. Positional errors can exceed this value, due to a range of factors including the accuracy of the information that was used to prepare the source mapping.&#13;
+At the time of the graphical capture, a segment/parcel number was allocated to uniquely describe each parcel of land. Attribute information collected from plans and maps was then linked to the segment/parcel number to form the relationship between the graphics and the attributes. A double entry process of keying in the attributes was done to eliminate any keying in errors. &#13;
+The DCDB is continuously updated by inputting boundary measurements from registered plans and from attribute updates from government gazettes and other administrative notifications. The department has a client service standard that 90% of all new registered plans be entered into the DCDB within 7 working days of the plan being registered in the titling system.</gco:CharacterString>
+                    </statement>
+                    <processStep>
+                        <LI_ProcessStep>
+                            <description>
+                                <gco:CharacterString>The DCDB data is extracted from ESRI SDE Geodatabase and exported to ESRI File Geodatabase.</gco:CharacterString>
+                            </description>
+                        </LI_ProcessStep>
+                    </processStep>
+                    
+                </LI_Lineage>
+            </lineage>
+        </DQ_DataQuality>
+    </dataQualityInfo>
+    <metadataConstraints>
+        <MD_SecurityConstraints>
+            <useLimitation>
+                <gco:CharacterString>Public</gco:CharacterString>
+            </useLimitation>
+            <classification>
+                <MD_ClassificationCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ClassificationCode" codeListValue="unclassified"/>
+            </classification>
+            <classificationSystem>
+                <gco:CharacterString>Metadata Access Level</gco:CharacterString>
+            </classificationSystem>
+        </MD_SecurityConstraints>
+    </metadataConstraints>
+</MD_Metadata>
