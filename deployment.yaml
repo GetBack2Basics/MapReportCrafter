@@ -146,9 +146,6 @@ spec:
       containers:
       - name: qgis-server
         image: qgis/qgis-server:latest
-        env:
-        - name: QGIS_PROJECT_FILE
-          value: /data/Cheat_Files/3_Symbolized_Data_w_PrintTemplate.qgz
         ports:
         - containerPort: 80
         volumeMounts:
