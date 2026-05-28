@@ -5,30 +5,26 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+    <script src="https://unpkg.com/mapbox-gl@2.15.0/dist/mapbox-gl.js"></script>
+    <link href="https://unpkg.com/mapbox-gl@2.15.0/dist/mapbox-gl.css" rel="stylesheet" />
     <style>
         body { margin: 0; padding: 0; font-family: sans-serif; display: flex; height: 100vh; overflow: hidden; }
         #map { width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1; }
-        
         .panel { background: white; padding: 12px; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); position: absolute; z-index: 1000; }
         .search-panel { top: 15px; left: 60px; display: flex; gap: 8px; align-items: flex-start; }
         .search-panel input { padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px; }
         .search-panel button { padding: 8px 16px; cursor: pointer; background: #0078A8; color: white; border: none; border-radius: 4px; font-weight: bold; height: 35px;}
-        
         .autocomplete-wrapper { position: relative; display: inline-block; }
         .autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; border: 1px solid #d4d4d4; border-top: none; background: white; max-height: 250px; overflow-y: auto; border-radius: 0 0 4px 4px; }
         .autocomplete-list div { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 13px; }
         .autocomplete-list div:hover { background-color: #e9e9e9; color: #0078A8; font-weight: bold; }
-
         #report-panel { top: 75px; left: 60px; width: 400px; display: none; max-height: 70vh; overflow-y: auto; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; font-size: 13px; }
         th { background-color: #f4f4f4; border-bottom: 2px solid #ccc; }
-        
-        /* Custom Layer Manager */
         #layer-manager { top: 15px; right: 15px; width: 320px; padding: 0; overflow: hidden; }
         .lm-header { cursor: move; display: flex; justify-content: space-between; align-items: center; background: #f0f0f0; padding: 10px 12px; border-bottom: 1px solid #ccc; }
         #layer-list-container { max-height: 75vh; overflow-y: auto; padding: 12px; }
-        
         .layer-item { border: 1px solid #ddd; padding: 8px; margin-bottom: 5px; border-radius: 4px; background: #fafafa; cursor: grab; display: flex; flex-direction: column; gap: 5px; }
         .layer-item:active { cursor: grabbing; }
         .layer-header { display: flex; align-items: center; justify-content: space-between; }
@@ -36,26 +32,34 @@
         .layer-controls { display: flex; align-items: center; gap: 8px; font-size: 12px; }
         .action-icon { cursor: pointer; color: #0078A8; background: #eee; padding: 2px 6px; border-radius: 10px; text-decoration: none; font-weight:bold; border: 1px solid #ccc;}
         .action-icon:hover { background: #0078A8; color: white; }
-        
         #draw-export { position: absolute; top: 150px; left: 15px; z-index: 1000; }
-        
         .btn { background: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; }
         .err { color: #FF4444; font-size: 11px; font-family: monospace; }
-        
         #sym-modal { display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); width: 420px; max-height: 80vh; background:white; z-index: 2000; border-radius:6px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); flex-direction: column; }
+        #build-date {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 11px;
+            color: #444;
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
-    
     <div class="search-panel panel">
         <div class="autocomplete-wrapper">
             <input type="text" id="lotPlan" placeholder="Start typing Lot/Plan..." autocomplete="off">
             <div id="autocomplete-list" class="autocomplete-list"></div>
         </div>
         <button onclick="searchParcel()">Search</button>
+        <button onclick="findIntersectingLotPlan()" title="Find a lot/plan intersecting both bushfire and soil">Find Match</button>
     </div>
-    
     <div id="report-panel" class="panel">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 10px;">
             <h3 style="margin:0; color: #333;">Map_Report_Crafter</h3>
@@ -66,9 +70,7 @@
             <div id="report-content"></div>
         </div>
     </div>
-    
     <button id="draw-export" class="btn panel" onclick="exportDrawings()" style="display:none;">💾 Export GeoJSON</button>
-
     <div id="layer-manager" class="panel">
         <div id="layer-manager-header" class="lm-header">
             <h3 style="margin:0; font-size: 14px;">Layer Manager</h3>
@@ -78,7 +80,6 @@
             <div id="layer-list"></div>
         </div>
     </div>
-
     <div id="sym-modal">
         <div style="padding: 15px; background: #0078A8; color: white; border-radius: 6px 6px 0 0; display: flex; justify-content: space-between; align-items: center;">
             <h3 id="sym-title" style="margin: 0; font-size: 16px;">Layer Name</h3>
@@ -89,18 +90,99 @@
             <div id="sym-content">Loading...</div>
         </div>
     </div>
+    <div id="build-date">Build: 2026-05-28</div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/esri-leaflet@3.0.10/dist/esri-leaflet.js"></script>
+    <script src="https://unpkg.com/esri-leaflet-vector@4.1.0/dist/esri-leaflet-vector.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <script src="https://unpkg.com/leaflet.vectorgrid@1.3.0/dist/Leaflet.VectorGrid.bundled.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <script>
-        const API_BASE = 'http://149.118.72.173:5000';
+        const BUILD_DATE = '2026-05-28';
+        const API_BASE = (() => {
+            const q = new URLSearchParams(window.location.search).get('api');
+            if (q) return q.replace(/\/$/, '');
+            if (window.location.protocol === 'file:') return 'http://149.118.72.173:5000';
+            if (window.location.port === '5000') return window.location.origin;
+            return `${window.location.protocol}//${window.location.hostname}:5000`;
+        })();
         var map, highlightLayer, appConfig, drawnItems;
         var activeLayers = {}; 
+
+        function normalizeBasemapUrl(url) {
+            if (!url) return url;
+            return url.replace('https://spatial-gis.information.qld.gov.au', 'https://gisservices.information.qld.gov.au');
+        }
+
+        function buildFallbackBaseMaps() {
+            const baseMaps = {};
+            const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            });
+            baseMaps['OpenStreetMap'] = osm;
+
+            const qldTopo = L.esri.tiledMapLayer({
+                url: 'https://gisservices.information.qld.gov.au/arcgis/rest/services/Basemaps/QTopoBase_AllScales/MapServer',
+                maxZoom: 22
+            });
+            baseMaps['QLD Topo (Raster)'] = qldTopo;
+            baseMaps['None'] = L.layerGroup();
+
+            try {
+                baseMaps['QLD Topo (Vector)'] = L.esri.Vector.vectorTileLayer(
+                    'https://spatial.information.qld.gov.au/arcgis/rest/services/Hosted/Basemaps_QldBase_Topographic/VectorTileServer'
+                );
+            } catch (e) {
+                console.warn('Vector Tiles Error', e);
+            }
+
+            return { baseMaps, defaultLayer: osm };
+        }
+
+        function buildConfiguredBaseMaps(configuredBaseMaps) {
+            const baseMaps = {};
+            let defaultLayer = null;
+
+            (configuredBaseMaps || []).forEach((def, idx) => {
+                try {
+                    const type = (def.type || 'tile').toLowerCase();
+                    const name = def.name || `Basemap ${idx + 1}`;
+                    const opts = def.options || {};
+                    let layer = null;
+
+                    if (type === 'none') {
+                        layer = L.layerGroup();
+                    } else if (type === 'tile' || type === 'xyz') {
+                        layer = L.tileLayer(normalizeBasemapUrl(def.url), opts);
+                    } else if (type === 'esri' || type === 'esri-tiled') {
+                        layer = L.esri.tiledMapLayer({
+                            url: normalizeBasemapUrl(def.url),
+                            ...opts,
+                            maxZoom: opts.maxZoom || 22
+                        });
+                    } else if (type === 'wms') {
+                        layer = L.tileLayer.wms(normalizeBasemapUrl(def.url), {
+                            ...opts,
+                            maxZoom: opts.maxZoom || 22
+                        });
+                    } else if (type === 'esri-vector' || type === 'vector') {
+                        layer = L.esri.Vector.vectorTileLayer(normalizeBasemapUrl(def.url), opts);
+                    }
+
+                    if (!layer) return;
+                    baseMaps[name] = layer;
+                    if (def.visibleByDefault || def.default) defaultLayer = layer;
+                } catch (e) {
+                    console.warn('Basemap config error', def, e);
+                }
+            });
+
+            return { baseMaps, defaultLayer };
+        }
 
         async function initApp() {
             try {
@@ -109,7 +191,23 @@
                 
                 map = L.map('map', { zoomControl: false, preferCanvas: true }).setView([-22.5, 144.0], 6);
                 L.control.zoom({ position: 'topleft' }).addTo(map);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+                
+                // Basemap Setup
+                const configuredBaseMaps = appConfig.baseMaps || appConfig.baseMapLayers || appConfig.basemaps || [];
+                let { baseMaps, defaultLayer } = buildConfiguredBaseMaps(configuredBaseMaps);
+                if (Object.keys(baseMaps).length === 0) {
+                    const fallback = buildFallbackBaseMaps();
+                    baseMaps = fallback.baseMaps;
+                    defaultLayer = fallback.defaultLayer;
+                }
+                if (!defaultLayer) {
+                    const firstName = Object.keys(baseMaps)[0];
+                    defaultLayer = firstName ? baseMaps[firstName] : null;
+                }
+                if (defaultLayer) defaultLayer.addTo(map);
+                
+                L.control.layers(baseMaps, null, { position: "bottomleft", collapsed: false }).addTo(map);
+
                 highlightLayer = L.geoJSON(null, { style: { color: '#00FFFF', weight: 4, fillOpacity: 0.2 } }).addTo(map);
 
                 initDrawTools();
@@ -124,7 +222,7 @@
             var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             document.getElementById(elmnt.id + "-header").onmousedown = dragMouseDown;
             function dragMouseDown(e) {
-                if(e.target.tagName === 'BUTTON') return; // Don't drag if clicking the minimize button
+                if(e.target.tagName === 'BUTTON') return;
                 e = e || window.event; e.preventDefault();
                 pos3 = e.clientX; pos4 = e.clientY;
                 document.onmouseup = closeDragElement;
@@ -178,13 +276,61 @@
             let combinedLayers = [...(appConfig.mapLayers || []), ...(appConfig.localMapLayers || [])];
             
             combinedLayers.forEach((def, index) => {
+                if (def.status === 'offline') return;
+                
                 let layerId = 'layer_' + index;
                 let isLocal = !!def.table;
-                let mapLayer = isLocal ? L.geoJSON(null, { style: { color: def.color, weight: 1, fillOpacity: 0.4 }}) 
-                                       : L.esri.dynamicMapLayer({ url: def.url, layers: def.options.layers, opacity: def.options.opacity || 1 });
+                
+                let mapLayer;
+                let useMvt = !!(isLocal && (def.renderMode === 'mvt' || def.table === 'bushfire_data'));
 
-                if (isLocal) map.on('moveend', () => { if(map.hasLayer(mapLayer)) fetchLocalData(def.table, mapLayer); });
+                if (isLocal && useMvt && L.vectorGrid) {
+                    let mvtUrl = `${API_BASE}/api/local_mvt/${def.table}/{z}/{x}/{y}.pbf`;
+                    mapLayer = L.vectorGrid.protobuf(mvtUrl, {
+                        vectorTileLayerStyles: {
+                            layer0: function(properties) {
+                                let col = def.color || '#3388ff';
+                                if (def.symbology && properties) {
+                                    let val = properties[def.symbology.field];
+                                    let cat = def.symbology.categories.find(c => c.value == val || c.value === val);
+                                    if (cat) col = cat.color;
+                                    else col = def.symbology.defaultColor || col;
+                                }
+                                return {
+                                    fill: true,
+                                    fillColor: col,
+                                    fillOpacity: 0.55,
+                                    color: col,
+                                    opacity: 0.9,
+                                    weight: 1
+                                };
+                            }
+                        },
+                        interactive: false,
+                        maxNativeZoom: 14,
+                        maxZoom: 20
+                    });
+                } else if (isLocal) {
+                    mapLayer = L.geoJSON(null, {
+                        style: function(feature) {
+                            let col = def.color || '#3388ff';
+                            if (def.symbology && feature.properties) {
+                                let val = feature.properties[def.symbology.field];
+                                let cat = def.symbology.categories.find(c => c.value == val || c.value === val);
+                                if (cat) col = cat.color;
+                                else col = def.symbology.defaultColor || col;
+                            }
+                            return { color: col, weight: 1, fillOpacity: 0.6 };
+                        }
+                    });
+                    map.on('moveend', () => { if(map.hasLayer(mapLayer)) fetchLocalData(def.table, mapLayer); });
+                } else {
+                    mapLayer = L.esri.dynamicMapLayer({ url: def.url, layers: def.options.layers, opacity: def.options.opacity || 1 });
+                }
+
                 activeLayers[layerId] = { layer: mapLayer, def: def, isLocal: isLocal };
+
+                let showInfoBtn = (!isLocal || def.metadataUrl || def.symbology) ? `<a class="action-icon" title="Symbology & Metadata" onclick="openLegend('${layerId}')">i</a>` : '';
 
                 let html = `
                     <div class="layer-item" data-id="${layerId}">
@@ -194,7 +340,7 @@
                                 ${def.name}
                             </label>
                             <div class="layer-controls">
-                                ${!isLocal ? `<a class="action-icon" title="Symbology & Metadata" onclick="openLegend('${layerId}')">i</a>` : ''}
+                                ${showInfoBtn}
                                 <a class="action-icon" title="Zoom to Layer" onclick="zoomToLayer('${layerId}')">🔍</a>
                             </div>
                         </div>
@@ -215,7 +361,7 @@
             let lObj = activeLayers[id];
             if (isVisible) {
                 map.addLayer(lObj.layer);
-                if(lObj.isLocal) fetchLocalData(lObj.def.table, lObj.layer);
+                if(lObj.isLocal && lObj.layer.clearLayers) fetchLocalData(lObj.def.table, lObj.layer);
             } else { map.removeLayer(lObj.layer); }
         }
 
@@ -237,7 +383,20 @@
 
         function zoomToLayer(id) {
             let lObj = activeLayers[id];
-            if (lObj.isLocal) { map.fitBounds(lObj.layer.getBounds()); } 
+            if (lObj.isLocal) {
+                if (lObj.layer.getBounds) {
+                    map.fitBounds(lObj.layer.getBounds());
+                } else {
+                    fetch(`${API_BASE}/api/local_extent?table=${lObj.def.table}`)
+                        .then(r => r.json())
+                        .then(d => {
+                            if (d && d.bbox && d.bbox.length === 4) {
+                                map.fitBounds([[d.bbox[1], d.bbox[0]], [d.bbox[3], d.bbox[2]]]);
+                            }
+                        })
+                        .catch(() => {});
+                }
+            }
             else if (lObj.layer.metadata) {
                 lObj.layer.metadata(function(err, meta) {
                     if (meta && meta.fullExtent) {
@@ -252,23 +411,49 @@
 
         async function openLegend(id) {
             let def = activeLayers[id].def;
+            let isLocal = activeLayers[id].isLocal;
+            
             document.getElementById('sym-modal').style.display = 'flex';
             document.getElementById('sym-title').innerText = def.name;
-            document.getElementById('sym-meta').href = def.metadataUrl || '#';
-            document.getElementById('sym-content').innerHTML = "Fetching Live Legend...";
-            try {
-                let res = await fetch(def.url + '/legend?f=json');
-                let data = await res.json();
-                let html = '';
-                data.layers.forEach(l => {
-                    if (def.options.layers.includes(l.layerId)) {
-                        html += `<h4>${l.layerName}</h4><table style="width:100%; font-size:13px;">`;
-                        l.legend.forEach(leg => { html += `<tr><td style="width:35px; text-align:center;"><img src="data:${leg.contentType};base64,${leg.imageData}"></td><td>${leg.label}</td></tr>`; });
-                        html += `</table>`;
+            
+            let metaLink = document.getElementById('sym-meta');
+            if (def.metadataUrl) {
+                metaLink.style.display = 'inline-block';
+                metaLink.href = def.metadataUrl;
+            } else {
+                metaLink.style.display = 'none';
+            }
+
+            if (isLocal) {
+                let legHtml = `<div style="margin-top:15px; font-size:14px;"><strong>Symbology:</strong>`;
+                if (def.symbology && def.symbology.categories) {
+                    def.symbology.categories.forEach(c => {
+                        legHtml += `<div style="display:flex; align-items:center; gap:10px; margin-top:8px;"><div style="width:25px; height:25px; background-color:${c.color}; border:1px solid #777; opacity: 0.6;"></div><span>${c.label}</span></div>`;
+                    });
+                    if (def.symbology.defaultLabel) {
+                        legHtml += `<div style="display:flex; align-items:center; gap:10px; margin-top:8px;"><div style="width:25px; height:25px; background-color:${def.symbology.defaultColor || '#ccc'}; border:1px solid #777; opacity: 0.6;"></div><span>${def.symbology.defaultLabel}</span></div>`;
                     }
-                });
-                document.getElementById('sym-content').innerHTML = html || "No legend available.";
-            } catch(e) { document.getElementById('sym-content').innerHTML = "Failed to load legend."; }
+                } else {
+                    legHtml += `<div style="display:flex; align-items:center; gap:10px; margin-top:8px;"><div style="width:25px; height:25px; background-color:${def.color || "#0078A8"}; border:1px solid #777; opacity: 0.6;"></div><span>Local Area Intersect</span></div>`;
+                }
+                legHtml += `</div>`;
+                document.getElementById('sym-content').innerHTML = legHtml;
+            } else {
+                document.getElementById('sym-content').innerHTML = "Fetching Live Legend...";
+                try {
+                    let res = await fetch(def.url + '/legend?f=json');
+                    let data = await res.json();
+                    let html = '';
+                    data.layers.forEach(l => {
+                        if (def.options.layers.includes(l.layerId)) {
+                            html += `<h4>${l.layerName}</h4><table style="width:100%; font-size:13px;">`;
+                            l.legend.forEach(leg => { html += `<tr><td style="width:35px; text-align:center;"><img src="data:${leg.contentType};base64,${leg.imageData}"></td><td>${leg.label}</td></tr>`; });
+                            html += `</table>`;
+                        }
+                    });
+                    document.getElementById('sym-content').innerHTML = html || "No legend available.";
+                } catch(e) { document.getElementById('sym-content').innerHTML = "Failed to load legend."; }
+            }
         }
 
         async function fetchLocalData(table, layerObj) {
@@ -278,7 +463,9 @@
                 let res = await fetch(`${API_BASE}/api/local_layer?table=${table}&bbox=${bbox}`);
                 let data = await res.json();
                 if(data.features) { layerObj.clearLayers(); layerObj.addData(data); }
-            } catch(e) {}
+            } catch(e) {
+                console.error("Local Data Fetch Error for table: " + table, e);
+            }
         }
 
         function setupAutocomplete() {
@@ -292,12 +479,32 @@
                 if (val.length < 3) return;
                 timeout = setTimeout(async () => {
                     let encodedWhere = encodeURIComponent(`UPPER(lotplan) LIKE UPPER('${val}%')`);
-                    let url = `https://gisservices.information.qld.gov.au/arcgis/rest/services/PlanningCadastre/LandParcelPropertyFramework/MapServer/4/query?where=${encodedWhere}&outFields=lotplan&returnGeometry=false&f=json`;
+                    let url = `https://gisservices.information.qld.gov.au/arcgis/rest/services/PlanningCadastre/LandParcelPropertyFramework/MapServer/4/query?where=${encodedWhere}&outFields=lotplan&returnGeometry=true&outSR=4326&f=geojson`;
                     try {
                         let res = await fetch(url); let data = await res.json();
                         if(data.features && data.features.length > 0) {
-                            data.features.slice(0, 10).forEach(f => {
-                                let lpText = f.attributes.lotplan || f.attributes.LOTPLAN || f.attributes.LotPlan;
+                            const candidates = data.features.slice(0, 15);
+                            const matched = [];
+
+                            for (const f of candidates) {
+                                let p = f.properties || {};
+                                let lpText = p.lotplan || p.LOTPLAN || p.LotPlan;
+                                if (!lpText || !f.geometry) continue;
+
+                                let both = await intersectsBushfireAndSoil(f.geometry);
+                                if (both) matched.push(lpText);
+                                if (matched.length >= 10) break;
+                            }
+
+                            if (matched.length === 0) {
+                                let item = document.createElement('div');
+                                item.innerHTML = 'No bushfire+soil matches in suggestions';
+                                item.style.color = '#666';
+                                list.appendChild(item);
+                                return;
+                            }
+
+                            matched.forEach(lpText => {
                                 let item = document.createElement('div');
                                 item.innerHTML = `<strong>${lpText.substr(0, val.length)}</strong>${lpText.substr(val.length)}`;
                                 item.addEventListener('click', function() { input.value = lpText; list.innerHTML = ''; searchParcel(); });
@@ -328,9 +535,15 @@
         async function searchParcel(clickLat = null, clickLng = null) {
             let lp = document.getElementById('lotPlan').value;
             if (!lp) return;
+            
+            document.getElementById('report-panel').style.display = 'block';
+            document.getElementById('pdf-subtitle').innerText = `Property Report: ${lp}`;
+            document.getElementById('report-content').innerHTML = '<div style="padding: 20px; text-align: center; color: #0078A8; font-weight: bold;">Generating Spatial Intersections...</div>';
+
             try {
                 let url = `https://gisservices.information.qld.gov.au/arcgis/rest/services/PlanningCadastre/LandParcelPropertyFramework/MapServer/4/query?where=lotplan='${lp}'&outFields=*&returnGeometry=true&outSR=4326&f=geojson`;
                 let res = await fetch(url); let data = await res.json();
+                
                 if(data.features && data.features.length > 0) {
                     let feature = data.features[0];
                     highlightLayer.clearLayers(); highlightLayer.addData(feature);
@@ -338,39 +551,136 @@
                     let center = highlightLayer.getBounds().getCenter();
                     let qLat = clickLat || center.lat; let qLng = clickLng || center.lng;
 
-                    document.getElementById('pdf-subtitle').innerText = `Property Report: ${lp}`;
                     let html = '<table><tr><th>Category</th><th>Details</th></tr>';
 
-                    if (appConfig && appConfig.restQueries) {
-                        for (let q of appConfig.restQueries) {
-                            // OPTIMIZATION: Request outFields=OBJECTID instead of * to prevent heavy queries from timing out
+                    const restRows = [];
+                    if (appConfig && appConfig.restQueries && appConfig.restQueries.length > 0) {
+                        const restPromises = appConfig.restQueries.map(async q => {
                             let qUrl = `${q.url}?geometry=${qLng},${qLat}&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326&outFields=OBJECTID&f=json`;
                             try {
-                                let qRes = await fetch(qUrl); 
+                                let qRes = await fetch(qUrl);
                                 if (!qRes.ok) throw new Error(`HTTP ${qRes.status}`);
                                 let qData = await qRes.json();
                                 let resultText = (qData.features && qData.features.length > 0) ? q.positiveText : q.negativeText;
-                                html += `<tr><td>${q.label}</td><td>${resultText}</td></tr>`;
-                            } catch (err) { html += `<tr><td>${q.label}</td><td class="err">Failed: ${err.message}</td></tr>`; }
+                                return `<tr><td>${q.label}</td><td>${resultText}</td></tr>`;
+                            } catch (err) {
+                                return `<tr><td>${q.label}</td><td class="err">Failed</td></tr>`;
+                            }
+                        });
+                        restRows.push(...(await Promise.all(restPromises)));
+                    }
+
+                    const localRows = [];
+                    if (appConfig && appConfig.localQueries && appConfig.localQueries.length > 0) {
+                        try {
+                            let payload = {
+                                geometry: feature.geometry,
+                                queries: appConfig.localQueries.map(q => ({
+                                    label: q.label,
+                                    table: q.payload.table,
+                                    column: q.payload.column
+                                }))
+                            };
+                            let multiRes = await fetch(`${API_BASE}/api/local_multi_intersect`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(payload)
+                            });
+                            let multiData = await multiRes.json();
+                            const byLabel = {};
+                            if (multiData && Array.isArray(multiData.results)) {
+                                multiData.results.forEach(r => { byLabel[r.label] = r; });
+                            }
+
+                            appConfig.localQueries.forEach(q => {
+                                const r = byLabel[q.label];
+                                if (!r) {
+                                    localRows.push(`<tr><td>${q.label}</td><td class="err">API Down</td></tr>`);
+                                } else if (r.error) {
+                                    localRows.push(`<tr><td>${q.label}</td><td class="err">Schema Error</td></tr>`);
+                                } else {
+                                    localRows.push(`<tr><td>${q.label}</td><td>${r.result !== null ? r.result : q.fallbackText}</td></tr>`);
+                                }
+                            });
+                        } catch(e) {
+                            appConfig.localQueries.forEach(q => {
+                                localRows.push(`<tr><td>${q.label}</td><td class="err">API Down</td></tr>`);
+                            });
                         }
                     }
 
-                    if (appConfig && appConfig.localQueries) {
-                        for (let q of appConfig.localQueries) {
-                            try {
-                                let payload = q.payload; payload.geometry = feature.geometry;
-                                let k8Res = await fetch(API_BASE + q.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                                let k8Data = await k8Res.json();
-                                if(k8Data.error) { html += `<tr><td>${q.label}</td><td class="err">Error</td></tr>`; } 
-                                else { html += `<tr><td>${q.label}</td><td>${k8Data.result !== null ? k8Data.result : q.fallbackText}</td></tr>`; }
-                            } catch(e) { html += `<tr><td>${q.label}</td><td class="err">API Down</td></tr>`; }
-                        }
-                    }
+                    html += restRows.join('');
+                    html += localRows.join('');
                     html += '</table>';
                     document.getElementById('report-content').innerHTML = html;
-                    document.getElementById('report-panel').style.display = 'block';
+                } else {
+                    document.getElementById('report-content').innerHTML = '<div style="padding: 10px; color: red;">Property not found.</div>';
                 }
-            } catch(e) {}
+            } catch(e) {
+                document.getElementById('report-content').innerHTML = '<div style="padding: 10px; color: red;">Failed to query property.</div>';
+            }
+        }
+
+        async function intersectsBushfireAndSoil(geometry) {
+            try {
+                let payload = {
+                    geometry,
+                    queries: [
+                        { label: 'Bushfire', table: 'bushfire_data', column: 'class' },
+                        { label: 'Soil', table: 'usle_data', column: 'k_factor' }
+                    ]
+                };
+                let res = await fetch(`${API_BASE}/api/local_multi_intersect`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                let data = await res.json();
+                if (!data || !Array.isArray(data.results)) return false;
+
+                const bushfire = data.results.find(r => r.label === 'Bushfire');
+                const soil = data.results.find(r => r.label === 'Soil');
+                return !!(bushfire && bushfire.result !== null && soil && soil.result !== null);
+            } catch (e) {
+                return false;
+            }
+        }
+
+        async function findIntersectingLotPlan() {
+            const input = document.getElementById('lotPlan');
+            const raw = (input.value || '').trim();
+            const prefix = raw.length >= 2 ? raw : '3GH';
+
+            document.getElementById('report-panel').style.display = 'block';
+            document.getElementById('pdf-subtitle').innerText = 'Property Report';
+            document.getElementById('report-content').innerHTML = '<div style="padding: 20px; text-align: center; color: #0078A8; font-weight: bold;">Finding Lot/Plan intersecting bushfire and soil...</div>';
+
+            try {
+                let encodedWhere = encodeURIComponent(`UPPER(lotplan) LIKE UPPER('${prefix}%')`);
+                let url = `https://gisservices.information.qld.gov.au/arcgis/rest/services/PlanningCadastre/LandParcelPropertyFramework/MapServer/4/query?where=${encodedWhere}&outFields=lotplan&returnGeometry=true&outSR=4326&f=geojson`;
+                let res = await fetch(url);
+                let data = await res.json();
+
+                if (!data.features || data.features.length === 0) {
+                    document.getElementById('report-content').innerHTML = '<div style="padding: 10px; color: red;">No matching lot/plan found for that prefix.</div>';
+                    return;
+                }
+
+                for (const f of data.features.slice(0, 25)) {
+                    let lp = f.properties?.lotplan || f.properties?.LOTPLAN || f.properties?.LotPlan;
+                    if (!lp || !f.geometry) continue;
+                    let both = await intersectsBushfireAndSoil(f.geometry);
+                    if (both) {
+                        input.value = lp;
+                        await searchParcel();
+                        return;
+                    }
+                }
+
+                document.getElementById('report-content').innerHTML = '<div style="padding: 10px; color: red;">No lot/plan in the sampled results intersects both bushfire and soil. Try another prefix.</div>';
+            } catch (e) {
+                document.getElementById('report-content').innerHTML = '<div style="padding: 10px; color: red;">Failed to find an intersecting lot/plan.</div>';
+            }
         }
 
         async function downloadPDF() {
@@ -394,6 +704,7 @@
         }
 
         initApp();
+        document.getElementById('build-date').innerText = `Build: ${BUILD_DATE}`;
     </script>
 </body>
 </html>

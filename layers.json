@@ -1,7 +1,39 @@
 {
+  "baseMaps": [
+    {
+      "name": "OpenStreetMap",
+      "type": "tile",
+      "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "options": {
+        "attribution": "&copy; OpenStreetMap contributors"
+      },
+      "visibleByDefault": true
+    },
+    {
+      "name": "QLD Topo (Raster)",
+      "type": "esri-tiled",
+      "url": "https://gisservices.information.qld.gov.au/arcgis/rest/services/Basemaps/QTopoBase_AllScales/MapServer",
+      "options": {
+        "maxZoom": 22
+      },
+      "visibleByDefault": false
+    },
+    {
+      "name": "QLD Topo (Vector)",
+      "type": "esri-vector",
+      "url": "https://spatial.information.qld.gov.au/arcgis/rest/services/Hosted/Basemaps_QldBase_Topographic/VectorTileServer",
+      "options": {},
+      "visibleByDefault": false
+    },
+    {
+      "name": "None",
+      "type": "none",
+      "visibleByDefault": false
+    }
+  ],
   "mapLayers": [
     {
-      "name": "Cadastre (State)",
+      "name": "Cadastre (State REST)",
       "url": "https://gisservices.information.qld.gov.au/arcgis/rest/services/PlanningCadastre/LandParcelPropertyFramework/MapServer",
       "options": {
         "layers": [
@@ -13,7 +45,7 @@
       "visibleByDefault": true
     },
     {
-      "name": "Important Ag Areas (State)",
+      "name": "Important Ag Areas",
       "url": "https://gisservices.information.qld.gov.au/arcgis/rest/services/Boundaries/AdminBoundariesFramework/MapServer",
       "options": {
         "layers": [
@@ -25,35 +57,11 @@
       "visibleByDefault": false
     },
     {
-      "name": "Vegetation Management (State)",
+      "name": "Vegetation Management",
       "url": "https://gisservices.information.qld.gov.au/arcgis/rest/services/Biota/VegetationManagement/MapServer",
       "options": {
         "layers": [
           109
-        ],
-        "opacity": 0.6,
-        "transparent": true
-      },
-      "visibleByDefault": false
-    },
-    {
-      "name": "Land Systems (State)",
-      "url": "https://gisservices.information.qld.gov.au/arcgis/rest/services/GeoscientificInformation/SoilsAndLandResource/MapServer",
-      "options": {
-        "layers": [
-          1302
-        ],
-        "opacity": 0.6,
-        "transparent": true
-      },
-      "visibleByDefault": false
-    },
-    {
-      "name": "Strategic Cropping Land (State)",
-      "url": "https://gisservices.information.qld.gov.au/arcgis/rest/services/Boundaries/AdminBoundariesFramework/MapServer",
-      "options": {
-        "layers": [
-          105
         ],
         "opacity": 0.6,
         "transparent": true
@@ -66,7 +74,64 @@
       "name": "Universal Soil Loss Eq. (Local)",
       "table": "usle_data",
       "color": "#ff7800",
-      "visibleByDefault": false
+      "visibleByDefault": false,
+      "status": "online",
+      "metadataUrl": "https://www.data.qld.gov.au/dataset/universal-soil-loss-equation",
+      "symbologyType": "color",
+      "symbology": {
+        "field": "k_factor",
+        "categories": [
+          {
+            "value": "High",
+            "color": "#d94801",
+            "label": "High Erodibility"
+          },
+          {
+            "value": "Moderate",
+            "color": "#f16913",
+            "label": "Moderate Erodibility"
+          }
+        ],
+        "defaultColor": "#fdd0a2",
+        "defaultLabel": "Low/Unclassified Erodibility"
+      }
+    },
+    {
+      "name": "Bushfire Prone Area (Local)",
+      "table": "bushfire_data",
+      "renderMode": "mvt",
+      "color": "#e31a1c",
+      "visibleByDefault": false,
+      "status": "online",
+      "metadataUrl": "https://qldspatial.information.qld.gov.au/catalogue/rest/document?f=xml&id={A8D2C6DF-448B-4E4F-A635-4AA2E144D7ED}",
+      "symbologyType": "color",
+      "symbology": {
+        "field": "class",
+        "categories": [
+          {
+            "value": "Very High Potential Bushfire Intensity",
+            "color": "#A80000",
+            "label": "Very High Intensity"
+          },
+          {
+            "value": "High Potential Bushfire Intensity",
+            "color": "#FF0000",
+            "label": "High Intensity"
+          },
+          {
+            "value": "Medium Potential Bushfire Intensity",
+            "color": "#FFAA00",
+            "label": "Medium Intensity"
+          },
+          {
+            "value": "Potential Impact Buffer",
+            "color": "#E64C00",
+            "label": "Impact Buffer"
+          }
+        ],
+        "defaultColor": "#d9d9d9",
+        "defaultLabel": "Other Risk Area"
+      }
     }
   ],
   "restQueries": [
@@ -77,33 +142,30 @@
       "negativeText": "No"
     },
     {
-      "label": "Vegetation Management",
+      "label": "Vegetation Mgmt",
       "url": "https://gisservices.information.qld.gov.au/arcgis/rest/services/Biota/VegetationManagement/MapServer/109/query",
-      "positiveText": "Yes",
-      "negativeText": "No"
-    },
-    {
-      "label": "Land Systems",
-      "url": "https://gisservices.information.qld.gov.au/arcgis/rest/services/GeoscientificInformation/SoilsAndLandResource/MapServer/1302/query",
-      "positiveText": "Yes",
-      "negativeText": "No"
-    },
-    {
-      "label": "Strategic Cropping Land",
-      "url": "https://gisservices.information.qld.gov.au/arcgis/rest/services/Boundaries/AdminBoundariesFramework/MapServer/105/query",
-      "positiveText": "Yes",
-      "negativeText": "No"
+      "positiveText": "Regulated Vegetation Present",
+      "negativeText": "Not Regulated"
     }
   ],
   "localQueries": [
     {
-      "label": "USLE K-Factor (Local)",
+      "label": "USLE K-Factor",
       "endpoint": "/api/local_intersect",
       "payload": {
         "table": "usle_data",
         "column": "k_factor"
       },
-      "fallbackText": "No Soil Data Intersected"
+      "fallbackText": "No Soil Data"
+    },
+    {
+      "label": "Bushfire Risk",
+      "endpoint": "/api/local_intersect",
+      "payload": {
+        "table": "bushfire_data",
+        "column": "class"
+      },
+      "fallbackText": "No Risk Detected"
     }
   ]
 }
