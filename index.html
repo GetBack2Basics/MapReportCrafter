@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8" />
     <title>Map_Report_Crafter</title>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-minimap@3.6.1/dist/Control.MiniMap.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
     <script src="https://unpkg.com/mapbox-gl@2.15.0/dist/mapbox-gl.js"></script>
     <link href="https://unpkg.com/mapbox-gl@2.15.0/dist/mapbox-gl.css" rel="stylesheet" />
     <style>
-        body { margin: 0; padding: 0; font-family: sans-serif; display: flex; height: 100vh; overflow: hidden; }
-        #map { width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1; }
-        .panel { background: white; padding: 12px; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); position: absolute; z-index: 1000; }
-        .search-panel { top: 15px; left: 60px; display: flex; gap: 8px; align-items: flex-start; }
-        .search-panel input { padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px; }
-        .search-panel button { padding: 8px 16px; cursor: pointer; background: #0078A8; color: white; border: none; border-radius: 4px; font-weight: bold; height: 35px;}
+        body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; margin: 0; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 60px; background: #003366; color: white; gap: 16px; flex-shrink: 0; position: relative; z-index: 1100; }
+        .project-title { font-size: 20px; font-weight: 700; white-space: nowrap; }
+        .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+        .header-actions input { padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px; color: #1f2933; background: #fff; }
+        .header-actions button { padding: 8px 14px; cursor: pointer; background: #0078A8; color: white; border: none; border-radius: 4px; font-weight: 700; }
+        .header-actions button:hover { background: #00608a; }
+        .header-actions .export-btn { background: #28a745; }
+        .header-actions .export-btn:hover { background: #208637; }
+        .panel { background: white; padding: 12px; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); z-index: 1000; }
         .autocomplete-wrapper { position: relative; display: inline-block; }
-        .autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; border: 1px solid #d4d4d4; border-top: none; background: white; max-height: 250px; overflow-y: auto; border-radius: 0 0 4px 4px; }
+        .autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; border: 1px solid #d4d4d4; border-top: none; background: white; max-height: 250px; overflow-y: auto; border-radius: 0 0 4px 4px; z-index: 1200; color: #1f2933; }
         .autocomplete-list div { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 13px; }
         .autocomplete-list div:hover { background-color: #e9e9e9; color: #0078A8; font-weight: bold; }
-        #report-panel { top: 75px; left: 60px; width: 400px; display: none; max-height: 70vh; overflow-y: auto; }
+        main { display: flex; flex: 1; overflow: hidden; }
+        #sidebar { width: 380px; display: flex; flex-direction: column; background: #f8f9fa; border-right: 1px solid #ddd; overflow-y: auto; padding: 12px; box-sizing: border-box; gap: 12px; }
+        .sidebar-card { background: white; border: 1px solid #e4e4e4; border-radius: 6px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .sidebar-card h3 { margin: 0 0 10px 0; color: #333; font-size: 16px; }
+        #report-panel { display: block; max-height: none; overflow: visible; }
+        #report-content { min-height: 90px; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; font-size: 13px; }
         th { background-color: #f4f4f4; border-bottom: 2px solid #ccc; }
-        #layer-manager { top: 15px; right: 15px; width: 320px; padding: 0; overflow: hidden; }
-        .lm-header { cursor: move; display: flex; justify-content: space-between; align-items: center; background: #f0f0f0; padding: 10px 12px; border-bottom: 1px solid #ccc; }
+        #layer-manager { width: 100%; padding: 0; overflow: hidden; box-shadow: none; border-radius: 0; }
+        .lm-header { cursor: default; display: flex; justify-content: space-between; align-items: center; background: #f0f0f0; padding: 10px 12px; border-bottom: 1px solid #ccc; }
         #layer-list-container { max-height: 75vh; overflow-y: auto; padding: 12px; }
         .layer-item { border: 1px solid #ddd; padding: 8px; margin-bottom: 5px; border-radius: 4px; background: #fafafa; cursor: grab; display: flex; flex-direction: column; gap: 5px; }
         .layer-item:active { cursor: grabbing; }
@@ -32,7 +43,28 @@
         .layer-controls { display: flex; align-items: center; gap: 8px; font-size: 12px; }
         .action-icon { cursor: pointer; color: #0078A8; background: #eee; padding: 2px 6px; border-radius: 10px; text-decoration: none; font-weight:bold; border: 1px solid #ccc;}
         .action-icon:hover { background: #0078A8; color: white; }
-        #draw-export { position: absolute; top: 150px; left: 15px; z-index: 1000; }
+        #chart-container { min-height: 200px; border: 1px dashed #c9c9c9; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #666; font-size: 13px; background: #fbfbfb; }
+        #map-wrapper { flex: 1; position: relative; min-width: 0; }
+        #map { width: 100%; height: 100%; }
+        #inset-map {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 250px;
+            height: 250px;
+            background: #eee;
+            border: 2px solid white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 1000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 12px;
+            text-align: center;
+        }
+        #draw-export { position: absolute; top: 15px; left: 15px; z-index: 1000; }
         .btn { background: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; }
         .err { color: #FF4444; font-size: 11px; font-family: monospace; }
         #sym-modal { display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); width: 420px; max-height: 80vh; background:white; z-index: 2000; border-radius:6px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); flex-direction: column; }
@@ -48,38 +80,71 @@
             font-size: 11px;
             color: #444;
         }
+        @media (max-width: 1100px) {
+            header { height: auto; min-height: 60px; padding: 10px 16px; align-items: flex-start; }
+            .project-title { font-size: 18px; }
+            .header-actions { width: 100%; justify-content: flex-start; }
+            .header-actions input { width: 220px; max-width: 100%; }
+        }
+        @media (max-width: 900px) {
+            main { flex-direction: column; }
+            #sidebar { width: 100%; max-height: 45vh; border-right: none; border-bottom: 1px solid #ddd; }
+            #map-wrapper { min-height: 50vh; }
+            #inset-map { width: 180px; height: 180px; }
+        }
     </style>
 </head>
 <body>
-    <div id="map"></div>
-    <div class="search-panel panel">
-        <div class="autocomplete-wrapper">
-            <input type="text" id="lotPlan" placeholder="Start typing Lot/Plan..." autocomplete="off">
-            <div id="autocomplete-list" class="autocomplete-list"></div>
+    <header>
+        <div class="project-title">Map Report Crafter</div>
+        <div class="header-actions">
+            <div class="autocomplete-wrapper">
+                <input type="text" id="lotPlan" placeholder="Start typing Lot/Plan..." autocomplete="off">
+                <div id="autocomplete-list" class="autocomplete-list"></div>
+            </div>
+            <button onclick="searchParcel()">Search</button>
+            <button class="export-btn" onclick="downloadPDF()">📄 Export PDF</button>
         </div>
-        <button onclick="searchParcel()">Search</button>
-        <button onclick="findIntersectingLotPlan()" title="Find a lot/plan intersecting both bushfire and soil">Find Match</button>
-    </div>
-    <div id="report-panel" class="panel">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 10px;">
-            <h3 style="margin:0; color: #333;">Map_Report_Crafter</h3>
-            <button class="btn" onclick="downloadPDF()">📄 PDF</button>
+    </header>
+
+    <main>
+        <aside id="sidebar">
+            <section class="sidebar-card">
+                <h3>Property Report</h3>
+                <div id="report-panel">
+                    <div id="pdf-container">
+                        <h4 id="pdf-subtitle" style="margin-top: 0; color: #555;">Property Report</h4>
+                        <div id="report-content"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="sidebar-card">
+                <h3>Layer Manager</h3>
+                <div id="layer-manager" class="panel">
+                    <div id="layer-manager-header" class="lm-header">
+                        <h3 style="margin:0; font-size: 14px;">Layer Manager</h3>
+                        <button onclick="toggleLegend()" style="cursor:pointer; border:1px solid #ccc; background:#fff; border-radius:3px; padding: 2px 8px; font-weight: bold;">_</button>
+                    </div>
+                    <div id="layer-list-container">
+                        <div id="layer-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="sidebar-card">
+                <h3>Data Charts</h3>
+                <div id="chart-container"></div>
+            </section>
+        </aside>
+
+        <div id="map-wrapper">
+            <div id="map"></div>
+            <button id="draw-export" class="btn panel" onclick="exportDrawings()" style="display:none;">💾 Export GeoJSON</button>
+            <div id="build-date">Build: 2026-05-28</div>
         </div>
-        <div id="pdf-container">
-            <h4 id="pdf-subtitle" style="margin-top: 0; color: #555;">Property Report</h4>
-            <div id="report-content"></div>
-        </div>
-    </div>
-    <button id="draw-export" class="btn panel" onclick="exportDrawings()" style="display:none;">💾 Export GeoJSON</button>
-    <div id="layer-manager" class="panel">
-        <div id="layer-manager-header" class="lm-header">
-            <h3 style="margin:0; font-size: 14px;">Layer Manager</h3>
-            <button onclick="toggleLegend()" style="cursor:pointer; border:1px solid #ccc; background:#fff; border-radius:3px; padding: 2px 8px; font-weight: bold;">_</button>
-        </div>
-        <div id="layer-list-container">
-            <div id="layer-list"></div>
-        </div>
-    </div>
+    </main>
+
     <div id="sym-modal">
         <div style="padding: 15px; background: #0078A8; color: white; border-radius: 6px 6px 0 0; display: flex; justify-content: space-between; align-items: center;">
             <h3 id="sym-title" style="margin: 0; font-size: 16px;">Layer Name</h3>
@@ -90,9 +155,9 @@
             <div id="sym-content">Loading...</div>
         </div>
     </div>
-    <div id="build-date">Build: 2026-05-28</div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-minimap@3.6.1/dist/Control.MiniMap.min.js"></script>
     <script src="https://unpkg.com/esri-leaflet@3.0.10/dist/esri-leaflet.js"></script>
     <script src="https://unpkg.com/esri-leaflet-vector@4.1.0/dist/esri-leaflet-vector.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
@@ -103,6 +168,8 @@
     
     <script>
         const BUILD_DATE = '2026-05-28';
+        const BUILD_TIME = '00:00';
+        const BUILD_VERSION = 'v1.0.0';
         const API_BASE = (() => {
             const q = new URLSearchParams(window.location.search).get('api');
             if (q) return q.replace(/\/$/, '');
@@ -116,6 +183,11 @@
         function normalizeBasemapUrl(url) {
             if (!url) return url;
             return url.replace('https://spatial-gis.information.qld.gov.au', 'https://gisservices.information.qld.gov.au');
+        }
+
+        function getPushBuildMeta() {
+            // Semantic version is intended to change only when updated for a pushed build.
+            return { version: BUILD_VERSION, dateText: BUILD_DATE, timeText: BUILD_TIME };
         }
 
         function buildFallbackBaseMaps() {
@@ -207,6 +279,24 @@
                 if (defaultLayer) defaultLayer.addTo(map);
                 
                 L.control.layers(baseMaps, null, { position: "bottomleft", collapsed: false }).addTo(map);
+
+                // Initialize Inset MiniMap
+                let miniMapBasemap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    minZoom: 0,
+                    maxZoom: 13
+                });
+
+                let miniMap = new L.Control.MiniMap(miniMapBasemap, {
+                    position: 'bottomright',
+                    toggleDisplay: true,
+                    width: 250,
+                    height: 250,
+                    collapsedWidth: 30,
+                    collapsedHeight: 30,
+                    zoomLevelOffset: -5,
+                    aimingRectOptions: { color: '#003366', weight: 2 },
+                    shadowRectOptions: { color: '#000000', weight: 1, opacity: 0, fillOpacity: 0 }
+                }).addTo(map);
 
                 highlightLayer = L.geoJSON(null, { style: { color: '#00FFFF', weight: 4, fillOpacity: 0.2 } }).addTo(map);
 
@@ -483,33 +573,28 @@
                     try {
                         let res = await fetch(url); let data = await res.json();
                         if(data.features && data.features.length > 0) {
-                            const candidates = data.features.slice(0, 15);
-                            const matched = [];
-
-                            for (const f of candidates) {
-                                let p = f.properties || {};
-                                let lpText = p.lotplan || p.LOTPLAN || p.LotPlan;
-                                if (!lpText || !f.geometry) continue;
-
-                                let both = await intersectsBushfireAndSoil(f.geometry);
-                                if (both) matched.push(lpText);
-                                if (matched.length >= 10) break;
+                            const seen = new Set();
+                            const suggestions = [];
+                            for (const f of data.features) {
+                                const p = f.properties || {};
+                                const lpText = p.lotplan || p.LOTPLAN || p.LotPlan;
+                                if (!lpText || seen.has(lpText)) continue;
+                                seen.add(lpText);
+                                suggestions.push(lpText);
+                                if (suggestions.length >= 15) break;
                             }
 
-                            if (matched.length === 0) {
-                                let item = document.createElement('div');
-                                item.innerHTML = 'No bushfire+soil matches in suggestions';
-                                item.style.color = '#666';
-                                list.appendChild(item);
-                                return;
-                            }
-
-                            matched.forEach(lpText => {
+                            suggestions.forEach(lpText => {
                                 let item = document.createElement('div');
                                 item.innerHTML = `<strong>${lpText.substr(0, val.length)}</strong>${lpText.substr(val.length)}`;
                                 item.addEventListener('click', function() { input.value = lpText; list.innerHTML = ''; searchParcel(); });
                                 list.appendChild(item);
                             });
+                        } else {
+                            let item = document.createElement('div');
+                            item.innerHTML = 'No matching lot/plan found';
+                            item.style.color = '#666';
+                            list.appendChild(item);
                         }
                     } catch(err) {}
                 }, 300);
@@ -704,7 +789,8 @@
         }
 
         initApp();
-        document.getElementById('build-date').innerText = `Build: ${BUILD_DATE}`;
+        const buildMeta = getPushBuildMeta();
+        document.getElementById('build-date').innerText = `Build: ${buildMeta.dateText} ${buildMeta.timeText} (${buildMeta.version})`;
     </script>
 </body>
 </html>
