@@ -26,6 +26,7 @@ Use these instructions for every chat in this repository.
 - Prefer execution_subagent for multi-step command workflows and summarized output.
 - Use run_in_terminal only when full/raw output or interactive handling is necessary.
 - If sandbox errors show Operation not permitted or blocked network/file access, rerun unsandboxed with a short reason.
+- For all git operations, explicitly target the repo root with `git -C /home/ubuntu/fungis-app ...` instead of relying on current working directory.
 
 ## Retry and Recovery Limits
 - Do not loop repeatedly on the same failing command pattern.
@@ -44,6 +45,8 @@ Use these instructions for every chat in this repository.
 - For bushfire and soil report performance, prefer batched local intersect APIs over many per-layer sequential calls.
 - Prefer vector tiles for large bushfire rendering workflows.
 - Keep API base resolution compatible with host:5000 unless user explicitly changes deployment routing.
+- For index.html UI edits, preserve and maintain build labeling in the footer as: Build YYYY-MM-DD HH:MM (v1.0.0).
+- Update the build date/time and version only for pushed builds (not for every local edit).
 
 ## Coordination With Existing Project Rules
 - Also follow HERMES_RULES.md in this repository.
