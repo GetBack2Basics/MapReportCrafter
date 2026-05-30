@@ -1,0 +1,5 @@
+backup/
+backend/api.log
+nohup.out
+__pycache__/
+*.pyc

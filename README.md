@@ -38,7 +38,7 @@ Intersection results are presented in a clean table. Selecting the PDF export op
 
 You do not need to edit large amounts of frontend or backend code to add or remove routine map/report layers. The application is driven by a non-developer-friendly JSON source file.
 
-### 1. Update `layers-dev.json`
+### 1. Update `site_data/layers-dev.json`
 
 Open the editable configuration file and define:
 
@@ -52,40 +52,40 @@ Open the editable configuration file and define:
 Execute:
 
 ```bash
-python3 build_map.py
+python3 scripts/build_map.py
 ```
 
-The script compiles `layers-dev.json` into runtime files used by the app:
+The script compiles `site_data/layers-dev.json` into runtime files used by the app:
 
-- `layers.json` (frontend runtime config)
+- `site_data/layers.json` (frontend runtime config)
 - `index.html` config reference alignment (if needed)
-- backup tar in `/backup/<timestamp>.tar`
+- backup tar in `backup/<timestamp>.tar`
 
 Optional key=value arguments:
 
 ```bash
-# Use a custom editable source file
-python3 build_map.py json=dev-layors.json
+# Use a custom editable source file in site_data/
+python3 scripts/build_map.py json=dev-layors.json
 
 # Run built-in post-build checks
-python3 build_map.py json=dev-layors.json test=true
+python3 scripts/build_map.py json=dev-layors.json test=true
 
 # Run a custom shell test script; if it fails, files are reverted from backup
-python3 build_map.py json=dev-layors.json test=test.sh
+python3 scripts/build_map.py json=dev-layors.json test=scripts/test.sh
 ```
 
 ### 3. Refresh the frontend
 
-The Leaflet frontend reads `layers.json` dynamically. After refresh, layer visibility, legend behavior, thematic colors, and report intersection rows reflect your JSON changes.
+The Leaflet frontend reads `site_data/layers.json` dynamically. After refresh, layer visibility, legend behavior, thematic colors, and report intersection rows reflect your JSON changes.
 
 ## Setup Instructions
 
 ### 1. Synchronize the layer configuration
 
-Run the Python synchronization script after editing `layers-dev.json`:
+Run the Python synchronization script after editing `site_data/layers-dev.json`:
 
 ```bash
-python3 build_map.py
+python3 scripts/build_map.py
 ```
 
 ### 2. Deploy the backend API to the Kubernetes PostGIS pod

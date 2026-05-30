@@ -109,7 +109,7 @@ def get_layer():
 @app.route('/api/local_intersect', methods=['POST'])
 def local_intersect():
     try:
-        data = request.json
+        data = request.get_json(silent=True)
         if not data:
             return jsonify({"error": "Missing JSON payload"}), 400
 
@@ -142,7 +142,7 @@ def local_intersect():
 @app.route('/api/local_multi_intersect', methods=['POST'])
 def local_multi_intersect():
     try:
-        data = request.json
+        data = request.get_json(silent=True)
         if not data:
             return jsonify({"error": "Missing JSON payload"}), 400
 
@@ -184,6 +184,28 @@ def local_multi_intersect():
         return jsonify({"results": results})
     except Exception as e:
         return jsonify({"error": str(e)})
+
+
+@app.route('/api/build-meta', methods=['GET'])
+def build_meta():
+    try:
+        cmd = ["git", "-C", "/home/ubuntu/fungis-app", "log", "-1", "--format=%cs|%ct|%h"]
+        output = subprocess.check_output(cmd, text=True).strip()
+        if output:
+            date_text, unix_time, short_hash = output.split('|')
+            hour_minute = subprocess.check_output(
+                ["date", "-u", "-d", f"@{unix_time}", "+%H:%M"],
+                text=True
+            ).strip()
+            return jsonify({
+                "version": f"v{short_hash}",
+                "dateText": date_text,
+                "timeText": hour_minute,
+            })
+    except Exception:
+        pass
+
+    return jsonify({"version": "v1.0.0", "dateText": "2026-05-28", "timeText": "00:00"})
 
 
 @app.route('/api/local_extent', methods=['GET'])

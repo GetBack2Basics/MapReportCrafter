@@ -3,16 +3,16 @@
 """Build runtime map config from a user-editable JSON source.
 
 Usage examples:
-- python3 build_map.py
-- python3 build_map.py json=layers-dev.json
-- python3 build_map.py json=dev-layors.json test=true
-- python3 build_map.py json=dev-layors.json test=test.sh
+- python3 scripts/build_map.py
+- python3 scripts/build_map.py json=layers-dev.json
+- python3 scripts/build_map.py json=dev-layors.json test=true
+- python3 scripts/build_map.py json=dev-layors.json test=scripts/test.sh
 
 Behavior:
-- Reads source JSON (default: layers-dev.json)
-- Writes runtime JSON (layers.json)
-- Ensures index.html points to layers.json
-- Creates backup tar at /backup/<timestamp>.tar before writing
+- Reads source JSON from site_data (default: layers-dev.json)
+- Writes runtime JSON to site_data/layers.json
+- Ensures index.html points to site_data/layers.json
+- Creates backup tar at backup/<timestamp>.tar before writing
 - If tests fail, reverts changed files from backup tar
 """
 
@@ -28,9 +28,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-ROOT = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent
+ROOT = SCRIPT_DIR.parent
+SITE_DATA_DIR = ROOT / "site_data"
 DEFAULT_SOURCE_NAME = "layers-dev.json"
-TARGET_PATH = ROOT / "layers.json"
+TARGET_PATH = SITE_DATA_DIR / "layers.json"
 INDEX_PATH = ROOT / "index.html"
 BACKUP_DIR = ROOT / "backup"
 
@@ -73,7 +75,9 @@ def parse_test_mode(raw_value: str | None) -> tuple[bool, str | None, str]:
     # Any non-boolean value is treated as a custom test script path.
     script = Path(value)
     if not script.is_absolute():
-        script = ROOT / script
+        script_in_root = ROOT / script
+        script_in_scripts = SCRIPT_DIR / script
+        script = script_in_root if script_in_root.exists() else script_in_scripts
     return True, str(script), "custom"
 
 
@@ -222,7 +226,7 @@ def update_index_config_reference() -> bool:
     else:
         updated = re.sub(
             r"const\s+LAYERS_CONFIG_PATH\s*=\s*['\"][^'\"]+['\"];",
-            "const LAYERS_CONFIG_PATH = 'layers.json';",
+            "const LAYERS_CONFIG_PATH = 'site_data/layers.json';",
             text,
             count=1,
         )
@@ -231,7 +235,7 @@ def update_index_config_reference() -> bool:
             changed = True
 
     updated_fetch = re.sub(
-        r"fetch\(\s*['\"]layers\.json\?v=['\"]\s*\+\s*new Date\(\)\.getTime\(\)\s*\)",
+        r"fetch\(\s*['\"](?:site_data/)?layers\.json\?v=['\"]\s*\+\s*new Date\(\)\.getTime\(\)\s*\)",
         "fetch(LAYERS_CONFIG_PATH + '?v=' + new Date().getTime())",
         text,
         count=1,
@@ -246,6 +250,7 @@ def update_index_config_reference() -> bool:
 
 
 def write_json(path: Path, data: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
         f.write("\n")
@@ -290,7 +295,7 @@ def run_builtin_tests(normalized: dict[str, Any]) -> list[str]:
             failures.append(f"layers.json missing/invalid top-level list: {key}")
 
     index_text = INDEX_PATH.read_text(encoding="utf-8")
-    if "const LAYERS_CONFIG_PATH = 'layers.json';" not in index_text:
+    if "const LAYERS_CONFIG_PATH = 'site_data/layers.json';" not in index_text:
         failures.append("index.html missing LAYERS_CONFIG_PATH constant")
     if "fetch(LAYERS_CONFIG_PATH + '?v=' + new Date().getTime())" not in index_text:
         failures.append("index.html missing config fetch using LAYERS_CONFIG_PATH")
@@ -321,7 +326,9 @@ def main() -> None:
 
     source_path = Path(source_name)
     if not source_path.is_absolute():
-        source_path = ROOT / source_path
+        site_data_candidate = SITE_DATA_DIR / source_path
+        root_candidate = ROOT / source_path
+        source_path = site_data_candidate if site_data_candidate.exists() or source_path == Path(DEFAULT_SOURCE_NAME) else root_candidate
 
     if not source_path.exists():
         if TARGET_PATH.exists():
