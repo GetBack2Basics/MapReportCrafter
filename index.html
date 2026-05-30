@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
     <script src="https://unpkg.com/mapbox-gl@2.15.0/dist/mapbox-gl.js"></script>
     <link href="https://unpkg.com/mapbox-gl@2.15.0/dist/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; margin: 0; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
         header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 60px; background: #003366; color: white; gap: 16px; flex-shrink: 0; position: relative; z-index: 1100; }
@@ -134,14 +135,18 @@
 
             <section class="sidebar-card">
                 <h3>Data Charts</h3>
-                <div id="chart-container"></div>
+                <div id="chart-container">
+                    <div style="position: relative; height: 260px; width: 100%;">
+                        <canvas id="layerChart"></canvas>
+                    </div>
+                </div>
             </section>
         </aside>
 
         <div id="map-wrapper">
             <div id="map"></div>
             <button id="draw-export" class="btn panel" onclick="exportDrawings()" style="display:none;">💾 Export GeoJSON</button>
-            <div id="build-date">Build: 2026-05-28</div>
+            <div id="build-date">Build: loading...</div>
         </div>
     </main>
 
@@ -167,9 +172,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <script>
-        const BUILD_DATE = '2026-05-28';
-        const BUILD_TIME = '00:00';
-        const BUILD_VERSION = 'v1.0.0';
+        const BUILD_FALLBACK_DATE = '2026-05-28';
+        const BUILD_FALLBACK_TIME = '00:00';
+        const BUILD_FALLBACK_VERSION = 'v1.0.0';
+        const LAYERS_CONFIG_PATH = 'layers.json';
         const API_BASE = (() => {
             const q = new URLSearchParams(window.location.search).get('api');
             if (q) return q.replace(/\/$/, '');
@@ -179,15 +185,71 @@
         })();
         var map, highlightLayer, appConfig, drawnItems;
         var activeLayers = {}; 
+        let myChart = null;
+
+        function updateChart(title, labels, dataValues, backgroundColors) {
+            const ctx = document.getElementById('layerChart').getContext('2d');
+
+            // Destroy existing chart if it exists to prevent canvas overlapping glitches
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            myChart = new Chart(ctx, {
+                type: 'doughnut', // Doughnut charts look best for thematic area breakdowns
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: dataValues,
+                        backgroundColor: backgroundColors,
+                        borderWidth: 1,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } },
+                        title: { display: true, text: title, font: { size: 14, family: 'sans-serif' } }
+                    },
+                    cutout: '60%'
+                }
+            });
+        }
 
         function normalizeBasemapUrl(url) {
             if (!url) return url;
             return url.replace('https://spatial-gis.information.qld.gov.au', 'https://gisservices.information.qld.gov.au');
         }
 
+        function normalizeWmsUrl(url) {
+            const normalizedUrl = normalizeBasemapUrl(url);
+            return normalizedUrl ? normalizedUrl.split('?')[0] : normalizedUrl;
+        }
+
         function getPushBuildMeta() {
             // Semantic version is intended to change only when updated for a pushed build.
-            return { version: BUILD_VERSION, dateText: BUILD_DATE, timeText: BUILD_TIME };
+            return { version: BUILD_FALLBACK_VERSION, dateText: BUILD_FALLBACK_DATE, timeText: BUILD_FALLBACK_TIME };
+        }
+
+        async function refreshBuildMeta() {
+            const buildDateEl = document.getElementById('build-date');
+            try {
+                const res = await fetch(`${API_BASE}/api/build-meta`);
+                const meta = await res.json();
+                if (buildDateEl && meta && meta.dateText && meta.timeText && meta.version) {
+                    buildDateEl.innerText = `Build: ${meta.dateText} ${meta.timeText} (${meta.version})`;
+                    return;
+                }
+            } catch (e) {
+                // Fall back to the hardcoded stamp below.
+            }
+
+            const fallback = getPushBuildMeta();
+            if (buildDateEl) {
+                buildDateEl.innerText = `Build: ${fallback.dateText} ${fallback.timeText} (${fallback.version})`;
+            }
         }
 
         function buildFallbackBaseMaps() {
@@ -197,15 +259,16 @@
             });
             baseMaps['OpenStreetMap'] = osm;
 
-            const qldTopo = L.esri.tiledMapLayer({
-                url: 'https://gisservices.information.qld.gov.au/arcgis/rest/services/Basemaps/QTopoBase_AllScales/MapServer',
+            baseMaps['QLD Imagery'] = L.tileLayer.wms(normalizeWmsUrl('https://spatial-img.information.qld.gov.au/arcgis/services/Basemaps/LatestSatelliteWOS_AllUsers/ImageServer/WMSServer?request=GetCapabilities&service=WMS'), {
+                layers: 'LatestSatelliteWOS_AllUsers',
+                format: 'image/png',
+                transparent: true,
                 maxZoom: 22
             });
-            baseMaps['QLD Topo (Raster)'] = qldTopo;
             baseMaps['None'] = L.layerGroup();
 
             try {
-                baseMaps['QLD Topo (Vector)'] = L.esri.Vector.vectorTileLayer(
+                baseMaps['QLD Topo'] = L.esri.Vector.vectorTileLayer(
                     'https://spatial.information.qld.gov.au/arcgis/rest/services/Hosted/Basemaps_QldBase_Topographic/VectorTileServer'
                 );
             } catch (e) {
@@ -237,7 +300,7 @@
                             maxZoom: opts.maxZoom || 22
                         });
                     } else if (type === 'wms') {
-                        layer = L.tileLayer.wms(normalizeBasemapUrl(def.url), {
+                        layer = L.tileLayer.wms(normalizeWmsUrl(def.url), {
                             ...opts,
                             maxZoom: opts.maxZoom || 22
                         });
@@ -258,7 +321,7 @@
 
         async function initApp() {
             try {
-                let confRes = await fetch('layers.json?v=' + new Date().getTime());
+                let confRes = await fetch(LAYERS_CONFIG_PATH + '?v=' + new Date().getTime());
                 appConfig = await confRes.json();
                 
                 map = L.map('map', { zoomControl: false, preferCanvas: true }).setView([-22.5, 144.0], 6);
@@ -293,6 +356,10 @@
                     height: 250,
                     collapsedWidth: 30,
                     collapsedHeight: 30,
+                    mapOptions: {
+                        zoomControl: true,
+                        zoomControlOptions: { position: 'topleft' }
+                    },
                     zoomLevelOffset: -5,
                     aimingRectOptions: { color: '#003366', weight: 2 },
                     shadowRectOptions: { color: '#000000', weight: 1, opacity: 0, fillOpacity: 0 }
@@ -507,9 +574,10 @@
             document.getElementById('sym-title').innerText = def.name;
             
             let metaLink = document.getElementById('sym-meta');
-            if (def.metadataUrl) {
+            let metadataHref = def.metadataUrl || (!isLocal ? def.url : '');
+            if (metadataHref) {
                 metaLink.style.display = 'inline-block';
-                metaLink.href = def.metadataUrl;
+                metaLink.href = metadataHref;
             } else {
                 metaLink.style.display = 'none';
             }
@@ -638,6 +706,40 @@
 
                     let html = '<table><tr><th>Category</th><th>Details</th></tr>';
 
+                    let chartLabels = [];
+                    let chartData = [];
+                    let chartColors = [];
+
+                    function getQueryColor(label) {
+                        const l = label.toLowerCase();
+                        if (l.includes('bushfire') || l.includes('fire')) return '#A80000';
+                        if (l.includes('vegetation') || l.includes('veg')) return '#228B22';
+                        if (l.includes('soil') || l.includes('usle')) return '#8B4513';
+                        if (l.includes('cropping') || l.includes('agricultural') || l.includes('ag area')) return '#DAA520';
+                        return '#0078A8';
+                    }
+
+                    function resolveApiEndpoint(endpointPath) {
+                        if (!endpointPath) return `${API_BASE}/api/local_intersect`;
+                        if (/^https?:\/\//i.test(endpointPath)) return endpointPath;
+                        return endpointPath.startsWith('/')
+                            ? `${API_BASE}${endpointPath}`
+                            : `${API_BASE}/${endpointPath}`;
+                    }
+
+                    function endpointPathOnly(endpointPath) {
+                        const raw = endpointPath ? String(endpointPath).trim() : '/api/local_intersect';
+                        if (!raw) return '/api/local_intersect';
+                        if (/^https?:\/\//i.test(raw)) {
+                            try {
+                                return new URL(raw).pathname || '/';
+                            } catch (e) {
+                                return raw;
+                            }
+                        }
+                        return raw.startsWith('/') ? raw : `/${raw}`;
+                    }
+
                     const restRows = [];
                     if (appConfig && appConfig.restQueries && appConfig.restQueries.length > 0) {
                         const restPromises = appConfig.restQueries.map(async q => {
@@ -646,50 +748,156 @@
                                 let qRes = await fetch(qUrl);
                                 if (!qRes.ok) throw new Error(`HTTP ${qRes.status}`);
                                 let qData = await qRes.json();
-                                let resultText = (qData.features && qData.features.length > 0) ? q.positiveText : q.negativeText;
-                                return `<tr><td>${q.label}</td><td>${resultText}</td></tr>`;
+                                let isPositive = !!(qData.features && qData.features.length > 0);
+                                let resultText = isPositive ? q.positiveText : q.negativeText;
+                                return { row: `<tr><td>${q.label}</td><td>${resultText}</td></tr>`, isPositive, label: q.label };
                             } catch (err) {
-                                return `<tr><td>${q.label}</td><td class="err">Failed</td></tr>`;
+                                return { row: `<tr><td>${q.label}</td><td class="err">Failed</td></tr>`, isPositive: false, label: q.label };
                             }
                         });
-                        restRows.push(...(await Promise.all(restPromises)));
+                        const restResults = await Promise.all(restPromises);
+                        restResults.forEach(r => {
+                            restRows.push(r.row);
+                            if (r.isPositive) {
+                                chartLabels.push(r.label);
+                                chartData.push(1);
+                                chartColors.push(getQueryColor(r.label));
+                            }
+                        });
                     }
 
                     const localRows = [];
                     if (appConfig && appConfig.localQueries && appConfig.localQueries.length > 0) {
-                        try {
-                            let payload = {
-                                geometry: feature.geometry,
-                                queries: appConfig.localQueries.map(q => ({
-                                    label: q.label,
-                                    table: q.payload.table,
-                                    column: q.payload.column
-                                }))
-                            };
-                            let multiRes = await fetch(`${API_BASE}/api/local_multi_intersect`, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(payload)
-                            });
-                            let multiData = await multiRes.json();
-                            const byLabel = {};
-                            if (multiData && Array.isArray(multiData.results)) {
-                                multiData.results.forEach(r => { byLabel[r.label] = r; });
-                            }
+                        const localQueries = appConfig.localQueries;
+                        const batchEligiblePaths = new Set(['/api/local_intersect', '/api/local_multi_intersect']);
+                        const useBatchMode = localQueries.every(q => {
+                            const endpointPath = endpointPathOnly((q && q.endpoint) ? q.endpoint : '/api/local_intersect');
+                            return batchEligiblePaths.has(endpointPath);
+                        });
 
-                            appConfig.localQueries.forEach(q => {
-                                const r = byLabel[q.label];
-                                if (!r) {
+                        if (useBatchMode) {
+                            try {
+                                const invalidBatchQueries = [];
+                                const validBatchQueries = [];
+
+                                localQueries.forEach(q => {
+                                    const queryPayload = (q && (q.payload || q.arguments)) || {};
+                                    const table = queryPayload.table;
+                                    const column = queryPayload.column;
+                                    if (!table || !column) {
+                                        invalidBatchQueries.push(q);
+                                        return;
+                                    }
+                                    validBatchQueries.push({
+                                        label: q.label,
+                                        table,
+                                        column
+                                    });
+                                });
+
+                                invalidBatchQueries.forEach(q => {
+                                    localRows.push(`<tr><td>${q.label}</td><td class="err">Schema Error</td></tr>`);
+                                });
+
+                                if (validBatchQueries.length === 0) {
+                                    throw new Error('No valid local batch queries');
+                                }
+
+                                const firstEndpoint = '/api/local_multi_intersect';
+                                let payload = {
+                                    geometry: feature.geometry,
+                                    queries: validBatchQueries
+                                };
+                                let multiRes = await fetch(resolveApiEndpoint(firstEndpoint), {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(payload)
+                                });
+                                let multiData = await multiRes.json();
+                                const byLabel = {};
+                                if (multiData && Array.isArray(multiData.results)) {
+                                    multiData.results.forEach(r => { byLabel[r.label] = r; });
+                                }
+
+                                localQueries.forEach(q => {
+                                    const r = byLabel[q.label];
+                                    if (!r && localRows.some(row => row.includes(`<td>${q.label}</td><td class="err">Schema Error</td>`))) {
+                                        return;
+                                    }
+                                    if (!r) {
+                                        localRows.push(`<tr><td>${q.label}</td><td class="err">API Down</td></tr>`);
+                                    } else if (r.error) {
+                                        localRows.push(`<tr><td>${q.label}</td><td class="err">Schema Error</td></tr>`);
+                                    } else {
+                                        let resultText = r.result !== null ? String(r.result) : (q.fallbackText || 'No Data');
+                                        localRows.push(`<tr><td>${q.label}</td><td>${resultText}</td></tr>`);
+                                        if (r.result !== null) {
+                                            chartLabels.push(String(r.result));
+                                            chartData.push(1);
+                                            chartColors.push(getQueryColor(q.label));
+                                        }
+                                    }
+                                });
+                            } catch(e) {
+                                localQueries.forEach(q => {
+                                    const alreadySetSchemaErr = localRows.some(row => row.includes(`<td>${q.label}</td><td class="err">Schema Error</td>`));
+                                    if (!alreadySetSchemaErr) {
+                                        localRows.push(`<tr><td>${q.label}</td><td class="err">API Down</td></tr>`);
+                                    }
+                                });
+                            }
+                        } else {
+                            const localPromises = localQueries.map(async q => {
+                                const endpoint = (q && q.endpoint) ? q.endpoint : '/api/local_intersect';
+                                const queryPayload = (q && (q.payload || q.arguments)) || {};
+                                const payload = {
+                                    ...queryPayload,
+                                    geometry: feature.geometry
+                                };
+
+                                if (!payload.table || !payload.column) {
+                                    return { label: q.label, error: 'Schema Error', result: null };
+                                }
+
+                                try {
+                                    let qRes = await fetch(resolveApiEndpoint(endpoint), {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify(payload)
+                                    });
+                                    let qData = null;
+                                    try { qData = await qRes.json(); } catch (e) {}
+                                    if (!qRes.ok) {
+                                        if (qData && qData.error) {
+                                            return { label: q.label, error: 'Schema Error', result: null };
+                                        }
+                                        return { label: q.label, error: 'API Down', result: null };
+                                    }
+                                    if (qData && qData.error) {
+                                        return { label: q.label, error: 'Schema Error', result: null };
+                                    }
+                                    return { label: q.label, result: (qData && qData.result !== undefined) ? qData.result : null };
+                                } catch (err) {
+                                    return { label: q.label, error: 'API Down', result: null };
+                                }
+                            });
+
+                            const localResults = await Promise.all(localPromises);
+                            localResults.forEach((r, idx) => {
+                                const q = localQueries[idx];
+                                if (r.error === 'API Down') {
                                     localRows.push(`<tr><td>${q.label}</td><td class="err">API Down</td></tr>`);
                                 } else if (r.error) {
                                     localRows.push(`<tr><td>${q.label}</td><td class="err">Schema Error</td></tr>`);
                                 } else {
-                                    localRows.push(`<tr><td>${q.label}</td><td>${r.result !== null ? r.result : q.fallbackText}</td></tr>`);
+                                    let resultText = r.result !== null ? String(r.result) : (q.fallbackText || 'No Data');
+                                    localRows.push(`<tr><td>${q.label}</td><td>${resultText}</td></tr>`);
+                                    if (r.result !== null) {
+                                        chartLabels.push(String(r.result));
+                                        chartData.push(1);
+                                        chartColors.push(getQueryColor(q.label));
+                                    }
                                 }
-                            });
-                        } catch(e) {
-                            appConfig.localQueries.forEach(q => {
-                                localRows.push(`<tr><td>${q.label}</td><td class="err">API Down</td></tr>`);
                             });
                         }
                     }
@@ -698,6 +906,12 @@
                     html += localRows.join('');
                     html += '</table>';
                     document.getElementById('report-content').innerHTML = html;
+
+                    if (chartData.length > 0) {
+                        updateChart("Property Constraints Found", chartLabels, chartData, chartColors);
+                    } else {
+                        updateChart("No Constraints", ["Clear"], [1], ["#28a745"]);
+                    }
                 } else {
                     document.getElementById('report-content').innerHTML = '<div style="padding: 10px; color: red;">Property not found.</div>';
                 }
@@ -789,8 +1003,7 @@
         }
 
         initApp();
-        const buildMeta = getPushBuildMeta();
-        document.getElementById('build-date').innerText = `Build: ${buildMeta.dateText} ${buildMeta.timeText} (${buildMeta.version})`;
+        refreshBuildMeta();
     </script>
 </body>
 </html>

@@ -36,11 +36,11 @@ Intersection results are presented in a clean table. Selecting the PDF export op
 
 ## For Administrators: Config-First Architecture
 
-You do not need to edit large amounts of frontend or backend code to add a new map layer. The application is driven by a single configuration source of truth.
+You do not need to edit large amounts of frontend or backend code to add or remove routine map/report layers. The application is driven by a non-developer-friendly JSON source file.
 
-### 1. Update `layers.json`
+### 1. Update `layers-dev.json`
 
-Open the master configuration file and define:
+Open the editable configuration file and define:
 
 - the new layer
 - its PostGIS table name
@@ -52,23 +52,40 @@ Open the master configuration file and define:
 Execute:
 
 ```bash
-python3 sync_layers.py
+python3 build_map.py
 ```
 
-The backend validation process will query the Kubernetes database, verify that the configured tables and columns exist, and authorize the layer for use.
+The script compiles `layers-dev.json` into runtime files used by the app:
+
+- `layers.json` (frontend runtime config)
+- `index.html` config reference alignment (if needed)
+- backup tar in `/backup/<timestamp>.tar`
+
+Optional key=value arguments:
+
+```bash
+# Use a custom editable source file
+python3 build_map.py json=dev-layors.json
+
+# Run built-in post-build checks
+python3 build_map.py json=dev-layors.json test=true
+
+# Run a custom shell test script; if it fails, files are reverted from backup
+python3 build_map.py json=dev-layors.json test=test.sh
+```
 
 ### 3. Refresh the frontend
 
-The Leaflet frontend reads the JSON configuration dynamically. After refresh, the new layer, legend, thematic colors, and intersection reporting logic become available in the application.
+The Leaflet frontend reads `layers.json` dynamically. After refresh, layer visibility, legend behavior, thematic colors, and report intersection rows reflect your JSON changes.
 
 ## Setup Instructions
 
 ### 1. Synchronize the layer configuration
 
-Run the Python synchronization script to fetch serverless layer schemas and generate the local configuration:
+Run the Python synchronization script after editing `layers-dev.json`:
 
 ```bash
-python3 sync_layers.py
+python3 build_map.py
 ```
 
 ### 2. Deploy the backend API to the Kubernetes PostGIS pod
